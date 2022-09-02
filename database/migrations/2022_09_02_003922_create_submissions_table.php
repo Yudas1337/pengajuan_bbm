@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('submissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('station_id')->constrained();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->char('letter_number', 150);
+            $table->date('date');
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
+            $table->foreignUuid('user_id')->constrained();
+            $table->text('fuel_requirement');
             $table->boolean('status')->default(0);
-            $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('submissions');
     }
 };
