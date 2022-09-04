@@ -2,11 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Station;
+use App\Models\User;
+use Faker\Provider\Uuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -18,10 +21,14 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'id' => Uuid::uuid(),
+            'station_id' => Station::all()->random(),
             'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('password'),
+            'status' => fake()->boolean(),
             'remember_token' => Str::random(10),
         ];
     }
@@ -33,7 +40,7 @@ class UserFactory extends Factory
      */
     public function unverified()
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

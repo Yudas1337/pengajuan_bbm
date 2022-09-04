@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Station extends Model
 {
     use HasFactory;
+
+    public $keyType = 'char';
+    public $incrementing = false;
+    protected $primaryKey = 'id';
 }
