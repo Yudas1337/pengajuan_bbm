@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\{
-    Auth, Route
-};
+use App\Http\Controllers\Dashboard\{DashboardController, ProfileController};
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\{Auth, Route};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +25,17 @@ Auth::routes([
     'reset' => false
 ]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
+    Route::name('dashboard.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('home');
+    });
+    Route::name('user.')->group(function () {
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+        Route::post('profile/{id}', [ProfileController::class, 'update'])->name('updateProfile');
+        Route::get('change-password', [ProfileController::class, 'showPasswordForm'])->name('showPasswordForm');
+        Route::post('change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+    });
+});
+
