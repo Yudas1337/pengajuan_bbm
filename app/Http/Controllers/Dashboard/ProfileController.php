@@ -3,84 +3,70 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ProfileRequest;
+use App\Models\User;
+use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    private UserService $service;
+
+    function __construct(UserService $userService)
+    {
+        $this->service = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('dashboard.pages.profile.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * update current user profile
      *
-     * @return Response
+     * @param ProfileRequest $request
+     * @param User $user
+     *
+     * @return RedirectResponse
      */
-    public function create()
+    public function update(ProfileRequest $request, User $user)
     {
-        //
+        $this->service->updateProfile($request, $user->id);
+
+        return redirect()->back()->with('success', 'Berhasil update profil');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * show password form
      *
-     * @param Request $request
-     * @return Response
+     * @return view
      */
-    public function store(Request $request)
+
+    public function showPasswordForm()
     {
-        //
+        return view('dashboard.pages.profile.change-password');
     }
 
     /**
-     * Display the specified resource.
+     * Update current user password
      *
-     * @param int $id
-     * @return Response
+     * @param ChangePasswordRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
+    public function changePassword(ChangePasswordRequest $request)
     {
-        //
-    }
+        $this->service->changePassword($request);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->back()->with('success', 'Berhasil update password');
     }
 }

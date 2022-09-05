@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->foreignUuid('station_id')->nullable()->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('username')->nullable()->unique();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status')->default(0);

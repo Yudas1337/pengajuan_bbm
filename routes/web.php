@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     });
     Route::name('user.')->group(function () {
         Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-        Route::post('profile/{id}', [ProfileController::class, 'update'])->name('updateProfile');
+        Route::post('profile/{user}', [ProfileController::class, 'update'])->name('updateProfile');
         Route::get('change-password', [ProfileController::class, 'showPasswordForm'])->name('showPasswordForm');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('change-password');
     });
