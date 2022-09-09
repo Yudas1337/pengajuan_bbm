@@ -37,7 +37,7 @@ class ProfileController extends Controller
      *
      * @return RedirectResponse
      */
-    public function update(ProfileRequest $request, User $user)
+    public function update(ProfileRequest $request, User $user): RedirectResponse
     {
         $this->service->updateProfile($request, $user->id);
 
@@ -50,7 +50,7 @@ class ProfileController extends Controller
      * @return view
      */
 
-    public function showPasswordForm()
+    public function showPasswordForm(): View
     {
         return view('dashboard.pages.profile.change-password');
     }
@@ -63,7 +63,7 @@ class ProfileController extends Controller
      * @return RedirectResponse
      */
 
-    public function changePassword(ChangePasswordRequest $request)
+    public function changePassword(ChangePasswordRequest $request): RedirectResponse
     {
         $this->service->changePassword($request);
 

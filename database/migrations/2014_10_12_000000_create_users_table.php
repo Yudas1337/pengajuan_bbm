@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('station_id')->nullable()->constrained()
-                ->cascadeOnDelete()->cascadeOnUpdate();
+                ->restrictOnDelete()->cascadeOnUpdate();
             $table->string('name');
             $table->string('username')->nullable()->unique();
             $table->string('email')->nullable()->unique();

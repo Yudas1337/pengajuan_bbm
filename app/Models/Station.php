@@ -12,4 +12,6 @@ class Station extends Model
     public $keyType = 'char';
     public $incrementing = false;
     protected $primaryKey = 'id';
+
+    protected $fillable = ['name', 'number', 'address', 'pic_name', 'pic_phone'];
 }

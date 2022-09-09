@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\Dashboard\{DashboardController, ProfileController};
+use App\Http\Controllers\Dashboard\{DashboardController,
+    ProfileController,
+    StationController,
+    SubmissionController,
+    UserController};
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\{Auth, Route};
 
@@ -37,5 +41,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         Route::get('change-password', [ProfileController::class, 'showPasswordForm'])->name('showPasswordForm');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('change-password');
     });
+    Route::resources([
+        'submissions' => SubmissionController::class,
+        'users' => UserController::class,
+        'stations' => StationController::class
+    ]);
 });
 
