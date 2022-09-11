@@ -32,25 +32,28 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'create-user']);
         Permission::create(['name' => 'update-user']);
         Permission::create(['name' => 'delete-user']);
+        Permission::create(['name' => 'activate-user']);
+        Permission::create(['name' => 'deactivate-user']);
 
         // Penyuluh
-        Role::create(['name' => 'Extension Worker'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'Penyuluh'])->givePermissionTo(Permission::all());
 
         // Ketua Kelompok
-        Role::create(['name' => 'Group Leader'])->givePermissionTo([
+        Role::create(['name' => 'Ketua Kelompok'])->givePermissionTo([
             'submit-letter-of-recommendation'
         ]);
 
         // Kepala Desa
-        Role::create(['name' => 'Village Head'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'Kepala Desa'])->givePermissionTo(Permission::all());
 
         // Petugas Pelayanan
-        Role::create(['name' => 'Service Officer'])->givePermissionTo([
+        Role::create(['name' => 'Petugas Pelayanan'])->givePermissionTo([
             'view-station', 'create-station', 'update-station', 'delete-station',
-            'view-user', 'create-user', 'update-user', 'delete-user'
+            'view-user', 'create-user', 'update-user', 'delete-user', 'activate-user',
+            'deactivate-user'
         ]);
 
         // Kepala Dinas
-        Role::create(['name' => 'Head of Department'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'Kepala Dinas'])->givePermissionTo(Permission::all());
     }
 }

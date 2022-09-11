@@ -40,11 +40,18 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         Route::post('profile/{user}', [ProfileController::class, 'update'])->name('updateProfile');
         Route::get('change-password', [ProfileController::class, 'showPasswordForm'])->name('showPasswordForm');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+        Route::prefix('users')->group(function () {
+            Route::post('activate/{user}', [UserController::class, 'activate'])->name('activate');
+            Route::get('inactive', [UserController::class, 'inactive'])->name('inactive');
+        });
     });
+    Route::name('stations.')->prefix('station')->group(function () {
+        Route::get('getStationsWithAjax', [StationController::class, 'getAllWithAjax'])->name('performAjax');
+    });
+    Route::resource('stations', StationController::class)->except('show');
+    Route::resource('users', UserController::class)->except('show');
     Route::resources([
-        'submissions' => SubmissionController::class,
-        'users' => UserController::class,
-        'stations' => StationController::class
+        'submissions' => SubmissionController::class
     ]);
 });
 

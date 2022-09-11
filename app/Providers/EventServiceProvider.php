@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Station;
+use App\Models\User;
 use App\Observers\StationObserver;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Station::observe(StationObserver::class);
+        User::observe(UserObserver::class);
     }
 
     /**

@@ -19,5 +19,9 @@ return [
     'update_failed' => 'Gagal memperbarui data',
     'delete_success' => 'Berhasil menghapus data',
     'delete_constrained' => 'Gagal menghapus! data sedang digunakan',
-    'delete_failed' => 'Gagal menghapus data'
+    'delete_failed' => 'Gagal menghapus data',
+    'user_soft_delete_success' => 'Berhasil menonaktifkan pengguna',
+    'user_soft_delete_failed' => 'Gagal menonaktifkan pengguna',
+    'user_restore_success' => 'Berhasil mengaktifkan pengguna',
+    'user_restore_failed' => 'Gagal mengaktikan pengguna'
 ];

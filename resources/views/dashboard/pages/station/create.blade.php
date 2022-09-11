@@ -11,7 +11,7 @@
                         @csrf
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nama SPBU</label>
+                                <label class="form-label">Nama SPBU <small class="text-danger">*</small> </label>
                                 <input value="{{ old('name') }}" type="text" name="name" autocomplete="off"
                                        class="form-control @error('name') is-invalid @enderror"
                                        placeholder="SPBU Malang" autofocus>
@@ -22,7 +22,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nomor SPBU</label>
+                                <label class="form-label">Nomor SPBU <small class="text-danger">*</small></label>
                                 <input value="{{ old('number') }}" type="text" name="number" autocomplete="off"
                                        class="form-control @error('number') is-invalid @enderror"
                                        placeholder="3412404">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Alamat SPBU</label>
+                            <label class="form-label">Alamat SPBU <small class="text-danger">*</small></label>
                             <textarea name="address" class="form-control @error('address') is-invalid @enderror"
                                       autocomplete="off">{{ old('address')  }}</textarea>
                             @error('address')
@@ -45,7 +45,7 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nama PIC</label>
+                                <label class="form-label">Nama PIC <small class="text-danger">*</small></label>
                                 <input value="{{ old('pic_name') }}" type="text" name="pic_name" autocomplete="off"
                                        class="form-control @error('pic_name') is-invalid @enderror"
                                        placeholder="John Doe">
@@ -56,7 +56,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nomor PIC</label>
+                                <label class="form-label">Nomor PIC <small class="text-danger">*</small></label>
                                 <input value="{{ old('pic_phone') }}" type="number" name="pic_phone"
                                        autocomplete="off"
                                        class="form-control @error('pic_phone') is-invalid @enderror"

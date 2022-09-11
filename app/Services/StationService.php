@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Http\Requests\StationRequest;
 use App\Repositories\StationRepository;
 use App\Traits\YajraTable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class StationService
 {
@@ -15,6 +17,37 @@ class StationService
     public function __construct(StationRepository $stationRepository)
     {
         $this->repository = $stationRepository;
+    }
+
+    /**
+     * Get all stations for select2 with ajax from StationRepository
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+
+    public function handleSelectAjaxStations(Request $request): JsonResponse
+    {
+        $page = $request->page;
+        $search = $request->term;
+
+        $resultCount = 25;
+
+        $offset = ($page - 1) * $resultCount;
+
+        $results = $this->repository->searchAjaxStations($search, $offset, $resultCount);
+
+        $morePages = ($offset + $resultCount) < $this->repository->countAll();
+
+        $results = array(
+            "results" => $results,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
     }
 
     /**

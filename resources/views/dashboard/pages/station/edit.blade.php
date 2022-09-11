@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-success">Update Data</button>
                         <button type="reset" class="btn btn-secondary">Kosongkan form</button>
                     </form>
                 </div>

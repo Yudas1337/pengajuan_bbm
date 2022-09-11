@@ -16,7 +16,7 @@ class ProfileRequest extends BaseRequest
     {
         return [
             'name' => 'required|min:3|max:255|regex:/^[a-z-A-Z_\s\.]*$/',
-            'email' => ['nullable', 'email', Rule::unique('users')->ignore($this->user->id)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($this->user->id)],
             'username' => ['required', 'min:3', 'max:255', Rule::unique('users')->ignore($this->user->id)]
         ];
     }

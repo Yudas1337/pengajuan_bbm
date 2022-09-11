@@ -2,15 +2,12 @@
 @section('content')
     <div class="container-fluid p-0">
 
-        <h1 class="h3 mb-3">Halaman data SPBU</h1>
+        <h1 class="h3 mb-3">Halaman data Pengguna Aktif</h1>
 
         <div class="row">
             <div class="col-12">
-
                 @if (session('success'))
                     <x-alert-success></x-alert-success>
-                @elseif(session('errors'))
-                    <x-alert-failed></x-alert-failed>
                 @endif
                 <div class="card">
                     <div class="card-body">
@@ -18,11 +15,10 @@
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Nomor</th>
-                                <th>Alamat</th>
-                                <th>Nama PIC</th>
-                                <th>Nomor PIC</th>
+                                <th>Nama Lengkap</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Jabatan</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -34,7 +30,7 @@
             </div>
         </div>
 
-        <x-delete-modal></x-delete-modal>
+        <x-user.inactivate-modal></x-user.inactivate-modal>
 
     </div>
 @endsection
@@ -45,7 +41,7 @@
             $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
-                let url = `{{ route('stations.destroy', ':id') }}`.replace(':id', id);
+                let url = `{{ route('users.destroy', ':id') }}`.replace(':id', id);
                 $('#deleteForm').attr('action', url);
             });
 
@@ -53,14 +49,13 @@
             $("#datatables-responsive").DataTable({
                 scrollX: true,
                 scrollY: '500px',
-                scrollCollapse: false,
                 paging: true,
                 pageLength: 100,
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 searching: true,
-                ajax: "{{ route('stations.index') }}",
+                ajax: "{{ route('users.index') }}",
                 columns: [
                     {
                         data: 'DT_RowIndex',
@@ -72,20 +67,17 @@
                         name: 'name'
                     },
                     {
-                        data: 'number',
-                        name: 'number'
+                        data: 'email',
+                        name: 'email'
                     },
                     {
-                        data: 'address',
-                        name: 'address'
+                        data: 'username',
+                        name: 'username'
                     },
                     {
-                        data: 'pic_name',
-                        name: 'pic_name'
-                    },
-                    {
-                        data: 'pic_phone',
-                        name: 'pic_phone'
+                        data: 'roles.name',
+                        name: 'roles.name',
+                        orderable: false
                     },
                     {
                         data: 'action',

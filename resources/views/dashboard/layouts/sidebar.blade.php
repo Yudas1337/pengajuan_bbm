@@ -71,7 +71,7 @@
                 Data Pengguna</span>
         </a>
         <ul id="users"
-            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('users.*') ? 'show' : '' }}"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('users.*') || request()->routeIs('user.inactive') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('users.create') ? 'active' : '' }}"><a
                     class="sidebar-link"
@@ -79,8 +79,11 @@
             </li>
             <li
                 class="sidebar-item {{ request()->routeIs('users.index') || request()->routeIs('users.edit') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('users.index') }}">List
-                    Data</a>
+                <a class="sidebar-link" href="{{ route('users.index') }}">Pengguna Aktif</a>
+            </li>
+            <li
+                class="sidebar-item {{ request()->routeIs('user.inactive') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('user.inactive') }}">Pengguna Nonaktif</a>
             </li>
         </ul>
     </li>

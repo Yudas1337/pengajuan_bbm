@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StationRequest;
 use App\Models\Station;
 use App\Services\StationService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -95,6 +96,7 @@ class StationController extends Controller
      *
      * @return RedirectResponse
      */
+
     public function destroy(Station $station): RedirectResponse
     {
         $destroy = $this->service->handleDeleteStation($station->id);
@@ -102,5 +104,20 @@ class StationController extends Controller
         if (!$destroy) return back()->with('errors', trans('alert.delete_constrained'));
 
         return back()->with('success', trans('alert.delete_success'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+
+    public function getAllWithAjax(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+            return $this->service->handleSelectAjaxStations($request);
+        }
     }
 }

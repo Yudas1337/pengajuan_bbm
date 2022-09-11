@@ -4,13 +4,19 @@ namespace App\Services;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\Users\StoreRequest;
+use App\Http\Requests\Users\UpdateRequest;
+use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Traits\YajraTable;
 
 class UserService
 {
-    private $repository;
+    use YajraTable;
 
-    function __construct(UserRepository $userRepository)
+    private UserRepository $repository;
+
+    public function __construct(UserRepository $userRepository)
     {
         $this->repository = $userRepository;
     }
@@ -18,9 +24,9 @@ class UserService
     /**
      * Update current user profile
      *
-     * @param  ProfileRequest $request
+     * @param ProfileRequest $request
      * @param mixed $id
-     * 
+     *
      * @return void
      */
 
@@ -32,8 +38,8 @@ class UserService
     /**
      * Update current user password
      *
-     * @param  ChangePasswordRequest $request
-     * 
+     * @param ChangePasswordRequest $request
+     *
      * @return void
      */
 
@@ -42,7 +48,101 @@ class UserService
         $validated = $request->validated();
 
         $this->repository->update(auth()->id(), [
-            'password'  => bcrypt($validated['password'])
+            'password' => bcrypt($validated['password'])
         ]);
+    }
+
+    /**
+     * Handle get all available users from UserRepository
+     *
+     * @return object|null
+     */
+
+    public function handleGetUser(): object|null
+    {
+        return $this->UserMockup($this->repository->getAll());
+    }
+
+    /**
+     * Handle get all inactive users from UserRepository
+     *
+     * @return object|null
+     */
+
+    public function handleGetInactiveUsers(): object|null
+    {
+        return $this->UserMockup($this->repository->getInactives());
+    }
+
+    /**
+     * Handle store user data from UserRepository
+     *
+     * @param StoreRequest $request
+     *
+     * @return void
+     */
+
+    public function handleStoreUser(StoreRequest $request): void
+    {
+        $validated = $request->validated();
+
+        $user = $this->repository->store([
+            'station_id' => $validated['station_id'] ?? null,
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password'])
+        ]);
+
+        $user->assignRole($validated['roles']);
+    }
+
+    /**
+     * Handle update specified user data from UserRepository
+     *
+     * @param UpdateRequest $request
+     * @param User $user
+     *
+     * @return void
+     */
+
+    public function handleUpdateUser(UpdateRequest $request, User $user): void
+    {
+        $validated = $request->validated();
+
+        $this->repository->update($user->id, [
+            'station_id' => $validated['station_id'] ?? null,
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email']
+        ]);
+
+        $user->syncRoles([$validated['roles']]);
+    }
+
+    /**
+     * Handle soft delete specified user data from UserRepository
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+
+    public function handleDeleteUser(string $id): void
+    {
+        $this->repository->destroy($id);
+    }
+
+    /**
+     * Handle activate specified user data from UserRepository
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+
+    public function handleActivateUser(string $id): void
+    {
+        $this->repository->restore($id);
     }
 }

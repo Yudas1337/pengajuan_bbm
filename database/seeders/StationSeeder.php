@@ -12,10 +12,11 @@ class StationSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         Station::factory()
-            ->count(10000)
+            ->count(1000)
             ->create();
     }
 }
