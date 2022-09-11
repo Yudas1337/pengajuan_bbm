@@ -6,12 +6,13 @@ use App\Models\User;
 use Faker\Provider\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
-use UserStatusEnum;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class UsersImport implements ToModel
+class UsersImport implements ToModel, WithBatchInserts, WithChunkReading
 {
     /**
-     * @param array $r 'id
+     * @param array $row
      *
      * @return Model|null
      */
@@ -26,5 +27,15 @@ class UsersImport implements ToModel
             'password' => bcrypt($row['password']),
             'status' => UserStatusEnum::USER_ACTIVE->value
         ]);
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
+    }
+
+    public function chunkSize(): int
+    {
+        return 50;
     }
 }
