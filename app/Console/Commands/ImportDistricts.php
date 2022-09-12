@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\District;
+use App\Models\Province;
+use App\Models\Regency;
 use App\Models\Village;
 use Illuminate\Console\Command;
 
@@ -32,6 +34,40 @@ class ImportDistricts extends Command
         $i = 1;
         $start_villages = 352501;
         $end_villages = 352518;
+        $province_id = 35; // jawa timur
+        $regency_id = 3525; // gresik
+
+        $provinces = file_get_contents(base_path() . "/imports/provinces/data.json");
+
+        $decodes = json_decode($provinces);
+        foreach ($decodes as $decode) {
+            Province::updateOrCreate(
+                ['id' => $decode->id],
+                [
+                    'id' => $decode->id,
+                    'name' => $decode->nama
+                ]
+            );
+            echo "($i) data provinsi berhasil di import \n";
+            $i++;
+        }
+
+        $regencies = file_get_contents(base_path() . "/imports/regencies/data.json");
+
+        $decodes = json_decode($regencies);
+
+        foreach ($decodes as $decode) {
+            Regency::updateOrCreate(
+                ['id' => $decode->id],
+                [
+                    'id' => $decode->id,
+                    'province_id' => $province_id,
+                    'name' => $decode->nama
+                ]
+            );
+            echo "($i) data kabupaten berhasil di import \n";
+            $i++;
+        }
 
         $districts = file_get_contents(base_path() . "/imports/districts/data.json");
 
@@ -41,10 +77,11 @@ class ImportDistricts extends Command
                 ['id' => $decode->id],
                 [
                     'id' => $decode->id,
+                    'regency_id' => $regency_id,
                     'name' => $decode->nama
                 ]
             );
-            echo "($i) data berhasil  import \n";
+            echo "($i) data kecamatan berhasil di import \n";
             $i++;
         }
 
@@ -60,7 +97,7 @@ class ImportDistricts extends Command
                         'name' => $decode->nama
                     ]
                 );
-                echo "($i) data berhasil  import \n";
+                echo "($i) data kelurahan/desa berhasil di import \n";
             }
 
         }
