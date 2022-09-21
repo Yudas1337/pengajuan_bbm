@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\{DashboardController,
+    DistrictController,
     ProfileController,
     StationController,
     SubmissionController,
@@ -48,10 +49,20 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     Route::name('stations.')->prefix('station')->group(function () {
         Route::get('getStationsWithAjax', [StationController::class, 'getAllWithAjax'])->name('performAjax');
     });
-    Route::resource('stations', StationController::class)->except('show');
-    Route::resource('users', UserController::class)->except('show');
+    Route::name('districts.')->prefix('district')->group(function () {
+        Route::get('villages/{district}', [DistrictController::class, 'getAllVillages'])->name('villages');
+    });
     Route::resources([
-        'submissions' => SubmissionController::class
-    ]);
+        'stations' => StationController::class,
+        'users' => UserController::class
+    ], ['except' => ['show']]);
+    Route::resource('submissions', SubmissionController::class);
+    Route::name('submission.')->group(function () {
+        Route::get('create-submission/{id}', [SubmissionController::class, 'createForm'])->name('createForm');
+        Route::post('excel-upload', [SubmissionController::class, 'uploadExcelToServer'])->name('excelUpload');
+        Route::get('receiver/{id}', [SubmissionController::class, 'getReceiverBySubmission'])->name('receiver');
+        Route::post('receivers-upload', [SubmissionController::class, 'storeReceivers'])->name('receiverUpload');
+    });
+
 });
 

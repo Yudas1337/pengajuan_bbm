@@ -26,6 +26,17 @@ class StationRepository extends BaseRepository
     /**
      * Handle the Get all data event from models.
      *
+     * @return mixed
+     */
+
+    public function getAllStations(): mixed
+    {
+        return $this->model->all();
+    }
+
+    /**
+     * Handle the Get all data event from models.
+     *
      * @param mixed $search
      * @param int $offset
      * @param int $results

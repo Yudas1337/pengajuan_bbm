@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Station;
+use App\Models\Submission;
 use App\Models\User;
 use App\Observers\StationObserver;
+use App\Observers\SubmissionObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -32,6 +34,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Station::observe(StationObserver::class);
         User::observe(UserObserver::class);
+        Submission::observe(SubmissionObserver::class);
     }
 
     /**

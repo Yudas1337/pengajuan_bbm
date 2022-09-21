@@ -56,6 +56,17 @@ class StationService
      * @return object|null
      */
 
+    public function handleGetAllStations(): object|null
+    {
+        return $this->repository->getAllStations();
+    }
+
+    /**
+     * Get all stations from StationRepository with yajra table
+     *
+     * @return object|null
+     */
+
     public function handleGetStations(): object|null
     {
         return $this->StationMockup($this->repository->getAll());

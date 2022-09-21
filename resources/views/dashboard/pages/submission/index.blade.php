@@ -7,24 +7,19 @@
         <div class="row">
             <div class="col-12">
                 @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        <div class="alert-message">
-                            <strong>Sukses!</strong> {{ session('success') }}
-                        </div>
-                    </div>
+                    <x-alert-success></x-alert-success>
                 @endif
                 <div class="card">
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
                             <tr>
-                                <th>No Registrasi</th>
-                                <th>Kapal</th>
-                                <th>Berangkat dari</th>
-                                <th>Tujuan</th>
-                                <th>Waktu Berangkat</th>
-                                <th>Waktu Tiba</th>
+                                <th>No</th>
+                                <th>Nama Kelompok</th>
+                                <th>Ketua Kelompok</th>
+                                <th>Nomor Surat Pengajuan</th>
+                                <th>Tanggal Surat Pengajuan</th>
+                                <th>Status Pengajuan</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -69,48 +64,46 @@
             $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
-                let url = `{{ route('shippings.destroy', ':id') }}`.replace(':id', id);
+                let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
                 $('#deleteForm').attr('action', url);
             });
 
             // Datatables Responsive
             $("#datatables-reponsive").DataTable({
-                button: [{
-                    extend: 'pdf'
-                }],
                 scrollX: true,
                 scrollY: '500px',
-                scrollCollapse: true,
                 paging: true,
                 pageLength: 100,
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 searching: true,
-                ajax: "{{ route('shippings.index') }}",
-                columns: [{
-                    data: 'shipping_license',
-                    name: 'shipping_license'
-                },
+                ajax: "{{ route('submissions.index') }}",
+                columns: [
                     {
-                        data: 'ship.name',
-                        name: 'ship.name'
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
                     },
                     {
-                        data: 'harbor_departure_from.name',
-                        name: 'harbor_departure_from.name'
+                        data: 'group_name',
+                        name: 'group_name'
                     },
                     {
-                        data: 'harbor_port_destination.name',
-                        name: 'harbor_port_destination.name'
+                        data: 'group_leader',
+                        name: 'group_leader'
                     },
                     {
-                        data: 'depart_time',
-                        name: 'depart_time'
+                        data: 'letter_number',
+                        name: 'letter_number'
                     },
                     {
-                        data: 'arrived_time',
-                        name: 'arrived_time'
+                        data: 'date',
+                        name: 'date'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         data: 'action',
