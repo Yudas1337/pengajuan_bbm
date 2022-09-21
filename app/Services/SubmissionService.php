@@ -156,7 +156,7 @@ class SubmissionService
     {
         $data = $request->validated();
         $submission_id = $data['submission_id'];
-        $store_submission = $this->repository->store($data);
+        $store_submission = $this->repository->storeOrUpdate($data);
 
         $oldData = $this->repository->show($submission_id);
         $uploaded_file = $request->file('letter_file');
