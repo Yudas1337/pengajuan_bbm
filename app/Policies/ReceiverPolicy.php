@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SubmissionPolicy
+class ReceiverPolicy
 {
     use HandlesAuthorization;
 
@@ -13,24 +13,23 @@ class SubmissionPolicy
      * Determine whether the user can view any models.
      *
      * @param User $user
-     *
      * @return bool
      */
-
     public function viewAny(User $user): bool
     {
-        return $user->can('view-letter-of-recommendation');
+        return $user->can('view-receiver');
     }
 
     /**
      * Determine whether the user can create models.
      *
      * @param User $user
+     *
      * @return bool
      */
     public function create(User $user): bool
     {
-        return $user->can('submit-letter-of-recommendation');
+        return $user->can('create-receiver');
     }
 
     /**
@@ -42,7 +41,7 @@ class SubmissionPolicy
      */
     public function update(User $user): bool
     {
-        return $user->can('update-letter-of-recommendation');
+        return $user->can('update-receiver');
     }
 
     /**
@@ -54,6 +53,6 @@ class SubmissionPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->can('delete-letter-of-recommendation');
+        return $user->can('delete-receiver');
     }
 }

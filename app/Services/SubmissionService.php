@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Http\Requests\ExcelSubmissionRequest;
 use App\Http\Requests\SubmissionRequest;
+use App\Http\Requests\SubmissionUpdateRequest;
 use App\Imports\UsersImport;
 use App\Repositories\SubmissionRepository;
 use App\Traits\YajraTable;
 use Faker\Provider\Uuid;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,6 +23,37 @@ class SubmissionService
     public function __construct(SubmissionRepository $submissionRepository)
     {
         $this->repository = $submissionRepository;
+    }
+
+    /**
+     * Get all submissions for select2 with ajax from SubmissionRepository
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+
+    public function handleSelectAjaxSubmission(Request $request): JsonResponse
+    {
+        $page = $request->page;
+        $search = $request->term;
+
+        $resultCount = 25;
+
+        $offset = ($page - 1) * $resultCount;
+
+        $results = $this->repository->searchAjaxSubmissions($search, $offset, $resultCount);
+
+        $morePages = ($offset + $resultCount) < $this->repository->countAll();
+
+        $results = array(
+            "results" => $results,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
     }
 
     /**
@@ -164,10 +197,64 @@ class SubmissionService
         if ($oldData->letter_file && $uploaded_file) {
             Storage::delete('public/' . $oldData->letter_file);
         }
+
         $filename = $uploaded_file->store('letter_file', 'public');
 
         $store_submission->update([
             'letter_file' => $filename
         ]);
     }
+
+    /**
+     * Handle the process update submission to SubmissionRepository
+     *
+     * @param SubmissionUpdateRequest $request
+     *
+     * @return void
+     */
+
+    public function handleUpdateSubmission(SubmissionUpdateRequest $request): void
+    {
+        $data = $request->validated();
+        $submission_id = $data['submission_id'];
+        $store_submission = $this->repository->storeOrUpdate($data);
+
+        $oldData = $this->repository->show($submission_id);
+
+        if ($request->hasFile('letter_file')) {
+            $uploaded_file = $request->file('letter_file');
+            if ($oldData->letter_file && $uploaded_file) {
+                Storage::delete('public/' . $oldData->letter_file);
+            }
+            $filename = $uploaded_file->store('letter_file', 'public');
+            $store_submission->update([
+                'letter_file' => $filename
+            ]);
+        }
+    }
+
+    /**
+     * Handle the process to get trashed submission to SubmissionRepository
+     *
+     * @return object|null
+     */
+
+    public function handleTrashedSubmission(): object|null
+    {
+        return $this->TrashedSubmissionMockup($this->repository->getTrashedSubmission());
+    }
+
+    /**
+     * Handle the process to restore submission by given id to SubmissionRepository
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+
+    public function handleRestoreSubmission(string $id): void
+    {
+        $this->repository->restoreSubmission($id);
+    }
+
 }

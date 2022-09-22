@@ -19,10 +19,12 @@ return new class extends Migration {
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->char('district_id', 20)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->softDeletes();
+            $table->foreign('district_id')->references('id')->on('districts');
             $table->timestamps();
         });
     }

@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Receiver;
 use App\Models\Station;
+use App\Models\Submission;
 use App\Models\User;
+use App\Policies\ReceiverPolicy;
 use App\Policies\StationPolicy;
+use App\Policies\SubmissionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -18,7 +22,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Station::class => StationPolicy::class,
-        User::class => UserPolicy::class
+        User::class => UserPolicy::class,
+        Submission::class => SubmissionPolicy::class,
+        Receiver::class => ReceiverPolicy::class
     ];
 
     /**

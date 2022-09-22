@@ -19,7 +19,6 @@
                                 <th>Ketua Kelompok</th>
                                 <th>Nomor Surat Pengajuan</th>
                                 <th>Tanggal Surat Pengajuan</th>
-                                <th>Status Pengajuan</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -31,7 +30,29 @@
             </div>
         </div>
 
-        <x-delete-modal></x-delete-modal>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi Aktivasi Pengajuan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" id="deleteForm" method="POST">
+                        @csrf
+                        @method('POST')
+                        <div class="modal-body m-3">
+                            <p class="mb-0">Apa anda yakin ingin aktivasi ulang data? data pengajuan akan diaktifkan
+                                kembali</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Aktivasi Pengajuan</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- END primary modal -->
 
     </div>
 @endsection
@@ -42,21 +63,21 @@
             $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
-                let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
+                let url = `{{ route('submission.restore', ':id') }}`.replace(':id', id);
                 $('#deleteForm').attr('action', url);
             });
 
             // Datatables Responsive
             $("#datatables-reponsive").DataTable({
                 scrollX: true,
-                scrollY: '500px',
+                scrollY: '300px',
                 paging: true,
                 pageLength: 100,
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 searching: true,
-                ajax: "{{ route('submissions.index') }}",
+                ajax: "{{ route('submission.trashed') }}",
                 columns: [
                     {
                         data: 'DT_RowIndex',
@@ -78,10 +99,6 @@
                     {
                         data: 'date',
                         name: 'date'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status'
                     },
                     {
                         data: 'action',

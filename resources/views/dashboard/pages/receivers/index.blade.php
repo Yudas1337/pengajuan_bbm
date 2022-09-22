@@ -2,26 +2,31 @@
 @section('content')
     <div class="container-fluid p-0">
 
-        <h1 class="h3 mb-3">Halaman data Pengajuan</h1>
+        <h1 class="h3 mb-3">Halaman data Penerima Bantuan</h1>
 
         <div class="row">
             <div class="col-12">
+
                 @if (session('success'))
                     <x-alert-success></x-alert-success>
+                @elseif(session('errors'))
+                    <x-alert-failed></x-alert-failed>
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatables-reponsive" class="table table-striped" style="width:100%">
+                        <table id="datatables-responsive" class="table table-striped" style="width:100%">
                             <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Kelompok</th>
-                                <th>Ketua Kelompok</th>
-                                <th>Nomor Surat Pengajuan</th>
-                                <th>Tanggal Surat Pengajuan</th>
-                                <th>Status Pengajuan</th>
-                                <th>Aksi</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>NIK</th>
+                                    <th>Tipe</th>
+                                    <th>Profesi</th>
+                                    <th>Status</th>
+                                    <th>Valid Sejak</th>
+                                    <th>Valid Sampai</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -37,51 +42,59 @@
 @endsection
 @section('footer')
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-            $(document).on('click', '.delete', function () {
+            $(document).on('click', '.delete', function() {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
-                let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
+                let url = `{{ route('receivers.destroy', ':id') }}`.replace(':id', id);
                 $('#deleteForm').attr('action', url);
             });
 
             // Datatables Responsive
-            $("#datatables-reponsive").DataTable({
+            $("#datatables-responsive").DataTable({
                 scrollX: true,
                 scrollY: '500px',
+                scrollCollapse: false,
                 paging: true,
                 pageLength: 100,
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 searching: true,
-                ajax: "{{ route('submissions.index') }}",
-                columns: [
-                    {
+                ajax: "{{ route('receivers.index') }}",
+                columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: 'group_name',
-                        name: 'group_name'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'group_leader',
-                        name: 'group_leader'
+                        data: 'national_identity_number',
+                        name: 'national_identity_number'
                     },
                     {
-                        data: 'letter_number',
-                        name: 'letter_number'
+                        data: 'receiver_type',
+                        name: 'receiver_type'
                     },
                     {
-                        data: 'date',
-                        name: 'date'
+                        data: 'profession',
+                        name: 'profession'
                     },
                     {
                         data: 'status',
                         name: 'status'
+                    },
+                    {
+                        data: 'valid_from',
+                        name: 'valid_from'
+                    },
+                    {
+                        data: 'valid_until',
+                        name: 'valid_until'
                     },
                     {
                         data: 'action',

@@ -22,7 +22,8 @@ class StoreRequest extends BaseRequest
             'station_id' => 'nullable|exists:stations,id',
             'username' => ['required', 'min:3', 'max:255', Rule::unique('users')->ignore($this->user)],
             'password' => 'required|min:6',
-            'roles' => 'required'
+            'roles' => 'required',
+            'district_id' => 'nullable|exists:districts,id'
         ];
     }
 }

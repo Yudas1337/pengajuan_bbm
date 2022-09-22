@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExcelSubmissionRequest;
 use App\Http\Requests\SubmissionRequest;
+use App\Http\Requests\SubmissionUpdateRequest;
 use App\Models\Submission;
 use App\Services\DistrictService;
 use App\Services\StationService;
@@ -23,9 +24,25 @@ class SubmissionController extends Controller
 
     public function __construct(SubmissionService $submissionService, StationService $stationService, DistrictService $districtService)
     {
+        $this->authorizeResource(Submission::class);
         $this->submissionService = $submissionService;
         $this->stationService = $stationService;
         $this->districtService = $districtService;
+    }
+
+    /**
+     * Get all submission data with ajax
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+
+    public function getAllWithAjax(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+            return $this->submissionService->handleSelectAjaxSubmission($request);
+        }
     }
 
     /**
@@ -63,6 +80,8 @@ class SubmissionController extends Controller
 
     public function createForm(string $submission_id): View
     {
+        $this->authorize('submit-letter-of-recommendation');
+
         $this->submissionService->handleShowSubmission($submission_id);
         $datas = [
             'stations' => $this->stationService->handleGetAllStations(),
@@ -71,17 +90,6 @@ class SubmissionController extends Controller
         ];
 
         return view('dashboard.pages.submission.create', $datas);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -94,25 +102,35 @@ class SubmissionController extends Controller
 
     public function edit(Submission $submission): View
     {
+        $id = $submission->id;
         $datas = [
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
-            'id' => $submission->id
+            'id' => $id,
+            'submission' => $this->submissionService->handleShowSubmission($id)
         ];
 
-        return view('dashboard.pages.submission.create', $datas);
+        return view('dashboard.pages.submission.edit', $datas);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
-     * @return Response
+     * @param SubmissionUpdateRequest $request
+     *
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+
+    public function updateSubmission(SubmissionUpdateRequest $request): JsonResponse
     {
-        //
+        $this->submissionService->handleUpdateSubmission($request);
+
+        session()->flash('success', trans('alert.update_success'));
+
+        return response()->json([
+            'success' => true,
+            'message' => trans('alert.update_success')
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -127,9 +145,9 @@ class SubmissionController extends Controller
     {
         $data = $this->submissionService->handleDeleteSubmission($submission->id);
 
-        if ($data) return back()->with('success', 'Berhasil menghapus pengajuan');
+        if ($data) return back()->with('success', trans('alert.delete_success'));
 
-        return back()->with('error', 'Data pengajuan sedang digunakan');
+        return back()->with('error', trans('alert.delete_constrained'));
     }
 
     /**
@@ -142,6 +160,7 @@ class SubmissionController extends Controller
 
     public function uploadExcelToServer(ExcelSubmissionRequest $request): void
     {
+        $this->authorize('submit-letter-of-recommendation');
         $this->submissionService->handleUploadExcel($request);
         $this->submissionService->insertExcelData($request);
     }
@@ -156,6 +175,8 @@ class SubmissionController extends Controller
 
     public function getReceiverBySubmission(string $id): mixed
     {
+        $this->authorize('submit-letter-of-recommendation');
+
         return $this->submissionService->handleGetReceiver($id);
     }
 
@@ -171,11 +192,11 @@ class SubmissionController extends Controller
     {
         $this->submissionService->handleStoreSubmission($request);
 
-        session()->flash('success', 'berhasil menambahkan data pengajuan');
+        session()->flash('success', trans('alert.add_success'));
 
         return response()->json([
             'success' => true,
-            'message' => 'Berhasil Simpan perubahan data'
+            'message' => trans('alert.data_change_success')
         ], Response::HTTP_CREATED);
     }
 
@@ -185,13 +206,64 @@ class SubmissionController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
+
     public function storeReceivers(Request $request): JsonResponse
     {
+        $this->authorize('submit-letter-of-recommendation');
+
         $this->submissionService->handleStoreReceivers($request);
 
         return response()->json([
             'success' => true,
-            'message' => 'Berhasil Simpan perubahan data'
+            'message' => trans('alert.data_change_success')
         ], Response::HTTP_CREATED);
+    }
+
+    public function verified(Request $request): View
+    {
+        $this->authorize('validate-letter-of-recommendation');
+
+        return view('dashboard.pages.submission.verified');
+
+    }
+
+    public function unverified(Request $request): View
+    {
+        $this->authorize('validate-letter-of-recommendation');
+
+        return view('dashboard.pages.submission.unverified');
+    }
+
+    /**
+     * show trashed submissions resource in storage.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+
+    public function trashedSubmission(Request $request): mixed
+    {
+        $this->authorize('restore-letter-of-recommendation');
+
+        if ($request->ajax()) return $this->submissionService->handleTrashedSubmission();
+
+        return view('dashboard.pages.submission.trashed');
+    }
+
+    /**
+     * Restore trashed submission by given specified id.
+     *
+     * @param string $id
+     *
+     * @return RedirectResponse
+     */
+
+    public function restoreSubmission(string $id): RedirectResponse
+    {
+        $this->authorize('restore-letter-of-recommendation');
+
+        $this->submissionService->handleRestoreSubmission($id);
+
+        return to_route('submissions.index')->with('success', trans('alert.submission_restore_success'));
     }
 }

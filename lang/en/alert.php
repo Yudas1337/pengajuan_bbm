@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'data_change_success' => 'Berhasil Simpan perubahan data',
     'add_success' => 'Berhasil menambahkan data',
     'add_failed' => 'Gagal menambahkan data',
     'update_success' => 'Berhasil memperbarui data',
@@ -23,5 +24,6 @@ return [
     'user_soft_delete_success' => 'Berhasil menonaktifkan pengguna',
     'user_soft_delete_failed' => 'Gagal menonaktifkan pengguna',
     'user_restore_success' => 'Berhasil mengaktifkan pengguna',
-    'user_restore_failed' => 'Gagal mengaktikan pengguna'
+    'user_restore_failed' => 'Gagal mengaktikan pengguna',
+    'submission_restore_success' => 'Berhasil mengatifkan pengajuan'
 ];

@@ -91,7 +91,8 @@ class UserService
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
-            'password' => bcrypt($validated['password'])
+            'password' => bcrypt($validated['password']),
+            'district_id' => $validated['district_id'] ?? null
         ]);
 
         $user->assignRole($validated['roles']);
@@ -114,7 +115,8 @@ class UserService
             'station_id' => $validated['station_id'] ?? null,
             'name' => $validated['name'],
             'username' => $validated['username'],
-            'email' => $validated['email']
+            'email' => $validated['email'],
+            'district_id' => $validated['district_id'] ?? null
         ]);
 
         $user->syncRoles([$validated['roles']]);

@@ -24,8 +24,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'view-letter-of-recommendation']);
         Permission::create(['name' => 'update-letter-of-recommendation']);
         Permission::create(['name' => 'delete-letter-of-recommendation']);
+        Permission::create(['name' => 'restore-letter-of-recommendation']);
         Permission::create(['name' => 'validate-letter-of-recommendation']);
-
 
         // Petugas pelayanan
         Permission::create(['name' => 'view-station']);
@@ -45,23 +45,33 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'update-receiver']);
         Permission::create(['name' => 'delete-receiver']);
 
-
-        // Penyuluh
-        Role::create(['name' => 'Penyuluh'])->givePermissionTo(Permission::all());
-
-        // Ketua Kelompok
-        Role::create(['name' => 'Ketua Kelompok'])->givePermissionTo([
-            'submit-letter-of-recommendation', 'view-letter-of-recommendation', 'update-letter-of-recommendation',
-            'delete-letter-of-recommendation'
-        ]);
-
-        // Kepala Desa
-        Role::create(['name' => 'Kepala Desa'])->givePermissionTo(Permission::all());
+        Permission::create(['name' => 'approve-letter']);
+        Permission::create(['name' => 'provide-letter-signature']);
 
         // Petugas Pelayanan
         Role::create(['name' => 'Petugas Pelayanan'])->givePermissionTo(Permission::all());
 
+        // Penyuluh
+        Role::create(['name' => 'Penyuluh'])->givePermissionTo([
+            'submit-letter-of-recommendation', 'view-letter-of-recommendation', 'update-letter-of-recommendation',
+            'delete-letter-of-recommendation', 'restore-letter-of-recommendation'
+        ]);
+
+        // Ketua Kelompok
+        Role::create(['name' => 'Ketua Kelompok'])->givePermissionTo([
+            'submit-letter-of-recommendation', 'view-letter-of-recommendation', 'update-letter-of-recommendation',
+            'delete-letter-of-recommendation', 'restore-letter-of-recommendation'
+        ]);
+
+        // Kepala Desa
+        Role::create(['name' => 'Kepala Desa'])->givePermissionTo([
+            'approve-letter'
+        ]);
+
+
         // Kepala Dinas
-        Role::create(['name' => 'Kepala Dinas'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'Kepala Dinas'])->givePermissionTo([
+            'provide-letter-signature'
+        ]);
     }
 }

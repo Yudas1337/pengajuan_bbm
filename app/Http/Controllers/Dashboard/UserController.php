@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Models\User;
+use App\Services\DistrictService;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,11 +16,13 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     private UserService $service;
+    private DistrictService $districtService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, DistrictService $districtService)
     {
         $this->authorizeResource(User::class);
         $this->service = $userService;
+        $this->districtService = $districtService;
     }
 
     /**
@@ -62,7 +65,8 @@ class UserController extends Controller
     public function create(): View
     {
         $roles = Role::all();
-        return view('dashboard.pages.user.create', compact('roles'));
+        $districts = $this->districtService->handleGetAllDistricts();
+        return view('dashboard.pages.user.create', compact('roles', 'districts'));
     }
 
     /**
@@ -106,7 +110,8 @@ class UserController extends Controller
     public function edit(User $user): View
     {
         $roles = Role::all();
-        return view('dashboard.pages.user.edit', compact('user', 'roles'));
+        $districts = $this->districtService->handleGetAllDistricts();
+        return view('dashboard.pages.user.edit', compact('user', 'roles', 'districts'));
     }
 
     /**

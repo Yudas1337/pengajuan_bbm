@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Receiver;
 use App\Models\Submission;
 use App\Models\SubmissionReceiver;
+use Illuminate\Support\Facades\DB;
 
 class SubmissionRepository extends BaseRepository
 {
@@ -28,7 +29,8 @@ class SubmissionRepository extends BaseRepository
     public function getAll(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date', 'status');
+            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date', 'status')
+            ->where('created_by', auth()->id());
     }
 
     /**
@@ -111,4 +113,67 @@ class SubmissionRepository extends BaseRepository
             'name' => $data['name'], 'national_identity_number' => $data['nik']
         ]);
     }
+
+    /**
+     * Handle Get all trashed submissions from Submission Model
+     *
+     * @return object|null
+     */
+
+    public function getTrashedSubmission(): mixed
+    {
+        return $this->trashed();
+    }
+
+    /**
+     * Handle get trashed submission instantly from models.
+     *
+     * @return mixed
+     */
+
+    public function trashed(): mixed
+    {
+        return $this->model->query()
+            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date')
+            ->where('created_by', auth()->id())
+            ->onlyTrashed();
+    }
+
+    /**
+     * Handle restore submission by given id instantly from models.
+     *
+     * @param string $id
+     *
+     * @return mixed
+     */
+
+    public function restoreSubmission(string $id): mixed
+    {
+        return $this->model->query()
+            ->onlyTrashed()
+            ->where('id', $id)->restore();
+    }
+
+    /**
+     * Handle the Get all data event from models.
+     *
+     * @param mixed $search
+     * @param int $offset
+     * @param int $results
+     *
+     * @return object
+     */
+
+    public function searchAjaxSubmissions(mixed $search, int $offset, int $results): object
+    {
+        return $this->model->query()
+            ->when($search, function ($query) use ($search) {
+                return $query->whereLike('group_name', $search);
+            })
+            ->orderBy('group_name')
+            ->skip($offset)
+            ->take($results)
+            ->get(['id', DB::raw("CONCAT(group_name, ' - ', group_leader) as text")]);
+    }
+
 }

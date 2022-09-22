@@ -3,6 +3,8 @@
 use App\Http\Controllers\Dashboard\{DashboardController,
     DistrictController,
     ProfileController,
+    ProvinceController,
+    ReceiverController,
     StationController,
     SubmissionController,
     UserController};
@@ -49,6 +51,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     Route::name('stations.')->prefix('station')->group(function () {
         Route::get('getStationsWithAjax', [StationController::class, 'getAllWithAjax'])->name('performAjax');
     });
+    Route::name('provinces.')->prefix('province')->group(function () {
+        Route::get('regencies/{province}', [ProvinceController::class, 'getAllRegencies'])->name('regencies');
+    });
     Route::name('districts.')->prefix('district')->group(function () {
         Route::get('villages/{district}', [DistrictController::class, 'getAllVillages'])->name('villages');
     });
@@ -56,13 +61,21 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         'stations' => StationController::class,
         'users' => UserController::class
     ], ['except' => ['show']]);
-    Route::resource('submissions', SubmissionController::class);
+    Route::resource('submissions', SubmissionController::class)->except('update');
+    Route::resource('receivers', ReceiverController::class)->except('show');
+
     Route::name('submission.')->group(function () {
+        Route::post('update-submission', [SubmissionController::class, 'updateSubmission'])->name('updateSubmission');
         Route::get('create-submission/{id}', [SubmissionController::class, 'createForm'])->name('createForm');
         Route::post('excel-upload', [SubmissionController::class, 'uploadExcelToServer'])->name('excelUpload');
         Route::get('receiver/{id}', [SubmissionController::class, 'getReceiverBySubmission'])->name('receiver');
         Route::post('receivers-upload', [SubmissionController::class, 'storeReceivers'])->name('receiverUpload');
+        Route::get('getSubmissionWithAjax', [SubmissionController::class, 'getAllWithAjax'])->name('performAjax');
+        Route::prefix('submission')->group(function () {
+            Route::get('unverified', [SubmissionController::class, 'unverified'])->name('unverified');
+            Route::get('verified', [SubmissionController::class, 'verified'])->name('verified');
+            Route::get('trashed', [SubmissionController::class, 'trashedSubmission'])->name('trashed');
+            Route::post('restore/{id}', [SubmissionController::class, 'restoreSubmission'])->name('restore');
+        });
     });
-
 });
-

@@ -34,9 +34,8 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="select-ships" class="form-label">Alamat SPBU <small
-                                    class="text-danger">*</small></label>
-                            <select id="select-ships" name="station_id" required class="form-control select2-ajax">
+                            <label for="select-ships" class="form-label">Alamat SPBU</label>
+                            <select id="select-ships" name="station_id" class="form-control select2-ajax">
                                 <option value="">--Pilih SPBU--</option>
                             </select>
                             @error('station_id')
@@ -75,13 +74,27 @@
                             <select id="select-roles" name="roles" class="form-control" required>
                                 <option value="">--Pilih Jabatan--</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->name  }}">{{ $role->name  }}</option>
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
                             @error('roles')
                             <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
                             </span>
+                            @enderror
+                        </div>
+                        <div id="container-districts" class="mb-3 col-md-12" style="display: none">
+                            <label class="form-label">Lokasi Kecamatan<small class="text-danger">*</small> </label>
+                            <select id="select-districts" name="district_id" class="form-control select-districts">
+                                <option value="">--Pilih Kecamatan--</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('district_id')
+                            <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -98,6 +111,15 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#select-roles').change(() => {
+                const roles = $('#select-roles').val()
+                if (roles === 'Penyuluh') {
+                    $('#container-districts').css('display', 'block')
+                } else {
+                    $('#container-districts').css('display', 'none')
+                }
+            })
+            $('.select-districts').select2()
             $('.select2-ajax').select2({
                 ajax: {
                     url: `{{ route('stations.performAjax') }}`,

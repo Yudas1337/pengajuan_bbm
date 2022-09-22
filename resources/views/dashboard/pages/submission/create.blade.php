@@ -578,52 +578,6 @@
                 })
             })
 
-            // Initialize validation
-            let $validationForm = $("#smartwizard-validation")
-            $validationForm.validate({
-                errorPlacement: function errorPlacement(error, element) {
-                    $(element).parents(".error-placeholder").append(
-                        error.addClass("invalid-feedback small d-block")
-                    )
-                },
-                highlight: function (element) {
-                    $(element).addClass("is-invalid");
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass("is-invalid");
-                },
-                rules: {
-                    "wizard-confirm": {
-                        equalTo: "input[name=\"wizard-password\"]"
-                    }
-                }
-            });
-            $validationForm
-                .smartWizard({
-                    autoAdjustHeight: false,
-                    backButtonSupport: false,
-                    useURLhash: false,
-                    showStepURLhash: false,
-                    toolbarSettings: {
-                        toolbarExtraButtons: [$(
-                            "<button class=\"btn btn-submit btn-primary\" type=\"button\">Finish</button>"
-                        )]
-                    }
-                })
-                .on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
-                    if (stepDirection === 1) {
-                        return $validationForm.valid();
-                    }
-                    return true;
-                });
-            $validationForm.find(".btn-submit").on("click", function () {
-                if (!$validationForm.valid()) {
-                    return;
-                }
-                alert("Great! The form is valid and ready to submit.");
-                return false;
-            });
-
 
         });
     </script>
