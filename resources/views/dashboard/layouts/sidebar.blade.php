@@ -26,11 +26,11 @@
             </li>
             <li
                 class="sidebar-item {{ request()->routeIs('submissions.index') || request()->routeIs('submissions.edit') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('submissions.index') }}">List
-                    Data</a>
+                <a class="sidebar-link" href="{{ route('submissions.index') }}">Pengajuan Saya</a>
             </li>
             @can('validate-letter-of-recommendation')
-                <li class="sidebar-item {{ request()->routeIs('submission.verified') ? 'active' : '' }}">
+                <li
+                    class="sidebar-item {{ request()->routeIs('submission.verified') || request()->routeIs('submission.verified_detail') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('submission.verified') }}">Terverifikasi</a>
                 </li>
                 <li class="sidebar-item {{ request()->routeIs('submission.unverified') ? 'active' : '' }}">
@@ -38,8 +38,7 @@
                 </li>
             @endcan
             @can('restore-letter-of-recommendation')
-                <li
-                    class="sidebar-item {{ request()->routeIs('submission.trashed') ? 'active' : '' }}">
+                <li class="sidebar-item {{ request()->routeIs('submission.trashed') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('submission.trashed') }}">Riwayat Penghapusan</a>
                 </li>
             @endcan
@@ -61,7 +60,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('stations.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('stations.create') ? 'active' : '' }}"><a class="sidebar-link"
-                                                                                                    href="{{ route('stations.create') }}">Tambah
+                    href="{{ route('stations.create') }}">Tambah
                     Data</a>
             </li>
             <li
@@ -85,8 +84,7 @@
         <ul id="receivers"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('receivers.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
-            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a
-                    class="sidebar-link"
+            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a class="sidebar-link"
                     href="{{ route('receivers.create') }}">Tambah Data</a>
             </li>
             <li
@@ -110,7 +108,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('users.*') || request()->routeIs('user.inactive') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('users.create') ? 'active' : '' }}"><a class="sidebar-link"
-                                                                                                 href="{{ route('users.create') }}">Tambah
+                    href="{{ route('users.create') }}">Tambah
                     Data</a>
             </li>
             <li

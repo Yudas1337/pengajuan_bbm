@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Receiver;
 use App\Models\Submission;
 use App\Models\SubmissionReceiver;
-use Illuminate\Support\Facades\DB;
 
 class SubmissionRepository extends BaseRepository
 {
@@ -29,8 +28,9 @@ class SubmissionRepository extends BaseRepository
     public function getAll(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date', 'status')
-            ->where('created_by', auth()->id());
+            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->author()
+            ->latest();
     }
 
     /**
@@ -52,34 +52,11 @@ class SubmissionRepository extends BaseRepository
     }
 
     /**
-     * Handle the Get all data event from models.
-     *
-     * @param string $submission_id
-     *
-     * @return void
-     */
-
-    public function truncateReceiverData(string $submission_id): void
-    {
-        $receiver = $this->model->query()
-            ->select('id')
-            ->with('submission_receivers', function ($q) {
-                return $q->select('submission_id', 'receiver_id')->get();
-            })->findOrFail($submission_id);
-
-        $receiver->submission_receivers()->each(function ($item) {
-            $tmp = $item->receiver_id;
-            $item->delete();
-            $this->receiver->findOrFail($tmp)->delete();
-        });
-    }
-
-    /**
      * Handle the Get all receiver by submission id from model.
      *
      * @param string $id
      *
-     * @return void
+     * @return object
      */
 
     public function getReceiverBySubmissionId(string $id): object
@@ -155,25 +132,34 @@ class SubmissionRepository extends BaseRepository
     }
 
     /**
-     * Handle the Get all data event from models.
+     * get submission by penyuluh
      *
-     * @param mixed $search
-     * @param int $offset
-     * @param int $results
+     * @param string $districtId
      *
-     * @return object
+     * @return mixed
      */
 
-    public function searchAjaxSubmissions(mixed $search, int $offset, int $results): object
+    public function getSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->when($search, function ($query) use ($search) {
-                return $query->whereLike('group_name', $search);
-            })
-            ->orderBy('group_name')
-            ->skip($offset)
-            ->take($results)
-            ->get(['id', DB::raw("CONCAT(group_name, ' - ', group_leader) as text")]);
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->verified()
+            ->join('users', 'users.id', '=', 'submissions.created_by')
+            ->where('submissions.district_id', $districtId)
+            ->latest('submissions.created_at');
     }
 
+    /**
+     * get submission by petugas
+     *
+     * @return mixed
+     */
+
+    public function getSubmissionByPetugas(): mixed
+    {
+        return $this->model->query()
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->verified()
+            ->latest('submissions.created_at');
+    }
 }

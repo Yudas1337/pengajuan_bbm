@@ -24,7 +24,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
     {
         $submission_id = request('submission_id');
 
-        $receiver = Receiver::create(
+        $receiver = Receiver::firstOrCreate(
+            ['national_identity_number' => $row['nik'] ?? $row['nomor_kusuka']],
             [
                 'id' => Uuid::uuid(),
                 'receiver_type' => $row['tipe'],
@@ -44,11 +45,14 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 'valid_until' => Carbon::parse($row['valid_until'])->format('Y-m-d')
             ]);
 
-        SubmissionReceiver::create([
-            'id' => Uuid::uuid(),
-            'receiver_id' => $receiver['id'],
-            'submission_id' => $submission_id
-        ]);
+        SubmissionReceiver::updateOrCreate(
+            ['submission_id' => $submission_id, 'receiver_id' => $receiver['id']],
+            [
+                'id' => Uuid::uuid(),
+                'receiver_id' => $receiver['id'],
+                'submission_id' => $submission_id
+            ]
+        );
     }
 
     public function headingRow(): int

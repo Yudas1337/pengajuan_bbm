@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExcelSubmissionRequest;
 use App\Http\Requests\SubmissionRequest;
@@ -31,22 +32,9 @@ class SubmissionController extends Controller
     }
 
     /**
-     * Get all submission data with ajax
+     * Display a listing of the resource.
      *
      * @param Request $request
-     *
-     * @return JsonResponse
-     */
-
-    public function getAllWithAjax(Request $request): JsonResponse
-    {
-        if ($request->ajax()) {
-            return $this->submissionService->handleSelectAjaxSubmission($request);
-        }
-    }
-
-    /**
-     * Display a listing of the resource.
      *
      * @return mixed
      */
@@ -219,15 +207,51 @@ class SubmissionController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function verified(Request $request): View
+    /**
+     * Store a newly created receivers resource in storage.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+
+
+    public function verified(Request $request): mixed
     {
         $this->authorize('validate-letter-of-recommendation');
 
-        return view('dashboard.pages.submission.verified');
+        if ($request->ajax()) {
+            if (UserHelper::checkRolePenyuluh()) {
+                return $this->submissionService->handleGetSubmissionsByPenyuluh();
+            } else if (UserHelper::checkRolePetugas()) {
+                return $this->submissionService->handleGetSubmissionsByPetugas();
+            }
+        }
 
+        return view('dashboard.pages.submission.verified');
     }
 
-    public function unverified(Request $request): View
+
+    /**
+     * show detail verified submission
+     * @param Submission $submission
+     * 
+     * @return View
+     */
+
+    public function verifiedDetail(Submission $submission): View
+    {
+        $id = $submission->id;
+        $datas = [
+            'stations' => $this->stationService->handleGetAllStations(),
+            'districts' => $this->districtService->handleGetAllDistricts(),
+            'id' => $id,
+            'submission' => $this->submissionService->handleShowSubmission($id)
+        ];
+
+        return view('dashboard.pages.submission.verified_detail', $datas);
+    }
+
+    public function unverified(Request $request): mixed
     {
         $this->authorize('validate-letter-of-recommendation');
 

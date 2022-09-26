@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\Dashboard\{DashboardController,
+use App\Http\Controllers\Dashboard\{
+    DashboardController,
     DistrictController,
     ProfileController,
     ProvinceController,
     ReceiverController,
     StationController,
     SubmissionController,
-    UserController};
+    UserController
+};
 use App\Http\Controllers\HomeController;
+use App\Models\Submission;
 use Illuminate\Support\Facades\{Auth, Route};
 
 /*
@@ -70,10 +73,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         Route::post('excel-upload', [SubmissionController::class, 'uploadExcelToServer'])->name('excelUpload');
         Route::get('receiver/{id}', [SubmissionController::class, 'getReceiverBySubmission'])->name('receiver');
         Route::post('receivers-upload', [SubmissionController::class, 'storeReceivers'])->name('receiverUpload');
-        Route::get('getSubmissionWithAjax', [SubmissionController::class, 'getAllWithAjax'])->name('performAjax');
         Route::prefix('submission')->group(function () {
             Route::get('unverified', [SubmissionController::class, 'unverified'])->name('unverified');
-            Route::get('verified', [SubmissionController::class, 'verified'])->name('verified');
+            Route::prefix('verified')->group(function () {
+                Route::get('/', [SubmissionController::class, 'verified'])->name('verified');
+                Route::get('{submission}', [SubmissionController::class, 'verifiedDetail'])->name('verified_detail');
+            });
             Route::get('trashed', [SubmissionController::class, 'trashedSubmission'])->name('trashed');
             Route::post('restore/{id}', [SubmissionController::class, 'restoreSubmission'])->name('restore');
         });

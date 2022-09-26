@@ -9,7 +9,6 @@ use App\Imports\UsersImport;
 use App\Repositories\SubmissionRepository;
 use App\Traits\YajraTable;
 use Faker\Provider\Uuid;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,37 +22,6 @@ class SubmissionService
     public function __construct(SubmissionRepository $submissionRepository)
     {
         $this->repository = $submissionRepository;
-    }
-
-    /**
-     * Get all submissions for select2 with ajax from SubmissionRepository
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-
-    public function handleSelectAjaxSubmission(Request $request): JsonResponse
-    {
-        $page = $request->page;
-        $search = $request->term;
-
-        $resultCount = 25;
-
-        $offset = ($page - 1) * $resultCount;
-
-        $results = $this->repository->searchAjaxSubmissions($search, $offset, $resultCount);
-
-        $morePages = ($offset + $resultCount) < $this->repository->countAll();
-
-        $results = array(
-            "results" => $results,
-            "pagination" => array(
-                "more" => $morePages
-            )
-        );
-
-        return response()->json($results);
     }
 
     /**
@@ -110,7 +78,6 @@ class SubmissionService
 
         if ($oldData->excel_file && $uploaded_file) {
             Storage::delete('public/' . $oldData->excel_file);
-            $this->repository->truncateReceiverData($submission_id);
         }
         $filename = $uploaded_file->store('submission_file', 'public');
 
@@ -257,4 +224,26 @@ class SubmissionService
         $this->repository->restoreSubmission($id);
     }
 
+    /**
+     * get all submission data with penyuluh
+     *
+     * @return mixed
+     */
+
+    public function handleGetSubmissionsByPenyuluh(): mixed
+    {
+        $disitrict_id = auth()->user()->district_id;
+        return $this->VerifiedSubmissionMockup($this->repository->getSubmissionByPenyuluh($disitrict_id));
+    }
+
+    /**
+     * get all submission data with petugas
+     *
+     * @return mixed
+     */
+
+    public function handleGetSubmissionsByPetugas(): mixed
+    {
+        return $this->VerifiedSubmissionMockup($this->repository->getSubmissionByPetugas());
+    }
 }

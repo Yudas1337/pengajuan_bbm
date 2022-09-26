@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,6 +30,17 @@ class Submission extends Model
     }
 
     /**
+     * One-to-Many relationship with User model
+     *
+     * @return BelongsTo
+     */
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
      * Scope a query to search with where
      *
      * @param mixed $query
@@ -41,5 +53,29 @@ class Submission extends Model
     public function scopeWhereLike(mixed $query, mixed $column, mixed $value): object|null
     {
         return $query->where($column, 'like', '%' . $value . '%');
+    }
+
+    /**
+     * scope a query search by author
+     * @param mixed $query
+     *
+     * @return object|null
+     */
+
+    public function scopeAuthor(mixed $query): object|null
+    {
+        return $query->where('created_by', auth()->id());
+    }
+
+    /**
+     * scope a query search by verified submission
+     * @param mixed $query
+     *
+     * @return object|null
+     */
+
+    public function scopeVerified(mixed $query): object|null
+    {
+        return $query->where('status', 1);
     }
 }

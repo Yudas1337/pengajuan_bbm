@@ -14,7 +14,6 @@ class ReceiverRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'submission_id' => 'nullable',
             'receiver_type' => 'required',
             'national_identity_number' => ['required', Rule::unique('receivers')->ignore($this->receiver)],
             'name' => 'required',

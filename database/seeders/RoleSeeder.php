@@ -54,7 +54,7 @@ class RoleSeeder extends Seeder
         // Penyuluh
         Role::create(['name' => 'Penyuluh'])->givePermissionTo([
             'submit-letter-of-recommendation', 'view-letter-of-recommendation', 'update-letter-of-recommendation',
-            'delete-letter-of-recommendation', 'restore-letter-of-recommendation'
+            'delete-letter-of-recommendation', 'restore-letter-of-recommendation', 'validate-letter-of-recommendation'
         ]);
 
         // Ketua Kelompok

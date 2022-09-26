@@ -19,6 +19,9 @@
                                 <th>Ketua Kelompok</th>
                                 <th>Nomor Surat Pengajuan</th>
                                 <th>Tanggal Surat Pengajuan</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th>Status Verifikasi</th>
                                 <th>Status Pengajuan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -80,8 +83,23 @@
                         name: 'date'
                     },
                     {
+                        data: 'start_time',
+                        name: 'start_time'
+                    },
+                    {
+                        data: 'end_time',
+                        name: 'end_time'
+                    },
+                    {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        searchable: false
+                    },
+                    {
+                        data: 'submission_status',
+                        name: 'submission_status',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',

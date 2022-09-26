@@ -10,20 +10,6 @@
                     <form method="POST" action="{{ route('receivers.store') }}">
                         @csrf
                         <div class="row">
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label">Pengajuan <small class="text-danger">*</small> </label>
-                                <select id="select-submissions" name="submission_id"
-                                        class="form-control submissions-ajax">
-                                    <option value="">--Pilih--</option>
-                                </select>
-                                @error('submission_id')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Nama <small class="text-danger">*</small> </label>
                                 <input value="{{ old('name') }}" type="text" name="name" autocomplete="off"
@@ -230,32 +216,6 @@
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
             $('.select2-ajax').select2();
-
-            $('.submissions-ajax').select2({
-                ajax: {
-                    url: `{{ route('submission.performAjax') }}`,
-                    type: 'get',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            term: params.term,
-                            page: params.page || 1
-                        };
-                    },
-                    processResults: function (response) {
-                        return {
-                            results: response.results,
-                            pagination: {
-                                more: response.pagination.more
-                            }
-                        };
-                    },
-                    cache: false
-                },
-                placeholder: 'Cari Pengajuan'
-            });
 
             const fetchVillages = (id) => {
                 const url = `{{ route('districts.villages', ':id') }}`.replace(':id', id);
