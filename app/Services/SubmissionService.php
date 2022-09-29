@@ -267,7 +267,7 @@ class SubmissionService
     public function handleGetUnverifiedSubmissionsByPenyuluh(): mixed
     {
         $disitrict_id = auth()->user()->district_id;
-        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPenyuluh($disitrict_id));
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPenyuluh($disitrict_id));
     }
 
     /**
@@ -278,7 +278,7 @@ class SubmissionService
 
     public function handleGetUnverifiedSubmissionsByPetugas(): mixed
     {
-        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPetugas());
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPetugas());
     }
 
     /**
@@ -289,6 +289,6 @@ class SubmissionService
 
     public function handleGetUnverifiedSubmissionsByKepalaDinas(): mixed
     {
-        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByKepalaDinas());
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByKepalaDinas());
     }
 }

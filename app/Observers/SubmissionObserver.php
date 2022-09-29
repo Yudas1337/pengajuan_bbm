@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Helpers\UserHelper;
 use App\Models\Submission;
 
 class SubmissionObserver
@@ -18,14 +19,20 @@ class SubmissionObserver
     }
 
     /**
-     * Handle the Submission "updated" event.
+     * Handle the Submission "updating" event.
      *
      * @param Submission $submission
      * @return void
      */
-    public function updated(Submission $submission)
+    public function updating(Submission $submission)
     {
-        //
+        if (UserHelper::checkRolePenyuluh()) {
+            $submission->validated_by_penyuluh = auth()->id();
+        } else if (UserHelper::checkRolePetugas()) {
+            $submission->validated_by_petugas = auth()->id();
+        } else if (UserHelper::checkRoleKepalaDinas()) {
+            $submission->validated_by_kepala_dinas = auth()->id();
+        }
     }
 
     /**

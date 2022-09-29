@@ -279,6 +279,26 @@ class SubmissionController extends Controller
     }
 
     /**
+     * show detail unverified submission
+     * @param Submission $submission
+     *
+     * @return View
+     */
+
+    public function unverifiedDetail(Submission $submission): View
+    {
+        $id = $submission->id;
+        $datas = [
+            'stations' => $this->stationService->handleGetAllStations(),
+            'districts' => $this->districtService->handleGetAllDistricts(),
+            'id' => $id,
+            'submission' => $this->submissionService->handleShowSubmission($id)
+        ];
+
+        return view('dashboard.pages.submission.unverified_detail', $datas);
+    }
+
+    /**
      * show trashed submissions resource in storage.
      *
      * @param Request $request

@@ -193,4 +193,39 @@ trait YajraTable
             ->rawColumns(['action'])
             ->toJson();
     }
+
+    /**
+     * Datatable mockup for unverified submission resource
+     *
+     * @param mixed $collection
+     *
+     * @return JsonResponse
+     */
+
+    public function UnverifiedSubmissionMockup(mixed $collection): JsonResponse
+    {
+        return DataTables::of($collection)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return view('dashboard.pages.submission.unverifiedDatatables', compact('data'));
+            })
+            ->editColumn('status', function ($data) {
+                return view('dashboard.pages.submission.status', compact('data'));
+            })
+            ->editColumn('date', function ($data) {
+                return Carbon::parse($data->date)->format('d-m-Y');
+            })
+            ->editColumn('start_time', function ($data) {
+                return Carbon::parse($data->start_time)->format('d M Y H:i');
+            })
+            ->editColumn('end_time', function ($data) {
+                return Carbon::parse($data->end_time)->format('d M Y H:i');
+            })
+            ->editColumn('submission_status', function ($data) {
+                $now = now()->format('Y-m-d H:i:s');
+                return view('dashboard.pages.submission.submission_status', compact('data', 'now'));
+            })
+            ->rawColumns(['action'])
+            ->toJson();
+    }
 }

@@ -74,7 +74,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         Route::get('receiver/{id}', [SubmissionController::class, 'getReceiverBySubmission'])->name('receiver');
         Route::post('receivers-upload', [SubmissionController::class, 'storeReceivers'])->name('receiverUpload');
         Route::prefix('submission')->group(function () {
-            Route::get('unverified', [SubmissionController::class, 'unverified'])->name('unverified');
+            Route::prefix('unverified')->group(function () {
+                Route::get('/', [SubmissionController::class, 'unverified'])->name('unverified');
+                Route::get('{submission}', [SubmissionController::class, 'unverifiedDetail'])->name('unverified_detail');
+            });
             Route::prefix('verified')->group(function () {
                 Route::get('/', [SubmissionController::class, 'verified'])->name('verified');
                 Route::get('{submission}', [SubmissionController::class, 'verifiedDetail'])->name('verified_detail');
