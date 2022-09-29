@@ -4,12 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
+
     /**
      * Run the migrations.
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('submissions', function (Blueprint $table) {
@@ -35,7 +38,9 @@ return new class extends Migration {
             $table->timestamp('end_time')->nullable();
             $table->boolean('status')->default(0);
             $table->foreignUuid('created_by')->nullable()->constrained('users');
-            $table->foreignUuid('validated_by')->nullable()->constrained('users');
+            $table->foreignUuid('validated_by_penyuluh')->nullable()->constrained('users');
+            $table->foreignUuid('validated_by_petugas')->nullable()->constrained('users');
+            $table->foreignUuid('validated_by_kepala_dinas')->nullable()->constrained('users');
             $table->softDeletes();
             $table->timestamps();
         });

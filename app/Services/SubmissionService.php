@@ -233,7 +233,7 @@ class SubmissionService
     public function handleGetSubmissionsByPenyuluh(): mixed
     {
         $disitrict_id = auth()->user()->district_id;
-        return $this->VerifiedSubmissionMockup($this->repository->getSubmissionByPenyuluh($disitrict_id));
+        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByPenyuluh($disitrict_id));
     }
 
     /**
@@ -244,6 +244,51 @@ class SubmissionService
 
     public function handleGetSubmissionsByPetugas(): mixed
     {
-        return $this->VerifiedSubmissionMockup($this->repository->getSubmissionByPetugas());
+        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByPetugas());
+    }
+
+    /**
+     * get all submission data by kepala dinas
+     * 
+     * @return mixed
+     */
+
+    public function handleGetSubmissionsByKepalaDinas(): mixed
+    {
+        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByKepalaDinas());
+    }
+
+    /**
+     * get all unverified submission data with penyuluh
+     *
+     * @return mixed
+     */
+
+    public function handleGetUnverifiedSubmissionsByPenyuluh(): mixed
+    {
+        $disitrict_id = auth()->user()->district_id;
+        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPenyuluh($disitrict_id));
+    }
+
+    /**
+     * get all unverified submission data with petugas
+     *
+     * @return mixed
+     */
+
+    public function handleGetUnverifiedSubmissionsByPetugas(): mixed
+    {
+        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPetugas());
+    }
+
+    /**
+     * get all unverified submission data by kepala dinas
+     * 
+     * @return mixed
+     */
+
+    public function handleGetUnverifiedSubmissionsByKepalaDinas(): mixed
+    {
+        return $this->VerifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByKepalaDinas());
     }
 }

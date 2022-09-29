@@ -139,13 +139,14 @@ class SubmissionRepository extends BaseRepository
      * @return mixed
      */
 
-    public function getSubmissionByPenyuluh(string $districtId): mixed
+    public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
             ->verified()
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->where('submissions.district_id', $districtId)
+            ->whereNotNull('validated_by_penyuluh')
             ->latest('submissions.created_at');
     }
 
@@ -155,11 +156,79 @@ class SubmissionRepository extends BaseRepository
      * @return mixed
      */
 
-    public function getSubmissionByPetugas(): mixed
+    public function getVerifiedSubmissionByPetugas(): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->join('users', 'users.id', '=', 'submissions.created_by')
             ->verified()
+            ->whereNotNull('validated_by_petugas')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get verified submission by kepala dinas
+     * 
+     * @return mixed
+     */
+
+    public function getVerifiedSubmissionByKepalaDinas(): mixed
+    {
+        return $this->model->query()
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->join('users', 'users.id', '=', 'submissions.created_by')
+            ->verified()
+            ->whereNotNull('validated_by_kepala_dinas')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get unverified submission by penyuluh
+     *
+     * @param string $districtId
+     *
+     * @return mixed
+     */
+
+    public function getUnverifiedSubmissionByPenyuluh(string $districtId): mixed
+    {
+        return $this->model->query()
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->join('users', 'users.id', '=', 'submissions.created_by')
+            ->where('submissions.district_id', $districtId)
+            ->whereNull('validated_by_penyuluh')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get unverified submission by petugas
+     *
+     * @return mixed
+     */
+
+    public function getUnverifiedSubmissionByPetugas(): mixed
+    {
+        return $this->model->query()
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->join('users', 'users.id', '=', 'submissions.created_by')
+            ->whereNotNull('validated_by_penyuluh')
+            ->whereNull('validated_by_petugas')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get unverified submission by kepala dinas
+     * 
+     * @return mixed
+     */
+
+    public function getUnverifiedSubmissionByKepalaDinas(): mixed
+    {
+        return $this->model->query()
+            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->join('users', 'users.id', '=', 'submissions.created_by')
+            ->whereNotNull('validated_by_petugas')
+            ->whereNull('validated_by_kepala_dinas')
             ->latest('submissions.created_at');
     }
 }

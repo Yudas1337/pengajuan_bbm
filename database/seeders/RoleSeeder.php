@@ -45,9 +45,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'update-receiver']);
         Permission::create(['name' => 'delete-receiver']);
 
-        Permission::create(['name' => 'approve-letter']);
-        Permission::create(['name' => 'provide-letter-signature']);
-
         // Petugas Pelayanan
         Role::create(['name' => 'Petugas Pelayanan'])->givePermissionTo(Permission::all());
 
@@ -65,13 +62,13 @@ class RoleSeeder extends Seeder
 
         // Kepala Desa
         Role::create(['name' => 'Kepala Desa'])->givePermissionTo([
-            'approve-letter'
+            'validate-letter-of-recommendation'
         ]);
 
 
         // Kepala Dinas
         Role::create(['name' => 'Kepala Dinas'])->givePermissionTo([
-            'provide-letter-signature'
+            'validate-letter-of-recommendation'
         ]);
     }
 }

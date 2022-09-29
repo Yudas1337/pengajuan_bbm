@@ -10,6 +10,27 @@
 <li class="sidebar-header">
     Menu Utama
 </li>
+@can('validate-letter-of-recommendation')
+    <li
+        class="sidebar-item {{ request()->routeIs('submissions.*') || request()->routeIs('submission.createForm') ? 'active' : '' }}">
+        <a data-bs-target="#verify-submissions" data-bs-toggle="collapse" class="sidebar-link collapsed">
+            <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Validasi Pengajuan</span>
+        </a>
+        <ul id="verify-submissions"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.*') ? 'show' : '' }}"
+            data-bs-parent="#sidebar">
+            @can('validate-letter-of-recommendation')
+                <li
+                    class="sidebar-item {{ request()->routeIs('submission.verified') || request()->routeIs('submission.verified_detail') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('submission.verified') }}">Terverifikasi</a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('submission.unverified') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('submission.unverified') }}">Belum Diverifikasi</a>
+                </li>
+            @endcan
+        </ul>
+    </li>
+@endcan
 @can('submit-letter-of-recommendation')
     <li
         class="sidebar-item {{ request()->routeIs('submissions.*') || request()->routeIs('submission.createForm') ? 'active' : '' }}">
@@ -28,15 +49,6 @@
                 class="sidebar-item {{ request()->routeIs('submissions.index') || request()->routeIs('submissions.edit') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('submissions.index') }}">Pengajuan Saya</a>
             </li>
-            @can('validate-letter-of-recommendation')
-                <li
-                    class="sidebar-item {{ request()->routeIs('submission.verified') || request()->routeIs('submission.verified_detail') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('submission.verified') }}">Terverifikasi</a>
-                </li>
-                <li class="sidebar-item {{ request()->routeIs('submission.unverified') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('submission.unverified') }}">Belum Diverifikasi</a>
-                </li>
-            @endcan
             @can('restore-letter-of-recommendation')
                 <li class="sidebar-item {{ request()->routeIs('submission.trashed') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('submission.trashed') }}">Riwayat Penghapusan</a>

@@ -208,12 +208,12 @@ class SubmissionController extends Controller
     }
 
     /**
-     * Store a newly created receivers resource in storage.
+     * Display list of verified submissions resource in storage.
      *
      * @param Request $request
-     * @return JsonResponse
+     *
+     * @return mixed
      */
-
 
     public function verified(Request $request): mixed
     {
@@ -224,6 +224,8 @@ class SubmissionController extends Controller
                 return $this->submissionService->handleGetSubmissionsByPenyuluh();
             } else if (UserHelper::checkRolePetugas()) {
                 return $this->submissionService->handleGetSubmissionsByPetugas();
+            } else if (UserHelper::checkRoleKepalaDinas()) {
+                return $this->submissionService->handleGetSubmissionsByKepalaDinas();
             }
         }
 
@@ -234,7 +236,7 @@ class SubmissionController extends Controller
     /**
      * show detail verified submission
      * @param Submission $submission
-     * 
+     *
      * @return View
      */
 
@@ -251,9 +253,27 @@ class SubmissionController extends Controller
         return view('dashboard.pages.submission.verified_detail', $datas);
     }
 
+    /**
+     * Display list of unverified submissions resource in storage.
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+
     public function unverified(Request $request): mixed
     {
         $this->authorize('validate-letter-of-recommendation');
+
+        if ($request->ajax()) {
+            if (UserHelper::checkRolePenyuluh()) {
+                return $this->submissionService->handleGetUnverifiedSubmissionsByPenyuluh();
+            } else if (UserHelper::checkRolePetugas()) {
+                return $this->submissionService->handleGetUnverifiedSubmissionsByPetugas();
+            } else if (UserHelper::checkRoleKepalaDinas()) {
+                return $this->submissionService->handleGetUnverifiedSubmissionsByKepalaDinas();
+            }
+        }
 
         return view('dashboard.pages.submission.unverified');
     }

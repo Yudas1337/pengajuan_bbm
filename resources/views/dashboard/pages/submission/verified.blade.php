@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-fluid p-0">
 
-        <h1 class="h3 mb-3">Halaman data Pengajuan</h1>
+        <h1 class="h3 mb-3">Halaman data Pengajuan Terverifikasi</h1>
 
         <div class="row">
             <div class="col-12">
@@ -13,17 +13,18 @@
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Kelompok</th>
-                                    <th>Ketua Kelompok</th>
-                                    <th>Nomor Surat Pengajuan</th>
-                                    <th>Tanggal Surat Pengajuan</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Status Pengajuan</th>
-                                    <th>Aksi</th>
-                                </tr>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Kelompok</th>
+                                <th>Ketua Kelompok</th>
+                                <th>Nomor Surat Pengajuan</th>
+                                <th>Tanggal Surat Pengajuan</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th>Status Pengajuan</th>
+                                <th>Diajukan Oleh</th>
+                                <th>Aksi</th>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -39,9 +40,9 @@
 @endsection
 @section('footer')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
-            $(document).on('click', '.delete', function() {
+            $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
                 let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
@@ -60,10 +61,10 @@
                 searching: true,
                 ajax: "{{ route('submission.verified') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
                     {
                         data: 'group_name',
                         name: 'group_name'
@@ -93,6 +94,10 @@
                         name: 'submission_status',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'name',
+                        name: 'users.name'
                     },
                     {
                         data: 'action',

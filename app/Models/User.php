@@ -20,6 +20,7 @@ class User extends Authenticatable
     public $primaryKey = 'id';
     public $incrementing = false;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,5 +63,16 @@ class User extends Authenticatable
     public function station(): BelongsTo
     {
         return $this->belongsTo(Station::class);
+    }
+
+    /**
+     * One-to-Many relationship with District Model
+     *
+     * @return BelongsTo
+     */
+
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
     }
 }
