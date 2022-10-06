@@ -11,13 +11,12 @@
     Menu Utama
 </li>
 @can('validate-letter-of-recommendation')
-    <li
-        class="sidebar-item {{ request()->routeIs('submissions.*') || request()->routeIs('submission.createForm') ? 'active' : '' }}">
+    <li class="sidebar-item {{ request()->routeIs('submission.*') ? 'active' : '' }}">
         <a data-bs-target="#verify-submissions" data-bs-toggle="collapse" class="sidebar-link collapsed">
             <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Validasi Pengajuan</span>
         </a>
         <ul id="verify-submissions"
-            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.*') ? 'show' : '' }}"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submission.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             @can('validate-letter-of-recommendation')
                 <li
@@ -39,7 +38,7 @@
                 Pengajuan</span>
         </a>
         <ul id="submissions"
-            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.*') ? 'show' : '' }}"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.trashed') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li
                 class="sidebar-item {{ request()->routeIs('submissions.create') || request()->routeIs('submission.createForm') ? 'active' : '' }}">

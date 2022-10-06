@@ -396,7 +396,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            let CSRF_TOKEN = $('input[name="csrf-token"]').attr('content');
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             let upload_msg = $('#upload-msg')
             let submission_id = $('#submission_id').val()
 

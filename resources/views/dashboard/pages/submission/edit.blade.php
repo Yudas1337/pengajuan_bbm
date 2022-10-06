@@ -8,7 +8,7 @@
             <div id="container-error" class="alert alert-danger" style="display: none">
                 <ul id="ul-error"></ul>
             </div>
-            <form id="smartwizard-validation" method="POST" action="{{ route('submission.updateSubmission')  }}">
+            <form id="smartwizard-validation" method="POST" action="{{ route('submission.updateSubmission') }}">
                 @csrf
                 <div id="smartwizard-arrows-primary" class="wizard wizard-primary mb-4 sw sw-theme-arrows sw-justified">
                     <ul class="nav">
@@ -30,52 +30,49 @@
 
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
-                             style="display: block; min-height: 650px">
+                            style="display: block; min-height: 650px">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ $submission->group_name }}" autofocus autocomplete="off"
-                                           name="group_name"
-                                           type="text" class="form-control">
+                                        name="group_name" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input value="{{ $submission->group_leader }}" autocomplete="off"
-                                           name="group_leader"
-                                           type="text" class="form-control">
+                                    <input value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nomor Surat Pengajuan <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <input value="{{ $submission->letter_number }}" autocomplete="off"
-                                           name="letter_number"
-                                           type="text" class="form-control">
+                                    <input value="{{ $submission->letter_number }}" autocomplete="off" name="letter_number"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Tanggal Surat Pengajuan <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <input value="{{ $submission->date }}" autocomplete="off"
-                                           name="date" type="date" class="form-control">
+                                    <input value="{{ $submission->date }}" autocomplete="off" name="date" type="date"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Kecamatan <small
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <select id="select-districts" name="district_id"
-                                            class="form-control select2-ajax">
+                                    <select id="select-districts" name="district_id" class="form-control select2-ajax">
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
-                                            <option
-                                                value="{{ $district->id }}" {{ $submission->district_id == $district->id ? 'selected' : '' }}>{{ $district->name }}</option>
+                                            <option value="{{ $district->id }}"
+                                                {{ $submission->district_id == $district->id ? 'selected' : '' }}>
+                                                {{ $district->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -84,8 +81,7 @@
                                 <label class="col-form-label col-sm-3 text-sm-right">Desa/Kelurahan <small
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <select id="select-villages" name="village_id"
-                                            class="form-control select2-ajax">
+                                    <select id="select-villages" name="village_id" class="form-control select2-ajax">
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -96,9 +92,8 @@
                                 <div class="col-sm-6">
                                     @foreach ($stations as $station)
                                         <label class="form-check">
-                                            <input
-                                                {{ $submission->station_id == $station->id ? 'checked' : ''  }} value="{{ $station->id }}"
-                                                name="station_id" type="radio"
+                                            <input {{ $submission->station_id == $station->id ? 'checked' : '' }}
+                                                value="{{ $station->id }}" name="station_id" type="radio"
                                                 class="form-check-input">
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
@@ -110,17 +105,15 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ date('Y-m-d\TH:i', strtotime($submission->start_time)) }}"
-                                           autocomplete="off" name="start_time"
-                                           type="datetime-local" class="form-control">
+                                        autocomplete="off" name="start_time" type="datetime-local" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Tanggal Selesai<small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <input value="{{ date('Y-m-d\TH:i', strtotime($submission->end_time))  }}"
-                                           autocomplete="off" name="end_time"
-                                           type="datetime-local" class="form-control">
+                                    <input value="{{ date('Y-m-d\TH:i', strtotime($submission->end_time)) }}"
+                                        autocomplete="off" name="end_time" type="datetime-local" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -130,15 +123,13 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input
-                                            {{ $submission->equipment_type == 'Kapal' ? 'checked' : '' }} value="Kapal"
-                                            name="equipment_type" type="radio"
+                                        <input {{ $submission->equipment_type == 'Kapal' ? 'checked' : '' }}
+                                            value="Kapal" name="equipment_type" type="radio"
                                             class="form-check-input">
                                         <span class="form-check-label">Kapal</span>
                                     </label> <label class="form-check">
-                                        <input
-                                            {{ $submission->equipment_type == 'Pompa' ? 'checked' : '' }} value="Pompa"
-                                            name="equipment_type" type="radio"
+                                        <input {{ $submission->equipment_type == 'Pompa' ? 'checked' : '' }}
+                                            value="Pompa" name="equipment_type" type="radio"
                                             class="form-check-input">
                                         <span class="form-check-label">Pompa</span>
                                     </label>
@@ -149,7 +140,7 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ $submission->total_equipment }}" autofocus autocomplete="off"
-                                           name="total_equipment" type="number" class="form-control">
+                                        name="total_equipment" type="number" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -158,22 +149,20 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input
-                                            {{ $submission->equipment_function === 'Transportasi Pencari Ikan' ? 'checked' : ''  }} value="Transportasi Pencari Ikan"
-                                            name="equipment_function" type="radio"
+                                            {{ $submission->equipment_function === 'Transportasi Pencari Ikan' ? 'checked' : '' }}
+                                            value="Transportasi Pencari Ikan" name="equipment_function" type="radio"
                                             class="form-check-input">
                                         <span class="form-check-label">Transportasi Pencari ikan</span>
                                     </label>
                                     <label class="form-check">
-                                        <input
-                                            {{ $submission->equipment_function === 'Pengairan' ? 'checked' : ''  }} value="Pengairan"
-                                            name="equipment_function" type="radio"
+                                        <input {{ $submission->equipment_function === 'Pengairan' ? 'checked' : '' }}
+                                            value="Pengairan" name="equipment_function" type="radio"
                                             class="form-check-input">
                                         <span class="form-check-label">Pengairan</span>
                                     </label>
                                     <label class="form-check">
-                                        <input
-                                            {{ $submission->equipment_function === 'Nelayan' ? 'checked' : ''  }} value="Nelayan"
-                                            name="equipment_function" type="radio"
+                                        <input {{ $submission->equipment_function === 'Nelayan' ? 'checked' : '' }}
+                                            value="Nelayan" name="equipment_function" type="radio"
                                             class="form-check-input">
                                         <span class="form-check-label">Nelayan</span>
                                     </label>
@@ -184,15 +173,13 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input
-                                            {{ $submission->fuel_type === 'Solar' ? 'checked' : ''  }} name="fuel_type"
+                                        <input {{ $submission->fuel_type === 'Solar' ? 'checked' : '' }} name="fuel_type"
                                             value="Solar" type="radio" class="form-check-input">
                                         <span class="form-check-label">Solar</span>
                                     </label>
                                     <label class="form-check">
-                                        <input
-                                            {{ $submission->fuel_type === 'Premium' ? 'checked' : ''  }} name="fuel_type"
-                                            value="Premium" type="radio" class="form-check-input">
+                                        <input {{ $submission->fuel_type === 'Premium' ? 'checked' : '' }}
+                                            name="fuel_type" value="Premium" type="radio" class="form-check-input">
                                         <span class="form-check-label">Premium</span>
                                     </label>
                                 </div>
@@ -202,8 +189,7 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ $submission->equipment_needed }}" autocomplete="off"
-                                           name="equipment_needed"
-                                           type="number" class="form-control">
+                                        name="equipment_needed" type="number" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -211,8 +197,8 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ date('Y-m-d\TH:i', strtotime($submission->equipment_uptime)) }}"
-                                           autocomplete="off"
-                                           name="equipment_uptime" type="datetime-local" class="form-control">
+                                        autocomplete="off" name="equipment_uptime" type="datetime-local"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -221,22 +207,22 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input {{ $submission->time_unit == 'hour' ? 'checked' : '' }} value="hour"
-                                               name="time_unit" type="radio" class="form-check-input">
+                                            name="time_unit" type="radio" class="form-check-input">
                                         <span class="form-check-label">Jam</span>
                                     </label>
                                     <label class="form-check">
                                         <input {{ $submission->time_unit == 'day' ? 'checked' : '' }} value="day"
-                                               name="time_unit" type="radio" class="form-check-input">
+                                            name="time_unit" type="radio" class="form-check-input">
                                         <span class="form-check-label">Hari</span>
                                     </label>
                                     <label class="form-check">
                                         <input {{ $submission->time_unit == 'week' ? 'checked' : '' }} value="week"
-                                               name="time_unit" type="radio" class="form-check-input">
+                                            name="time_unit" type="radio" class="form-check-input">
                                         <span class="form-check-label">Minggu</span>
                                     </label>
                                     <label class="form-check">
                                         <input {{ $submission->time_unit == 'month' ? 'checked' : '' }} value="month"
-                                               name="time_unit" type="radio" class="form-check-input">
+                                            name="time_unit" type="radio" class="form-check-input">
                                         <span class="form-check-label">Bulan</span>
                                     </label>
                                 </div>
@@ -246,7 +232,7 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <input value="{{ $submission->formula }}" autocomplete="off" name="formula"
-                                           type="number" placeholder="64" class="form-control">
+                                        type="number" placeholder="64" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -259,25 +245,24 @@
                                     <input autocomplete="off" name="letter_file" type="file" class="form-control">
                                 </div>
                             </div>
-                            @if($submission->letter_file)
+                            @if ($submission->letter_file)
                                 <div class="mb-3 row error-placeholder">
                                     <div class="col-sm-3">
                                         <label class="col-form-label col-sm-12 text-sm-right">File Tersimpan di:</label>
                                     </div>
 
                                     <div class="col-sm-6">
-                                        <a target="_blank" href="{{ asset('storage/'. $submission->letter_file) }}"
-                                           class="btn btn-md btn-danger">
+                                        <a target="_blank" href="{{ asset('storage/' . $submission->letter_file) }}"
+                                            class="btn btn-md btn-danger">
                                             <i class="align-middle me-2 fas fa-fw fa-file-pdf"></i>Lihat File</a>
                                     </div>
                                 </div>
                             @endif
                         </div>
             </form>
-            <div id="upload-fisherman-file" class="tab-pane" role="tabpanel"
-                 style="display: none; min-height: 350px">
+            <div id="upload-fisherman-file" class="tab-pane" role="tabpanel" style="display: none; min-height: 350px">
                 <form id="excelUploadForm" method="POST" action="{{ route('submission.excelUpload') }}"
-                      enctype="multipart/form-data">
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3 row">
                         <div class="col-lg-10 alert alert-warning" role="alert">
@@ -298,7 +283,7 @@
                             Nelayan<small class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <input value="{{ $id }}" id="submission_id" autocomplete="off"
-                                   name="submission_id" readonly type="text" class="form-control">
+                                name="submission_id" readonly type="text" class="form-control">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -306,18 +291,17 @@
                             Nelayan<small class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <input id="excel_file" autocomplete="off" name="excel_file" type="file"
-                                   class="form-control">
+                                class="form-control">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-form-label col-sm-3 text-sm-right"><small
-                                class="text-danger"></small></label>
+                        <label class="col-form-label col-sm-3 text-sm-right"><small class="text-danger"></small></label>
                         <div class="col-sm-6">
                             <div class="progress">
                                 <div id="upload-progress-bar"
-                                     class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                     role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                     style="width: 0"></div>
+                                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                    role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 0"></div>
                             </div>
                             <h5 id="upload-msg" style="display: none" class="mt-3 text-success">File
                                 Berhasil
@@ -326,23 +310,22 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-form-label col-sm-3 text-sm-right"><small
-                                class="text-danger"></small></label>
+                        <label class="col-form-label col-sm-3 text-sm-right"><small class="text-danger"></small></label>
                         <div class="col-sm-6">
                             <button id="btn_excel_file" type="submit" name="submit_excel"
-                                    class="btn btn-success">Upload
+                                class="btn btn-success">Upload
                                 File
                             </button>
                         </div>
                     </div>
-                    @if($submission->excel_file)
+                    @if ($submission->excel_file)
                         <div class="mb-3 row error-placeholder">
                             <div class="col-sm-3">
                                 <label class="col-form-label col-sm-12 text-sm-right">File Tersimpan di:</label>
                             </div>
                             <div class="col-sm-6">
-                                <a target="_blank" href="{{ asset('storage/'. $submission->excel_file) }}"
-                                   class="btn btn-md btn-danger">
+                                <a target="_blank" href="{{ asset('storage/' . $submission->excel_file) }}"
+                                    class="btn btn-md btn-danger">
                                     <i class="align-middle me-2 fas fa-fw fa-file-excel"></i>Lihat File</a>
                             </div>
                         </div>
@@ -351,8 +334,7 @@
             </div>
             <form method="POST" id="receivers-form">
                 @csrf
-                <div id="data-verification" class="tab-pane" role="tabpanel"
-                     style="display: none; min-height: 900px">
+                <div id="data-verification" class="tab-pane" role="tabpanel" style="display: none; min-height: 900px">
                     <div class="mb-3 row">
                         <div class="col-lg-10 alert alert-warning" role="alert">
                             <div class="alert-message">
@@ -377,12 +359,12 @@
                         <div class="col-12">
                             <table id="datatables-responsive" class="table table-striped" style="width:100%">
                                 <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Nelayan</th>
-                                    <th>No KTP</th>
-                                    <th>Kuota</th>
-                                </tr>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Nelayan</th>
+                                        <th>No KTP</th>
+                                        <th>Kuota</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -399,9 +381,9 @@
                     <div class="mb-3 row">
                         <label class="form-check m-0">
                             <input id="confirmation_checkbox" type="checkbox" name="data_confirmation"
-                                   class="form-check-input">
+                                class="form-check-input">
                             <span class="form-check-label">Saya menyetujui syarat dan ketentuan
-                                        <small class="text-danger">*</small></span>
+                                <small class="text-danger">*</small></span>
                         </label>
                     </div>
                     <div class="mb-3 row">
@@ -426,9 +408,9 @@
 @section('footer')
     <script src="{{ asset('app-assets/js/jquery.form.min.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-            let CSRF_TOKEN = $('input[name="csrf-token"]').attr('content');
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             let upload_msg = $('#upload-msg')
             let submission_id = $('#submission_id').val()
 
@@ -459,7 +441,7 @@
                     enctype: 'multipart/form-data',
                     data: form,
                     success: (data) => {
-                        window.location = `{{ route('submissions.index')  }}`
+                        window.location = `{{ route('submissions.index') }}`
                     },
                     error: (err) => {
                         let errors = HandleError(err.responseJSON.errors)
@@ -477,7 +459,7 @@
 
             $('#excel_file').change(() => {
                 upload_msg.css('display', 'none')
-                $('.progress .progress-bar').css("width", 0 + '%', function () {
+                $('.progress .progress-bar').css("width", 0 + '%', function() {
                     return $(this).attr("aria-valuenow", 0) + "%";
                 })
 
@@ -488,22 +470,22 @@
             })
 
             $('#excelUploadForm').ajaxForm({
-                uploadProgress: function (event, position, total, percentComplete) {
+                uploadProgress: function(event, position, total, percentComplete) {
                     $('#upload-msg').css('display', 'block')
                     upload_msg.attr('class', 'mt-3 text-danger')
                     upload_msg.text("upload dan insert data sedang diproses...")
                     let percentage = percentComplete;
-                    $('.progress .progress-bar').css("width", percentage + '%', function () {
+                    $('.progress .progress-bar').css("width", percentage + '%', function() {
                         return $(this).attr("aria-valuenow", percentage) + "%";
                     })
                 },
-                success: function () {
+                success: function() {
                     upload_msg.attr('class', 'mt-3 text-success')
                     upload_msg.text("Berhasil Upload File")
                     $('#excel_file').attr('disabled', true)
                     $('#btn_excel_file').attr('disabled', true)
                 },
-                error: function (err) {
+                error: function(err) {
                     let error_msg = err.responseJSON.errors.excel_file[0]
                     $('#upload-progress-bar').attr('class',
                         'progress-bar progress-bar-striped progress-bar-animated bg-danger')
@@ -596,10 +578,10 @@
                     searching: true,
                     ajax: url,
                     columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                            data: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
+                        },
                         {
                             data: 'name',
                             name: 'receivers.name'
@@ -629,7 +611,8 @@
                         let td = tr[i].getElementsByTagName('td')
                         for (let j = 0; j < td.length; j++) {
                             if (td[j].childNodes[0].name !== undefined) {
-                                array[tr[i].getAttribute('id')][td[j].childNodes[0].name] = td[j].childNodes[0].value
+                                array[tr[i].getAttribute('id')][td[j].childNodes[0].name] = td[j]
+                                    .childNodes[0].value
                             }
 
                         }

@@ -163,7 +163,6 @@ class SubmissionController extends Controller
 
     public function getReceiverBySubmission(string $id): mixed
     {
-        $this->authorize('submit-letter-of-recommendation');
 
         return $this->submissionService->handleGetReceiver($id);
     }
