@@ -60,12 +60,6 @@ class RoleSeeder extends Seeder
             'delete-letter-of-recommendation', 'restore-letter-of-recommendation'
         ]);
 
-        // Kepala Desa
-        Role::create(['name' => 'Kepala Desa'])->givePermissionTo([
-            'validate-letter-of-recommendation'
-        ]);
-
-
         // Kepala Dinas
         Role::create(['name' => 'Kepala Dinas'])->givePermissionTo([
             'validate-letter-of-recommendation'
