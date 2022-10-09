@@ -7,6 +7,7 @@ use App\Models\Receiver;
 use App\Models\Station;
 use App\Models\Submission;
 use App\Models\User;
+use App\Policies\GroupPolicy;
 use App\Policies\ReceiverPolicy;
 use App\Policies\StationPolicy;
 use App\Policies\SubmissionPolicy;
@@ -24,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
         Station::class => StationPolicy::class,
         User::class => UserPolicy::class,
         Submission::class => SubmissionPolicy::class,
-        Receiver::class => ReceiverPolicy::class
+        Receiver::class => ReceiverPolicy::class,
+        Group::class => GroupPolicy::class
     ];
 
     /**

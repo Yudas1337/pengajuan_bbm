@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama_kelompok', 150)->unique();
+            $table->string('group_name', 150)->unique();
             $table->foreignUuid('group_leader_id')->constrained('users');
             $table->timestamps();
         });

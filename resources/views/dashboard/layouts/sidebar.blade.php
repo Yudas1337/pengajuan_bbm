@@ -82,6 +82,33 @@
         </ul>
     </li>
 @endcan
+
+@can('create-group')
+    <li class="sidebar-header">
+        Menu Kelompok
+    </li>
+
+    <li class="sidebar-item {{ request()->routeIs('groups.*') ? 'active' : '' }}">
+        <a data-bs-target="#groups" data-bs-toggle="collapse" class="sidebar-link collapsed">
+            <i class="align-middle me-2 fas fa-fw fa-gas-pump"></i> <span class="align-middle">
+                Data Kelompok</span>
+        </a>
+        <ul id="groups"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('groups.*') ? 'show' : '' }}"
+            data-bs-parent="#sidebar">
+            <li class="sidebar-item {{ request()->routeIs('groups.create') ? 'active' : '' }}"><a class="sidebar-link"
+                    href="{{ route('groups.create') }}">Tambah
+                    Data</a>
+            </li>
+            <li
+                class="sidebar-item {{ request()->routeIs('groups.index') || request()->routeIs('users.edit') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('groups.index') }}">List
+                    Data</a>
+            </li>
+        </ul>
+    </li>
+@endcan
+
 @can('create-receiver')
     <li class="sidebar-header">
         Menu Penerima Bantuan

@@ -77,4 +77,17 @@ class UserRepository extends BaseRepository
             ->with(['station', 'district'])
             ->firstOrFail());
     }
+
+    /**
+     * handle get group leader
+     * 
+     * @return object
+     */
+
+    public function handleGetGroupLeader() : object
+    {
+        return $this->model->query()
+        ->role('Ketua Kelompok')
+        ->get();
+    }
 }

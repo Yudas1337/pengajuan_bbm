@@ -45,6 +45,12 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'update-receiver']);
         Permission::create(['name' => 'delete-receiver']);
 
+        Permission::create(['name' => 'view-group']);
+        Permission::create(['name' => 'create-group']);
+        Permission::create(['name' => 'update-group']);
+        Permission::create(['name' => 'delete-group']);
+
+
         // Petugas SPBU 
         Permission::create(['name' => 'record-transaction']);
 
@@ -54,7 +60,8 @@ class RoleSeeder extends Seeder
         // Penyuluh
         Role::create(['name' => 'Penyuluh'])->givePermissionTo([
             'submit-letter-of-recommendation', 'view-letter-of-recommendation', 'update-letter-of-recommendation',
-            'delete-letter-of-recommendation', 'restore-letter-of-recommendation', 'validate-letter-of-recommendation'
+            'delete-letter-of-recommendation', 'restore-letter-of-recommendation', 'validate-letter-of-recommendation',
+            'view-group', 'create-group', 'update-group', 'delete-group'
         ]);
 
         // Ketua Kelompok

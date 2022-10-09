@@ -9,6 +9,7 @@ use App\Http\Requests\SubmissionRequest;
 use App\Http\Requests\SubmissionUpdateRequest;
 use App\Models\Submission;
 use App\Services\DistrictService;
+use App\Services\GroupService;
 use App\Services\StationService;
 use App\Services\SubmissionService;
 use Illuminate\Http\JsonResponse;
@@ -22,13 +23,15 @@ class SubmissionController extends Controller
     private StationService $stationService;
     private DistrictService $districtService;
     private SubmissionService $submissionService;
+    private GroupService $groupService;
 
-    public function __construct(SubmissionService $submissionService, StationService $stationService, DistrictService $districtService)
+    public function __construct(SubmissionService $submissionService, StationService $stationService, DistrictService $districtService, GroupService $groupService)
     {
         $this->authorizeResource(Submission::class);
         $this->submissionService = $submissionService;
         $this->stationService = $stationService;
         $this->districtService = $districtService;
+        $this->groupService = $groupService;
     }
 
     /**
@@ -74,7 +77,8 @@ class SubmissionController extends Controller
         $datas = [
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
-            'id' => $submission_id
+            'id' => $submission_id,
+            'groups' => $this->groupService->handleFetchGroups()
         ];
 
         return view('dashboard.pages.submission.create', $datas);

@@ -228,4 +228,26 @@ trait YajraTable
             ->rawColumns(['action'])
             ->toJson();
     }
+
+    /**
+     * Datatable mockup for group resource
+     *
+     * @param mixed $collection
+     *
+     * @return JsonResponse
+     */
+
+    public function GroupMockup(mixed $collection): JsonResponse
+    {
+        return DataTables::of($collection)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return view('dashboard.pages.group.datatables', compact('data'));
+            })
+            ->editColumn('group_name', function ($data){
+                return str_replace('_', ' ', strtolower($data->group_name));
+            })
+            ->rawColumns(['action'])
+            ->toJson();
+    }
 }

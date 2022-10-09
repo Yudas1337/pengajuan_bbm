@@ -147,4 +147,15 @@ class UserService
     {
         $this->repository->restore($id);
     }
+
+    /**
+     * handle get group leader
+     * 
+     * @return object
+     */
+
+    public function handleGetGroupLeader() : object
+    {
+        return $this->repository->handleGetGroupLeader();
+    }
 }

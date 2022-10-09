@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\{
     ReceiverController,
     StationController,
     SubmissionController,
+    GroupController,
     UserController
 };
 use App\Http\Controllers\HomeController;
@@ -62,10 +63,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     });
     Route::resources([
         'stations' => StationController::class,
-        'users' => UserController::class
+        'users' => UserController::class,
+        'receivers' => ReceiverController::class,
+        'groups' => GroupController::class
     ], ['except' => ['show']]);
     Route::resource('submissions', SubmissionController::class)->except('update');
-    Route::resource('receivers', ReceiverController::class)->except('show');
 
     Route::name('submission.')->group(function () {
         Route::post('update-submission', [SubmissionController::class, 'updateSubmission'])->name('updateSubmission');
@@ -86,4 +88,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
             Route::post('restore/{id}', [SubmissionController::class, 'restoreSubmission'])->name('restore');
         });
     });
+
 });
