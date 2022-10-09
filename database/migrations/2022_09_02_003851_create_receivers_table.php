@@ -30,8 +30,6 @@ return new class extends Migration {
             $table->string('village', 100)->nullable();
             $table->text('address')->nullable();
             $table->enum('status', ['Valid', 'Draft', 'Perubahan', 'Tidak Valid', 'Final', 'Ditutup'])->nullable();
-            $table->date('valid_from')->nullable();
-            $table->date('valid_until')->nullable();
             $table->text('barcode')->nullable();
             $table->softDeletes();
             $table->timestamps();

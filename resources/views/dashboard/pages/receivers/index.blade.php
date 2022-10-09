@@ -23,8 +23,6 @@
                                     <th>Tipe</th>
                                     <th>Profesi</th>
                                     <th>Status</th>
-                                    <th>Valid Sejak</th>
-                                    <th>Valid Sampai</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -87,14 +85,6 @@
                     {
                         data: 'status',
                         name: 'status'
-                    },
-                    {
-                        data: 'valid_from',
-                        name: 'valid_from'
-                    },
-                    {
-                        data: 'valid_until',
-                        name: 'valid_until'
                     },
                     {
                         data: 'action',

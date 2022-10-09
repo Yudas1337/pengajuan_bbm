@@ -166,30 +166,6 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Valid Sejak <small class="text-danger">*</small></label>
-                                <input value="{{ old('valid_from') }}" type="date" name="valid_from"
-                                       autocomplete="off"
-                                       class="form-control @error('valid_from') is-invalid @enderror">
-                                @error('valid_from')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">Valid Sampai <small class="text-danger">*</small></label>
-                                <input value="{{ old('valid_until') }}" type="date" name="valid_until"
-                                       autocomplete="off"
-                                       class="form-control @error('valid_until') is-invalid @enderror">
-                                @error('valid_until')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
                                 <label class="form-label">Status <small class="text-danger">*</small></label>
                                 <select id="select-regencies" name="status" class="form-control select2-ajax">
                                     <option value="Valid" selected>Valid</option>

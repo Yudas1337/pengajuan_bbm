@@ -27,9 +27,7 @@ class ReceiverRequest extends BaseRequest
             'district' => 'required',
             'village' => 'required',
             'address' => 'required',
-            'status' => 'required',
-            'valid_from' => 'required',
-            'valid_until' => 'required'
+            'status' => 'required'
         ];
     }
 
@@ -56,9 +54,7 @@ class ReceiverRequest extends BaseRequest
             'district.required' => 'Kecamatan tidak boleh kosong!',
             'village.required' => 'Desa / kelurahan tidak boleh kosong!',
             'address.required' => 'Alamat tidak boleh kosong!',
-            'status.required' => 'Status tidak boleh kosong!',
-            'valid_from.required' => 'Valid sejak tidak boleh kosong!',
-            'valid_until.required' => 'Valid sampai tidak boleh kosong!'
+            'status.required' => 'Status tidak boleh kosong!'
         ];
     }
 }
