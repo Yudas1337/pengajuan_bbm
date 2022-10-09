@@ -28,7 +28,7 @@ class SubmissionRepository extends BaseRepository
     public function getAll(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time')
+            ->select('id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time')
             ->author()
             ->latest();
     }
@@ -43,6 +43,7 @@ class SubmissionRepository extends BaseRepository
 
     public function storeOrUpdate(array $data): mixed
     {
+        $data['updated_at'] = now();
         return $this->model->updateOrCreate(
             [
                 'id' => $data['submission_id']
@@ -111,7 +112,7 @@ class SubmissionRepository extends BaseRepository
     public function trashed(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_name', 'group_leader', 'letter_number', 'date')
+            ->select('id', 'group_name', 'group_leader')
             ->where('created_by', auth()->id())
             ->onlyTrashed();
     }
@@ -142,7 +143,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->verified()
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->where('submissions.district_id', $districtId)
@@ -159,7 +160,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPetugas(): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->verified()
             ->whereNotNull('validated_by_petugas')
@@ -175,7 +176,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->verified()
             ->whereNotNull('validated_by_kepala_dinas')
@@ -193,7 +194,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->where('submissions.district_id', $districtId)
             ->whereNull('validated_by_penyuluh')
@@ -209,7 +210,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPetugas(): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->whereNotNull('validated_by_penyuluh')
             ->whereNull('validated_by_petugas')
@@ -225,7 +226,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->select('submissions.id', 'group_name', 'group_leader', 'letter_number', 'date', 'status', 'start_time', 'end_time', 'users.name')
+            ->select('submissions.id', 'group_name', 'group_leader', 'status', 'start_time', 'end_time', 'users.name')
             ->join('users', 'users.id', '=', 'submissions.created_by')
             ->whereNotNull('validated_by_petugas')
             ->whereNull('validated_by_kepala_dinas')

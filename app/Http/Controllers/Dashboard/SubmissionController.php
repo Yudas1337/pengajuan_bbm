@@ -114,7 +114,7 @@ class SubmissionController extends Controller
         $this->submissionService->handleUpdateSubmission($request);
 
         session()->flash('success', trans('alert.update_success'));
-
+        // dd();
         return response()->json([
             'success' => true,
             'message' => trans('alert.update_success')

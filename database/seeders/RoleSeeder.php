@@ -45,6 +45,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'update-receiver']);
         Permission::create(['name' => 'delete-receiver']);
 
+        // Petugas SPBU 
+        Permission::create(['name' => 'record-transaction']);
+
         // Petugas Pelayanan
         Role::create(['name' => 'Petugas Pelayanan'])->givePermissionTo(Permission::all());
 
@@ -63,6 +66,11 @@ class RoleSeeder extends Seeder
         // Kepala Dinas
         Role::create(['name' => 'Kepala Dinas'])->givePermissionTo([
             'validate-letter-of-recommendation'
+        ]);
+
+        // Petugas SPBU
+        Role::create(['name' => 'Petugas SPBU'])->givePermissionTo([
+            'record-transaction'
         ]);
     }
 }

@@ -30,7 +30,7 @@
 
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
-                             style="display: block; min-height: 650px">
+                             style="display: block">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
@@ -46,22 +46,6 @@
                                 <div class="col-sm-6">
                                     <input value="{{ old('group_leader') }}" autocomplete="off" name="group_leader"
                                            type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Nomor Surat Pengajuan <small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('letter_number') }}" autocomplete="off" name="letter_number"
-                                           type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Tanggal Surat Pengajuan <small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('date') }}" autocomplete="off"
-                                           name="date" type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -100,127 +84,21 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Tanggal Mulai<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('start_time') }}" autocomplete="off" name="start_time"
-                                           type="datetime-local" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Tanggal Selesai<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('end_time') }}" autocomplete="off" name="end_time"
-                                           type="datetime-local" class="form-control">
-                                </div>
-                            </div>
                         </div>
                         <div id="input-detail-data" class="tab-pane" role="tabpanel" style="display: none;">
                             <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Jenis Alat <small
+                                <label class="col-form-label col-sm-3 text-sm-right">Jenis Penerima <small
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input value="Kapal" name="equipment_type" type="radio"
-                                               class="form-check-input">
-                                        <span class="form-check-label">Kapal</span>
-                                    </label> <label class="form-check">
-                                        <input value="Pompa" name="equipment_type" type="radio"
-                                               class="form-check-input">
-                                        <span class="form-check-label">Pompa</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Jumlah Alat<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('total_equipment') }}" autofocus autocomplete="off"
-                                           name="total_equipment" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Fungsi Alat<small
-                                        class="text-danger">*</small></label>
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input value="transportasi_pencari_ikan" name="equipment_function" type="radio"
-                                               class="form-check-input">
-                                        <span class="form-check-label">Transportasi Pencari ikan</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input value="pengairan" name="equipment_function" type="radio"
-                                               class="form-check-input">
-                                        <span class="form-check-label">Pengairan</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input value="nelayan" name="equipment_function" type="radio"
+                                        <input value="Nelayan" name="receiver_type" type="radio"
                                                class="form-check-input">
                                         <span class="form-check-label">Nelayan</span>
+                                    </label> <label class="form-check">
+                                        <input value="Pembudidaya" name="receiver_type" type="radio"
+                                               class="form-check-input">
+                                        <span class="form-check-label">Pembudidaya</span>
                                     </label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Jenis BBM<small
-                                        class="text-danger">*</small></label>
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input name="fuel_type" value="Solar" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Solar</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input name="fuel_type" value="Premium" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Premium</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Kebutuhan Setiap Alat<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('equipment_needed') }}" autocomplete="off"
-                                           name="equipment_needed"
-                                           type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Waktu Operasional Alat<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('equipment_uptime') }}" autocomplete="off"
-                                           name="equipment_uptime" type="datetime-local" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Satuan Waktu<small
-                                        class="text-danger">*</small></label>
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input value="hour" name="time_unit" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Jam</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input value="day" name="time_unit" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Hari</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input value="week" name="time_unit" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Minggu</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input value="month" name="time_unit" type="radio" class="form-check-input">
-                                        <span class="form-check-label">Bulan</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Formula<small
-                                        class="text-danger">*</small> </label>
-                                <div class="col-sm-6">
-                                    <input value="{{ old('formula') }}" autocomplete="off" name="formula"
-                                           type="number" placeholder="64" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">

@@ -17,8 +17,6 @@
                                 <th>No</th>
                                 <th>Nama Kelompok</th>
                                 <th>Ketua Kelompok</th>
-                                <th>Nomor Surat Pengajuan</th>
-                                <th>Tanggal Surat Pengajuan</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status Pengajuan</th>
@@ -72,14 +70,6 @@
                     {
                         data: 'group_leader',
                         name: 'group_leader'
-                    },
-                    {
-                        data: 'letter_number',
-                        name: 'letter_number'
-                    },
-                    {
-                        data: 'date',
-                        name: 'date'
                     },
                     {
                         data: 'start_time',
