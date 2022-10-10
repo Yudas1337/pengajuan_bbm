@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\{AuthController, ReceiverController, TransactionController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::group(['middleware' => ['validate.rest.token', 'enable.cors']], function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
@@ -25,4 +21,11 @@ Route::group(['middleware' => ['validate.rest.token', 'enable.cors']], function 
             Route::post('logout', [AuthController::class, 'logout']);
         });
     });
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::prefix('transaction')->group(function () {
+            Route::post('add', [TransactionController::class, 'addTransaction']);
+        });
+        Route::apiResource('receivers', ReceiverController::class);
+    });
+
 });

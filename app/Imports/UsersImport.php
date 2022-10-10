@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Receiver;
 use App\Models\SubmissionReceiver;
-use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -53,8 +52,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 'village' => $row['desa'],
                 'address' => $row['alamat'],
                 'status' => $row['status'],
-                'valid_from' => Carbon::parse($row['valid_from'])->format('Y-m-d'),
-                'valid_until' => Carbon::parse($row['valid_until'])->format('Y-m-d'),
                 'barcode' => $output_file ?? null
             ]
         );

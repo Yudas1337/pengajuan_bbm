@@ -16,7 +16,7 @@ return new class extends Migration {
     {
         Schema::create('receivers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('group_id')->constrained();
+            $table->foreignUuid('group_id')->nullable()->constrained();
             $table->string('receiver_type', 100)->nullable();
             $table->char('national_identity_number', 16)->unique()->nullable();
             $table->string('name', 150)->nullable();
