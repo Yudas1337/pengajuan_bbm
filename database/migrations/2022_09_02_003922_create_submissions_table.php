@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
 
     /**
      * Run the migrations.
@@ -17,8 +16,7 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('group_name', 150)->nullable();
-            $table->string('group_leader', 150)->nullable();
+            $table->foreignUuid('group_id')->nullable()->constrained();
             $table->foreignUuid('district_id')->nullable()->constrained();
             $table->foreignUuid('village_id')->nullable()->constrained();
             $table->foreignUuid('station_id')->nullable()->constrained();

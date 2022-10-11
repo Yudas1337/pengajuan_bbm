@@ -6,7 +6,6 @@ use App\Models\Group;
 use App\Models\Receiver;
 use App\Models\SubmissionReceiver;
 use Faker\Provider\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -19,10 +18,10 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
     /**
      * @param array $row
      *
-     * @return Model|null
+     * @return void
      */
 
-    public function model(array $row)
+    public function model(array $row): void
     {
         $old = Receiver::where('national_identity_number', $row['nik'])->first();
         $group = Group::where('group_name', str_replace(' ', '_', strtoupper($row['nama_kelompok'])))->first();
@@ -34,7 +33,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 ->generate($url . 'receiver/' . $row['nik']);
             $output_file = 'qr_file/' . $row['nik'] . '.png';
             Storage::disk('public')->put($output_file, $image);
-        }else{
+        } else {
             $old->update([
                 'group_id' => $group->id,
                 'receiver_type' => $row['tipe'],
@@ -85,7 +84,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
             ]
         );
 
-        
+
     }
 
     public function headingRow(): int
