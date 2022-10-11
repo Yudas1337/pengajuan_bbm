@@ -13,7 +13,7 @@ class SubmissionRequest extends BaseRequest
     {
         return [
             'submission_id' => 'required',
-            'group_name' => 'required',
+            'group_id' => 'required',
             'group_leader' => 'required',
             'district_id' => 'required',
             'village_id' => 'required',
@@ -34,7 +34,7 @@ class SubmissionRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'group_name.required' => 'Nama Kelompok tidak boleh kosong',
+            'group_id.required' => 'Nama Kelompok tidak boleh kosong',
             'group_leader.required' => 'Nama Ketua Kelompok tidak boleh kosong',
             'district_id.required' => 'Kecamatan tidak boleh kosong',
             'village_id.required' => 'Desa/Kelurahan tidak boleh kosong',

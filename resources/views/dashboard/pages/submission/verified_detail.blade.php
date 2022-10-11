@@ -35,11 +35,11 @@
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                 class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <select name="group_name"
+                                    <select id="select-group" name="group_id"
                                             class="form-control select2-ajax" disabled>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" {{ $group->group_leader_id === auth()->id() || $submission->group_name === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}" data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,8 +48,8 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input disabled value="{{ $submission->group_leader }}" autocomplete="off"
-                                        name="group_leader" type="text" class="form-control">
+                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -205,6 +205,20 @@
             });
 
             $('.select2-ajax').select2();
+
+            // set leader name on load 
+            setLeaderName()
+            // select group change 
+            $('#select-group').change(function() {
+                setLeaderName()
+            })
+
+            function setLeaderName() {
+                var select = document.getElementById( "select-group" );
+                var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
+                
+                $('#leader-name').val(group.name)
+            }
 
             const fetchVillages = () => {
                 const id = $('#select-districts').val()

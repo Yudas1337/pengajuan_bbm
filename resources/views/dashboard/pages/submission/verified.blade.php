@@ -64,12 +64,12 @@
                     searchable: false
                 },
                     {
-                        data: 'group_name',
-                        name: 'group_name'
+                        data: 'group.group_name',
+                        name: 'group.group_name'
                     },
                     {
-                        data: 'group_leader',
-                        name: 'group_leader'
+                        data: 'group.user.name',
+                        name: 'group.user.name'
                     },
                     {
                         data: 'start_time',
@@ -86,8 +86,8 @@
                         searchable: false
                     },
                     {
-                        data: 'name',
-                        name: 'users.name'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
                         data: 'action',

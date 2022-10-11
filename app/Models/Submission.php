@@ -41,6 +41,17 @@ class Submission extends Model
     }
 
     /**
+     * One-to-Many relationship with Group model
+     *
+     * @return BelongsTo
+     */
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    /**
      * Scope a query to search with where
      *
      * @param mixed $query
