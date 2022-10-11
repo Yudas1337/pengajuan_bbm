@@ -33,10 +33,15 @@
                             style="display: block;">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
-                                        class="text-danger">*</small> </label>
+                                class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <input disabled value="{{ $submission->group_name }}" autofocus autocomplete="off"
-                                        name="group_name" type="text" class="form-control">
+                                    <select name="group_name"
+                                            class="form-control select2-ajax" disabled>
+                                        <option value="">--Pilih--</option>
+                                        @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}" {{ $group->group_leader_id === auth()->id() || $submission->group_name === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">

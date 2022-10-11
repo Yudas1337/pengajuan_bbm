@@ -23,4 +23,16 @@ class GroupRepository extends BaseRepository {
         return $this->model->query()
         ->with('user');
     }
+
+    /**
+     * Handle the Get all data event from models.
+     *
+     * 
+     * @return mixed
+     */
+
+    public function fetchGroups() : mixed
+    {
+        return $this->model->all();
+    }
 }

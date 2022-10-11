@@ -6,6 +6,18 @@ use App\Enums\UserRoleEnum;
 
 class UserHelper
 {
+
+    /**
+     * check role ketua kelompok
+     * 
+     * @return bool
+     */
+
+    public static function checkRoleKetuaKelompok(): bool
+    {
+        return auth()->user()->roles->pluck('name')[0] === UserRoleEnum::KETUA_KELOMPOK->value;
+    }
+
     /**
      * check role penyuluh
      * 

@@ -99,7 +99,8 @@ class SubmissionController extends Controller
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
             'id' => $id,
-            'submission' => $this->submissionService->handleShowSubmission($id)
+            'submission' => $this->submissionService->handleShowSubmission($id),
+            'groups' => $this->groupService->handleFetchGroups()
         ];
 
         return view('dashboard.pages.submission.edit', $datas);
@@ -250,7 +251,8 @@ class SubmissionController extends Controller
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
             'id' => $id,
-            'submission' => $this->submissionService->handleShowSubmission($id)
+            'submission' => $this->submissionService->handleShowSubmission($id),
+            'groups' => $this->groupService->handleFetchGroups()
         ];
 
         return view('dashboard.pages.submission.verified_detail', $datas);
@@ -295,7 +297,8 @@ class SubmissionController extends Controller
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
             'id' => $id,
-            'submission' => $this->submissionService->handleShowSubmission($id)
+            'submission' => $this->submissionService->handleShowSubmission($id),
+            'groups' => $this->groupService->handleFetchGroups()
         ];
 
         return view('dashboard.pages.submission.unverified_detail', $datas);
@@ -332,5 +335,22 @@ class SubmissionController extends Controller
         $this->submissionService->handleRestoreSubmission($id);
 
         return to_route('submissions.index')->with('success', trans('alert.submission_restore_success'));
+    }
+
+    /**
+     * handle get total quota receivers
+     * 
+     * @param Submission $submission
+     * 
+     * @return JsonResponse
+     * 
+     */
+
+    public function getTotalQuota(Submission $submission) : JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->submissionService->handleGetTotalQuota($submission->id)
+        ], Response::HTTP_OK);
     }
 }

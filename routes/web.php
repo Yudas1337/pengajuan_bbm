@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
                 Route::get('/', [SubmissionController::class, 'verified'])->name('verified');
                 Route::get('{submission}', [SubmissionController::class, 'verifiedDetail'])->name('verified_detail');
             });
+            Route::get('totalQuota/{submission}', [SubmissionController::class, 'getTotalQuota'])->name('getTotalQuota');
             Route::get('trashed', [SubmissionController::class, 'trashedSubmission'])->name('trashed');
             Route::post('restore/{id}', [SubmissionController::class, 'restoreSubmission'])->name('restore');
         });

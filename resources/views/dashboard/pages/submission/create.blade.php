@@ -35,9 +35,13 @@
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <input value="{{ old('group_name') }}" autofocus autocomplete="off"
-                                           name="group_name"
-                                           type="text" class="form-control">
+                                    <select name="group_name"
+                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
+                                        <option value="">--Pilih--</option>
+                                        @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}" {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -199,6 +203,11 @@
                             <button class="btn btn-success" type="submit">Simpan
                                 Perubahan
                             </button>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-12">
+                            <h4>Total Kuota : <span id="totalQuota">0</span></h4>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -446,6 +455,8 @@
                         success: (data) => {
                             dataTables.ajax.reload();
 
+                            getTotalQuota()
+
                             alert(data.message)
                         },
                         error: (err) => {
@@ -454,6 +465,25 @@
                     })
 
                 })
+
+                // get total quota 
+                function getTotalQuota() {
+                    $.ajax({
+                        url: `{{ route('submission.getTotalQuota', ':submission') }}`.replace(':submission', submission_id),
+                        method: 'get',
+                        data: {
+                            _token: CSRF_TOKEN,
+                        },
+                        success: (data) => {
+                            $('#totalQuota').html(data.data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                }
+                
+                getTotalQuota()
             })
 
 

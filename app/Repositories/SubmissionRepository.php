@@ -232,4 +232,20 @@ class SubmissionRepository extends BaseRepository
             ->whereNull('validated_by_kepala_dinas')
             ->latest('submissions.created_at');
     }
+
+    /**
+     * handle get total quota
+     * 
+     * @param string $submission_id
+     * 
+     * @return int
+     * 
+     */
+
+    public function handleGetTotalQuota(string $submission_id) : int
+    {
+        return $this->submissionReceiver->query()
+        ->where('submission_id', $submission_id)
+        ->sum('quota');
+    }
 }

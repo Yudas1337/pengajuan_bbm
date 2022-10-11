@@ -289,4 +289,17 @@ class SubmissionService
     {
         return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByKepalaDinas());
     }
+
+    /**
+     * Handle get total quota
+     * 
+     * @param string $submission_id
+     * 
+     * @return int
+     */
+
+    public function handleGetTotalQuota(string $submission_id) : int
+    {
+        return $this->repository->handleGetTotalQuota($submission_id);
+    }
 }

@@ -24,7 +24,7 @@ class GroupService {
     
     public function handleFetchGroups() : object
     {
-        return $this->repository->getAll();
+        return $this->repository->fetchGroups();
     }
 
     /**
