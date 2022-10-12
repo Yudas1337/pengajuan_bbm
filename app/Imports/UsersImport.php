@@ -25,6 +25,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
     {
         $old = Receiver::where('national_identity_number', $row['nik'])->first();
         $group = Group::where('group_name', str_replace(' ', '_', strtoupper($row['nama_kelompok'])))->first();
+
         $url = config('app.api_url');
 
         if (!$old) {

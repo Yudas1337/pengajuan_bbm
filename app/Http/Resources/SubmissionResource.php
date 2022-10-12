@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
-class LoginResource extends JsonResource
+class SubmissionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,12 +19,11 @@ class LoginResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'username' => $this->username,
-            'email' => $this->email,
-            'station' => $this->whenLoaded('station', StationResource::make($this->station)),
-            'district' => $this->whenLoaded('district', DistrictResource::make($this->district)),
-            'group' => $this->whenLoaded('group', GroupResource::make($this->group))
+            'station_id' => $this->whenLoaded('station', StationResource::make($this->station)),
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'status' => $this->status,
+            'created_by' => $this->created_by
         ];
     }
 }

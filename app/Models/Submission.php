@@ -52,6 +52,17 @@ class Submission extends Model
     }
 
     /**
+     * One-to-Many relationship with Station model
+     *
+     * @return BelongsTo
+     */
+
+    public function station(): BelongsTo
+    {
+        return $this->belongsTo(Station::class);
+    }
+
+    /**
      * Scope a query to search with where
      *
      * @param mixed $query

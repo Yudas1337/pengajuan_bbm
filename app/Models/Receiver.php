@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,5 +27,16 @@ class Receiver extends Model
     public function submission_receivers(): HasMany
     {
         return $this->hasMany(SubmissionReceiver::class);
+    }
+
+    /**
+     * One-to-One relationship with Group Model
+     *
+     * @return BelongsTo
+     */
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
     }
 }

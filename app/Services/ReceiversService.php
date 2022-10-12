@@ -32,6 +32,7 @@ class ReceiversService
      * Store receiver data to receiverRepository
      *
      * @param ReceiverRequest $request
+     *
      * @return void
      */
 
@@ -56,12 +57,27 @@ class ReceiversService
 
     /**
      * Delete receiver from receiverRepository
-     * @param String $id
+     *
+     * @param string $id
+     *
      * @return mixed
      */
 
     public function handleDeleteReceiver(string $id): mixed
     {
         return $this->repository->destroy($id);
+    }
+
+    /**
+     * Show receiver using specified nik from receiverRepository
+     *
+     * @param string $nik
+     *
+     * @return object
+     */
+
+    public function handleShowReceiver(string $nik): object
+    {
+        return $this->repository->show($nik);
     }
 }

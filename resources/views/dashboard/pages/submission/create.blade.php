@@ -39,7 +39,8 @@
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}"
+                                                    data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,7 +49,8 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input value="{{ old('group_leader') }}" id="leader-name" disabled autocomplete="off" name="group_leader"
+                                    <input value="{{ old('group_leader') }}" id="leader-name" disabled
+                                           autocomplete="off" name="group_leader"
                                            type="text" class="form-control">
                                 </div>
                             </div>
@@ -279,11 +281,11 @@
                 return err
             }
 
-            // select group change 
-            $('#select-group').change(function() {
-                var select = document.getElementById( "select-group" );
+            // select group change
+            $('#select-group').change(function () {
+                var select = document.getElementById("select-group");
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
-                
+
                 $('#leader-name').val(group.name)
             })
 
@@ -474,7 +476,7 @@
 
                 })
 
-                // get total quota 
+                // get total quota
                 function getTotalQuota() {
                     $.ajax({
                         url: `{{ route('submission.getTotalQuota', ':submission') }}`.replace(':submission', submission_id),
@@ -490,7 +492,7 @@
                         }
                     })
                 }
-                
+
                 getTotalQuota()
             })
 

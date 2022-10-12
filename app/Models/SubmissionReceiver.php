@@ -27,4 +27,26 @@ class SubmissionReceiver extends Model
     {
         return $this->belongsTo(Receiver::class);
     }
+
+    /**
+     * One-to-Many relationship with Submission Model
+     *
+     * @return BelongsTo
+     */
+
+    public function submission(): BelongsTo
+    {
+        return $this->belongsTo(Submission::class);
+    }
+
+    /**
+     * One-to-Many relationship with User Model
+     *
+     * @return BelongsTo
+     */
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'validated_by');
+    }
 }

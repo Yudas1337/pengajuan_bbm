@@ -74,20 +74,20 @@ class UserRepository extends BaseRepository
     {
         return LoginResource::make($this->model->query()
             ->where('username', $username)
-            ->with(['station', 'district'])
+            ->with(['station', 'district', 'group'])
             ->firstOrFail());
     }
 
     /**
      * handle get group leader
-     * 
+     *
      * @return object
      */
 
-    public function handleGetGroupLeader() : object
+    public function handleGetGroupLeader(): object
     {
         return $this->model->query()
-        ->role('Ketua Kelompok')
-        ->get();
+            ->role('Ketua Kelompok')
+            ->get();
     }
 }
