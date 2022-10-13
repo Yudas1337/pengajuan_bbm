@@ -25,7 +25,7 @@ Route::group(['middleware' => ['validate.rest.token', 'enable.cors']], function 
         Route::prefix('transaction')->group(function () {
             Route::post('add', [TransactionController::class, 'addTransaction']);
         });
-        Route::apiResource('receivers', ReceiverController::class);
+        Route::get('receivers/{nik}', [ReceiverController::class, 'show']);
     });
 
 });
