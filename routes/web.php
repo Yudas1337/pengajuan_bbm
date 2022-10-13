@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\{
     UserController
 };
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PrintCardController;
 use App\Models\Submission;
 use Illuminate\Support\Facades\{Auth, Route};
 
@@ -29,6 +30,11 @@ use Illuminate\Support\Facades\{Auth, Route};
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/card', [PrintCardController::class, 'index'])->name('card');
+Route::post('/check-nik', [PrintCardController::class, 'checkNik'])->name('check-nik');
+
+Route::post('/print-card', [PrintCardController::class, 'printCard'])->name('print-card');
 
 Auth::routes([
     'verify' => false,

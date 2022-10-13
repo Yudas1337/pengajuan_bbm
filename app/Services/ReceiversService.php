@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PrintCardRequest;
 use App\Http\Requests\ReceiverRequest;
 use App\Repositories\ReceiversRepository;
 use App\Traits\YajraTable;
@@ -63,5 +64,18 @@ class ReceiversService
     public function handleDeleteReceiver(string $id): mixed
     {
         return $this->repository->destroy($id);
+    }
+
+    /**
+     * handle check nik
+     * 
+     * @param PrintCardRequest $request
+     * 
+     * @return object|null
+     */
+    public function handleCheckNik(PrintCardRequest $request) : object|null
+    {
+        $data = $request->validated();
+        return $this->repository->getByNik($data['nik']);
     }
 }

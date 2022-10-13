@@ -22,4 +22,16 @@ class ReceiversRepository extends BaseRepository
     {
         return $this->model->query();
     }
+
+    /**
+     * Handle get receiver by nik
+     * 
+     * @param string nik
+     * 
+     * @return object|null
+     */
+    public function getByNik(string $nik) : object|null
+    {
+        return $this->model->where('national_identity_number', $nik)->first();
+    }
 }
