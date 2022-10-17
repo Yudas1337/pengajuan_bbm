@@ -16,7 +16,7 @@ class QuotaTransactionRequest extends BaseRequest
         return [
             'submission_id' => 'required|exists:submissions,id',
             'quota_cost' => 'required|regex:/^[0-9]*$/',
-            'receiver_id' => 'required|exists:receivers,national_identity_number'
+            'receiver_id' => 'required|exists:receivers,id'
         ];
     }
 }

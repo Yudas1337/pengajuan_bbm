@@ -29,9 +29,8 @@ class TransactionController extends Controller
     {
         $this->authorize('record-transaction');
 
-        $this->service->handleQuotaTransaction($request);
-        $this->service->handleReduceQuota();
+        $this->service->handleCheckRequirements($request);
 
-        return ResponseFormatter::success(null, 'Berhasil ');
+        return ResponseFormatter::success(null, 'Berhasil melakukan transaksi');
     }
 }

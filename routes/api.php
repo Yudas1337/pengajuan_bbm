@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\{AuthController, ReceiverController, TransactionController};
+use App\Http\Controllers\Api\{AuthController, ReceiverController, TransactionController, UserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +24,9 @@ Route::group(['middleware' => ['validate.rest.token', 'enable.cors']], function 
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('transaction')->group(function () {
             Route::post('add', [TransactionController::class, 'addTransaction']);
+        });
+        Route::prefix('user')->group(function () {
+            Route::get('/', [UserController::class, 'getUser']);
         });
         Route::get('receivers/{nik}', [ReceiverController::class, 'show']);
     });

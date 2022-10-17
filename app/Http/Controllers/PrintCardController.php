@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PrintCardRequest;
 use App\Services\ReceiversService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PrintCardController extends Controller
 {
@@ -18,37 +18,46 @@ class PrintCardController extends Controller
 
     /**
      * show searching card by nik
-     * 
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         return view('dashboard.pages.card.index');
     }
 
     /**
      * check nik
-     * 
+     *
+     * @param PrintCardRequest $request
+     *
      * @return RedirectResponse
      */
-    public function checkNik(PrintCardRequest $request) : RedirectResponse
+
+    public function checkNik(PrintCardRequest $request): RedirectResponse
     {
         $data = $this->receiverService->handleCheckNik($request);
-        if($data){
+        if ($data) {
             return back()->with(['success' => 'Data pengguna ditemukan !', 'data' => $data]);
-        }else{
+        } else {
             return back()->with('notfound', 'Data pengguna tidak ditemukan !');
         }
     }
 
     /**
      * print card
+     *
+     * @param PrintCardRequest $request
+     *
+     * @return View
+     *
      */
-    public function printCard(PrintCardRequest $request)
+    public function printCard(PrintCardRequest $request): View
     {
         $datas = [
             'data' => $this->receiverService->handleCheckNik($request)
         ];
-        
+
         return view('dashboard.pages.card.print', $datas);
     }
 }

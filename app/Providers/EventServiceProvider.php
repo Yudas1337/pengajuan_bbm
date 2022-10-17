@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
-use App\Models\User;
 use App\Models\Group;
-use App\Models\Station;
 use App\Models\Receiver;
+use App\Models\Station;
 use App\Models\Submission;
+use App\Models\SubmissionHistory;
+use App\Models\User;
 use App\Observers\GroupObserver;
-use App\Observers\UserObserver;
-use App\Observers\StationObserver;
 use App\Observers\ReceiverObserver;
+use App\Observers\StationObserver;
+use App\Observers\SubmissionHistoryObserver;
 use App\Observers\SubmissionObserver;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -41,6 +43,7 @@ class EventServiceProvider extends ServiceProvider
         Submission::observe(SubmissionObserver::class);
         Receiver::observe(ReceiverObserver::class);
         Group::observe(GroupObserver::class);
+        SubmissionHistory::observe(SubmissionHistoryObserver::class);
     }
 
     /**
