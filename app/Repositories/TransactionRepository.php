@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\SubmissionHistoryResource;
 use App\Models\SubmissionHistory;
 use App\Models\SubmissionReceiver;
 
@@ -95,15 +96,20 @@ class TransactionRepository extends BaseRepository
     }
 
     /**
-     * Add quota transaction history from receiver via model.
+     * Get transaction history from submission history via model.
      *
-     * @param array $data
+     * @param string $receiver_id
      *
-     * @return mixed
+     * @return object
      */
 
-    public function addTransactionHistory(array $data)
+    public function getTransactionHistory(string $receiver_id): object
     {
-        return $this->model->create($data);
+        return SubmissionHistoryResource::collection($this->model->query()
+            ->whereRelation('submission_receiver', 'receiver_id', '=', $receiver_id)
+            ->with(['user'])
+            ->take(10)
+            ->latest()
+            ->get());
     }
 }

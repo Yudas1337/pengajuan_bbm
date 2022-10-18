@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignUuid('receiver_id')->constrained();
             $table->foreignUuid('submission_id')->constrained();
             $table->integer('quota')->default(20);
+            $table->integer('default_quota')->default(20);
             $table->boolean('status')->default(0);
             $table->foreignUuid('validated_by')->nullable()->constrained('users');
             $table->timestamp('validated_at')->nullable();

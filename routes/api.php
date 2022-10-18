@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\{AuthController, ReceiverController, TransactionController, UserController};
+use App\Http\Controllers\Api\{AuthController,
+    ReceiverController,
+    TransactionController,
+    TransactionHistoryController,
+    UserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +27,9 @@ Route::group(['middleware' => ['validate.rest.token', 'enable.cors']], function 
     });
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('transaction')->group(function () {
+            Route::prefix('history')->group(function () {
+                Route::get('{receiver}', [TransactionHistoryController::class, 'index']);
+            });
             Route::post('add', [TransactionController::class, 'addTransaction']);
         });
         Route::prefix('user')->group(function () {

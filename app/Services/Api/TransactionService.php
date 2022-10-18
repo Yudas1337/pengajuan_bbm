@@ -54,7 +54,7 @@ class TransactionService extends BaseRepository
      *
      * @param QuotaTransactionRequest $request
      *
-     * @return mixed
+     * @return JsonResponse
      */
 
     public function handleQuotaTransaction(QuotaTransactionRequest $request): JsonResponse
@@ -66,7 +66,7 @@ class TransactionService extends BaseRepository
         $updated_quota = $submission->quota - $data['quota_cost'];
 
         $this->repository->reduceReceiverQuota($data['submission_id'], $data['receiver_id'], $updated_quota);
-        $this->repository->addTransactionHistory([
+        $this->repository->store([
             'submission_receiver_id' => $submission->id,
             'quota_cost' => $data['quota_cost'],
             'user_id' => auth()->id()

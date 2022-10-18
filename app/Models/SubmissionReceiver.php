@@ -11,11 +11,10 @@ class SubmissionReceiver extends Model
     use HasFactory;
 
     public $incrementing = false;
-    public $fillable = ['id', 'receiver_id', 'submission_id', 'quota', 'status', 'validated_by', 'validated_at'];
+    public $fillable = ['id', 'receiver_id', 'submission_id', 'quota', 'default_quota', 'status', 'validated_by', 'validated_at'];
     public $keyType = 'char';
     protected $table = 'submission_receivers';
     protected $primaryKey = 'id';
-
 
     /**
      * One-to-Many relationship with Receiver Model
