@@ -15,7 +15,7 @@ class Submission extends Model
     public $incrementing = false;
     protected $table = 'submissions';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'group_id', 'district_id', 'village_id', 'station_id', 'receiver_type', 'letter_file', 'excel_file', 'start_time', 'end_time', 'status', 'created_by', 'validated_by_penyuluh', 'validated_by_petugas', 'validated_by_kepala_dinas', 'updated_at'];
+    protected $fillable = ['id', 'group_id', 'district_id', 'village_id', 'station_id', 'receiver_type', 'letter_file', 'excel_file', 'start_time', 'end_time', 'status', 'created_by', 'validated_by_penyuluh', 'validated_by_petugas', 'validated_by_kepala_dinas', 'approval_message', 'updated_at'];
     protected $keyType = 'char';
 
     /**

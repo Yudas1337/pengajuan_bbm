@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('group_name', 150)->unique();
+            $table->string('receiver_type')->nullable();
             $table->foreignUuid('group_leader_id')->constrained('users');
             $table->timestamps();
         });

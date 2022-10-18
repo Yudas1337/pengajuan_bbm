@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GroupRequest extends BaseRequest
@@ -14,8 +15,9 @@ class GroupRequest extends BaseRequest
     public function rules() : array
     {
         return [
-            'group_name'    => 'required|unique:groups|max:150',
-            'group_leader_id'  => 'required|exists:users,id'
+            'group_name'    => ['required', 'max:150', Rule::unique('groups')->ignore($this->group)],
+            'group_leader_id'  => 'required|exists:users,id',
+            'receiver_type' => 'required'
         ];
     }
 
@@ -33,6 +35,7 @@ class GroupRequest extends BaseRequest
             'group_name.max' => 'Nama group terlalu panjang!',
             'group_leader_id.required' => 'Ketua kelompok tidak boleh kosong!',
             'group_leader_id.exists' => 'Ketua kelompok tidak ditemukan!',
+            'receiver_type.required' => 'Jenis penerima tidak boleh kosong!'
         ];
     }
 }

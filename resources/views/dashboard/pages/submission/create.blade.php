@@ -31,6 +31,21 @@
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
                              style="display: block">
+                             @if( auth()->user()->roles->pluck('name')[0] === "Penyuluh" || auth()->user()->roles->pluck('name')[0] === "Petugas Pelayanan")
+                             <div class="mb-3 row error-placeholder">
+                                <label class="col-form-label col-sm-3 text-sm-right">Filter Ketua Kelompok <small
+                                        class="text-danger">*</small></label>
+                                <div class="col-sm-6">
+                                    <select id="select-filter-districts"
+                                            class="form-control select2-ajax">
+                                        <option value="">--Pilih--</option>
+                                        @foreach ($districts as $district)
+                                            <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                             @endif
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
@@ -38,10 +53,6 @@
                                     <select id="select-group" name="group_id"
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
                                         <option value="">--Pilih--</option>
-                                        @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}"
-                                                    data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -59,7 +70,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-districts" name="district_id"
-                                            class="form-control select2-ajax">
+                                            class="form-control select2-ajax" disabled>
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -72,7 +83,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-villages" name="village_id"
-                                            class="form-control select2-ajax">
+                                            class="form-control select2-ajax" disabled>
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -84,7 +95,7 @@
                                     @foreach ($stations as $station)
                                         <label class="form-check">
                                             <input value="{{ $station->id  }}" name="station_id" type="radio"
-                                                   class="form-check-input">
+                                                   class="form-check-input" disabled>
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
                                     @endforeach
@@ -98,11 +109,11 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input value="Nelayan" name="receiver_type" type="radio"
-                                               class="form-check-input">
+                                               class="form-check-input" disabled>
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
                                         <input value="Pembudidaya" name="receiver_type" type="radio"
-                                               class="form-check-input">
+                                               class="form-check-input" disabled>
                                         <span class="form-check-label">Pembudidaya</span>
                                     </label>
                                 </div>
@@ -135,6 +146,7 @@
                                     </li>
                                     <li>Ekstensi file yang diperbolehkan yaitu excel / csv.</li>
                                     <li>Pastikan file yang dipilih telah benar dan sesuai.</li>
+                                    <li>Pastikan nama kelompok sudah terdaftar pada menu group.</li>
                                 </ul>
                             </div>
                         </div>
@@ -186,7 +198,7 @@
             <form method="POST" id="receivers-form">
                 @csrf
                 <div id="data-verification" class="tab-pane" role="tabpanel"
-                     style="display: none; min-height: 900px">
+                     style="display: none; min-height: 950px">
                     <div class="mb-3 row">
                         <div class="col-lg-10 alert alert-warning" role="alert">
                             <div class="alert-message">
@@ -281,12 +293,78 @@
                 return err
             }
 
+            if("{{ $user_role }}" === "Ketua Kelompok"){
+                setFieldValue()
+            }
+
             // select group change
             $('#select-group').change(function () {
+                setFieldValue()
+            })
+
+            function setFieldValue() {
                 var select = document.getElementById("select-group");
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
+                var user = JSON.parse(select.options[select.selectedIndex].getAttribute('data-user'))
+                var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
+                var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
+                var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
 
-                $('#leader-name').val(group.name)
+
+                // page 1 
+                $('#leader-name').val(user.name)
+                let optionDistrict = `<option value="${district.id}">${district.name}</option>`
+                $('#select-districts').html(optionDistrict)
+                let optionVillage = `<option value="${village.id}">${village.name}</option>`
+                $('#select-villages').html(optionVillage)
+
+                let itemStation = $('input[name="station_id"]')
+                for(let i = 0; i < itemStation.length; i++) {
+                    if(itemStation[i].value == station.id){
+                        itemStation.removeAttr('checked')
+                        itemStation[i].setAttribute('checked', true)
+                    }
+                }
+
+                // page 2 
+                let receiverType = $('input[name="receiver_type"]')
+                for(let i = 0; i < receiverType.length; i++) {
+                    if(receiverType[i].value == group.receiver_type){
+                        receiverType.removeAttr('checked')
+                        receiverType[i].setAttribute('checked', true)
+                    }
+                }
+            }
+
+            $('#select-filter-districts').change(function(){
+                const url = `{{ route('getGroupByKecamatan', ':id') }}`.replace(':id', $(this).val())
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    success: function(groups) {
+                        let option = ''
+                        groups.map(group => {
+                            option += `<option
+                            data-group = '${JSON.stringify(group)}'
+                            data-district = '${JSON.stringify(group.user.district)}'
+                            data-village = '${JSON.stringify(group.user.village)}'
+                            data-station = '${JSON.stringify(group.user.station)}'
+                            data-user = '${JSON.stringify(group.user)}'
+                            value="${group.id}">${group.group_name}</option>`
+                        })
+
+                        $('#select-group').html(option)
+
+                        document.getElementById('smartwizard-validation').reset()
+                        $('#select-districts').val('').trigger('change')
+                        $('#select-villages').val('').trigger('change')
+                        $('input[name="station_id"]').removeAttr('checked')
+                        $('input[name="receiver_type"]').removeAttr('checked')
+
+                        setFieldValue()
+                    }
+                })
             })
 
             // form detail

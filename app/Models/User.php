@@ -33,7 +33,8 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'district_id'
+        'district_id',
+        'village_id'
     ];
 
     /**
@@ -75,6 +76,16 @@ class User extends Authenticatable
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
+    }
+
+    /**
+     * One-to-many relationship with Village Model
+     * 
+     * @return BelongsTo
+     */
+    public function village(): BelongsTo
+    {
+        return $this->belongsTo(Village::class);
     }
 
     /**

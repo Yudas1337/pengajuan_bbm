@@ -244,8 +244,29 @@
                             </table>
                         </div>
                     </div>
+                    @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                    <div class="mb-3 row">
+                        <div class="col-12">
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
+                                <small>(isi keterangan jika anda menolak pengajuan)</small>
+                                <textarea rows="5" class="form-control @error('group_name') is-invalid @enderror"></textarea>
+                                @error('group_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="mb-3 row">
                         <label class="form-check m-0">
+                            @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                            <button id="" type="button" class="btn btn-danger">Tolak
+                                Pengajuan
+                            </button>
+                            @endif
                             <button id="submit-form-button" type="button" class="btn btn-success">Verifikasi
                                 Pengajuan
                             </button>

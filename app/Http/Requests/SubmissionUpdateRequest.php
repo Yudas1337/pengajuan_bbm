@@ -13,6 +13,7 @@ class SubmissionUpdateRequest extends BaseRequest
     {
         return [
             'submission_id' => 'required',
+            'group_id'  => 'required',
             'group_name' => 'required',
             'group_leader' => 'required',
             'district_id' => 'required',
@@ -34,6 +35,7 @@ class SubmissionUpdateRequest extends BaseRequest
     public function messages(): array
     {
         return [
+            'group_id.required' => 'Nama Kelompok tidak boleh kosong',
             'group_name.required' => 'Nama Kelompok tidak boleh kosong',
             'group_leader.required' => 'Nama Ketua Kelompok tidak boleh kosong',
             'district_id.required' => 'Kecamatan tidak boleh kosong',

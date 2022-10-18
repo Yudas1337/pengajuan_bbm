@@ -40,6 +40,26 @@
 
                                 @enderror
                             </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Jenis Penerima <small class="text-danger">*</small></label>
+                                <div class="col-sm-6">
+                                    <label class="form-check">
+                                        <input value="Nelayan" {{ ($group->receiver_type === "Nelayan") ? 'checked' : '' }} name="receiver_type" type="radio"
+                                            class="form-check-input @error('receiver_type') is-invalid @enderror">
+                                        <span class="form-check-label">Nelayan</span>
+                                    </label> 
+                                    <label class="form-check">
+                                        <input value="Pembudidaya" {{ ($group->receiver_type === "Pembudidaya") ? 'checked' : '' }} name="receiver_type" type="radio"
+                                            class="form-check-input @error('receiver_type') is-invalid @enderror">
+                                        <span class="form-check-label">Pembudidaya</span>
+                                    </label>
+                                </div>
+                                @error('receiver_type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -115,6 +115,7 @@ class SubmissionRepository extends BaseRepository
     {
         return $this->model->query()
             ->select('id', 'group_id')
+            ->with('group.user')
             ->where('created_by', auth()->id())
             ->onlyTrashed();
     }

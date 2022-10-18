@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Services\GroupService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupRequest;
+use App\Models\District;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class GroupController extends Controller
@@ -107,5 +109,17 @@ class GroupController extends Controller
         if (!$destroy) return back()->with('errors', trans('alert.delete_constrained'));
 
         return back()->with('success', trans('alert.delete_success'));
+    }
+
+    /**
+     * get group by kecamatan
+     * 
+     * @param District $district
+     * 
+     * @return JsonResponse
+     */
+    public function getGroupByKecamatan(District $district): JsonResponse
+    {
+        return response()->json($this->service->handleGetByKecamatan($district->id));
     }
 }

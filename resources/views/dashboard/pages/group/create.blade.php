@@ -23,7 +23,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Ketua Kelompok <small class="text-danger">*</small></label>
-                                <select name="group_leader_id" class="form-control select2-ajax">
+                                <select name="group_leader_id" class="form-control select2-ajax @error('group_leader_id') is-invalid @enderror">
                                     @foreach($leader as $l)
                                         <option value="{{ $l->id }}">{{ $l->name }}</option>
                                     @endforeach
@@ -33,6 +33,26 @@
                                     <strong class="text-danger">{{ $message }}</strong>
                                 </span>
 
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Jenis Penerima <small class="text-danger">*</small></label>
+                                <div class="col-sm-6">
+                                    <label class="form-check">
+                                        <input value="Nelayan" name="receiver_type" type="radio"
+                                            class="form-check-input @error('receiver_type') is-invalid @enderror">
+                                        <span class="form-check-label">Nelayan</span>
+                                    </label> 
+                                    <label class="form-check">
+                                        <input value="Pembudidaya" name="receiver_type" type="radio"
+                                            class="form-check-input @error('receiver_type') is-invalid @enderror">
+                                        <span class="form-check-label">Pembudidaya</span>
+                                    </label>
+                                </div>
+                                @error('receiver_type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>

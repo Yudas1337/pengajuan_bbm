@@ -83,12 +83,12 @@
                         searchable: false
                     },
                     {
-                        data: 'group_name',
-                        name: 'group_name'
+                        data: 'group.group_name',
+                        name: 'group.group_name'
                     },
                     {
-                        data: 'group_leader',
-                        name: 'group_leader'
+                        data: 'group.user.name',
+                        name: 'group.user.name'
                     },
                     {
                         data: 'action',

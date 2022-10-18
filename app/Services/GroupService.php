@@ -81,4 +81,15 @@ class GroupService {
     {
         return $this->repository->destroy($id);
     }
+
+    /**
+     * handle get group by kecamatan
+     * 
+     * @param string $districtId
+     * @return object|null
+     */
+    public function handleGetByKecamatan(string $districtId): object|null
+    {
+        return $this->repository->getGroupByKecamatan($districtId);
+    }
 }

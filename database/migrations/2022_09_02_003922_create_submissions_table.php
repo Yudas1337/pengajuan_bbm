@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->foreignUuid('station_id')->nullable()->constrained();
             $table->string('receiver_type', 100)->nullable();
             $table->text('letter_file')->nullable();
+            $table->text('letter_verification')->nullable();
             $table->text('excel_file')->nullable();
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration {
             $table->foreignUuid('validated_by_penyuluh')->nullable()->constrained('users');
             $table->foreignUuid('validated_by_petugas')->nullable()->constrained('users');
             $table->foreignUuid('validated_by_kepala_dinas')->nullable()->constrained('users');
+            $table->string('approval_message')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

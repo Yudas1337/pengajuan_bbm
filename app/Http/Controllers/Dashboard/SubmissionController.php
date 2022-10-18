@@ -78,7 +78,8 @@ class SubmissionController extends Controller
             'stations' => $this->stationService->handleGetAllStations(),
             'districts' => $this->districtService->handleGetAllDistricts(),
             'id' => $submission_id,
-            'groups' => $this->groupService->handleFetchGroups()
+            'groups' => $this->groupService->handleFetchGroups(),
+            'user_role' => auth()->user()->roles->pluck('name')[0],
         ];
 
         return view('dashboard.pages.submission.create', $datas);
@@ -119,7 +120,7 @@ class SubmissionController extends Controller
         $this->submissionService->handleUpdateSubmission($request);
 
         session()->flash('success', trans('alert.update_success'));
-        // dd();
+
         return response()->json([
             'success' => true,
             'message' => trans('alert.update_success')

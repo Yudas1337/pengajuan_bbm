@@ -27,11 +27,11 @@ use Illuminate\Support\Facades\{Auth, Route};
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/card', [PrintCardController::class, 'index'])->name('card');
+Route::get('/', [PrintCardController::class, 'index'])->name('card');
 Route::post('/check-nik', [PrintCardController::class, 'checkNik'])->name('check-nik');
 
 Route::post('/print-card', [PrintCardController::class, 'printCard'])->name('print-card');
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         'groups' => GroupController::class
     ], ['except' => ['show']]);
     Route::resource('submissions', SubmissionController::class)->except('update');
+    Route::get('getGroupByKecamatan/{district}', [GroupController::class, 'getGroupByKecamatan'])->name('getGroupByKecamatan');
 
     Route::name('submission.')->group(function () {
         Route::post('update-submission', [SubmissionController::class, 'updateSubmission'])->name('updateSubmission');

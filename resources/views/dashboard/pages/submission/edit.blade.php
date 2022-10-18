@@ -39,7 +39,13 @@
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}" 
+                                                data-group="{{ $group }}"
+                                                data-district="{{ $group->user->district }}"
+                                                data-village="{{ $group->user->village }}"
+                                                data-station="{{ $group->user->station }}"
+                                                data-user="{{ $group->user }}" 
+                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,7 +54,7 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
+                                    <input id="leader-name" readonly="true" value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
                                         type="text" class="form-control">
                                 </div>
                             </div>
@@ -56,7 +62,7 @@
                                 <label class="col-form-label col-sm-3 text-sm-right">Kecamatan <small
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <select id="select-districts" name="district_id" class="form-control select2-ajax">
+                                    <select id="select-districts" name="district_id" class="form-control select2-districts">
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}"
@@ -70,7 +76,7 @@
                                 <label class="col-form-label col-sm-3 text-sm-right">Desa/Kelurahan <small
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <select id="select-villages" name="village_id" class="form-control select2-ajax">
+                                    <select id="select-villages" name="village_id" class="form-control select2-villages">
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -81,9 +87,9 @@
                                 <div class="col-sm-6">
                                     @foreach ($stations as $station)
                                         <label class="form-check">
-                                            <input {{ $submission->station_id == $station->id ? 'checked' : '' }}
+                                            <input
                                                 value="{{ $station->id }}" name="station_id" type="radio"
-                                                class="form-check-input">
+                                                class="form-check-input" readonly="true">
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
                                     @endforeach
@@ -96,14 +102,14 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input {{ $submission->receiver_type == 'Nelayan' ? 'checked' : '' }}
+                                        <input
                                             value="Nelayan" name="receiver_type" type="radio"
-                                            class="form-check-input">
+                                            class="form-check-input" readonly="true">
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
-                                        <input {{ $submission->receiver_type == 'Pembudidaya' ? 'checked' : '' }}
+                                        <input
                                             value="Pembudidaya" name="receiver_type" type="radio"
-                                            class="form-check-input">
+                                            class="form-check-input" readonly="true">
                                         <span class="form-check-label">Pembudidaya</span>
                                     </label>
                                 </div>
@@ -297,24 +303,57 @@
                 return err
             }
 
-            // set leader name on load 
-            setLeaderName()
+            // set selected value on load 
+            setSelectedValue()
             // select group change 
             $('#select-group').change(function() {
-                setLeaderName()
+                setSelectedValue()
             })
 
-            function setLeaderName() {
-                var select = document.getElementById( "select-group" );
+            function setSelectedValue() {
+                var select = document.getElementById("select-group");
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
-                
-                $('#leader-name').val(group.name)
+                var user = JSON.parse(select.options[select.selectedIndex].getAttribute('data-user'))
+                var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
+                var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
+                var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
+
+                // page 1 
+                $('#leader-name').val(user.name)
+                let optionDistrict = `<option value="${district.id}">${district.name}</option>`
+                $('#select-districts').html(optionDistrict)
+                let optionVillage = `<option value="${village.id}">${village.name}</option>`
+                $('#select-villages').html(optionVillage)
+
+                let itemStation = $('input[name="station_id"]')
+                for(let i = 0; i < itemStation.length; i++) {
+                    if(itemStation[i].value == station.id){
+                        itemStation.removeAttr('checked')
+                        itemStation[i].setAttribute('checked', true)
+                    }
+                }
+
+                // page 2 
+                let receiverType = $('input[name="receiver_type"]')
+                for(let i = 0; i < receiverType.length; i++) {
+                    if(receiverType[i].value == group.receiver_type){
+                        receiverType.removeAttr('checked')
+                        receiverType[i].setAttribute('checked', true)
+                    }
+                }
             }
 
+            $('#select-districts').select2();
+            $('#select-villages').select2();
+            
             // form detail
             $('#submit-form-button').click(() => {
                 const form = new FormData(document.getElementById('smartwizard-validation'))
                 form.append('submission_id', submission_id)
+
+                for (var pair of form.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]); 
+                }
                 let url = `{{ route('submission.updateSubmission') }}`;
                 $.ajax({
                     url: url,

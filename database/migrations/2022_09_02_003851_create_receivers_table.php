@@ -24,7 +24,6 @@ return new class extends Migration {
             $table->enum('gender', ['Perempuan', 'Laki-laki'])->nullable();
             $table->string('birth_place', 100)->nullable();
             $table->date('birth_date')->nullable();
-            $table->string('profession', 100);
             $table->string('province', 100)->nullable();
             $table->string('regency', 100)->nullable();
             $table->string('district', 100)->nullable();

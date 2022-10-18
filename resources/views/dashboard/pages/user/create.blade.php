@@ -97,6 +97,17 @@
                                 </span>
                             @enderror
                         </div>
+                        <div id="container-village" class="mb-3 col-md-12" style="display: none">
+                            <label class="form-label">Lokasi Desa<small class="text-danger">*</small> </label>
+                            <select id="select-village" name="village_id" class="form-control select-village">
+                                <option value="">--Pilih Desa--</option>
+                            </select>
+                            @error('village_id')
+                            <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="reset" class="btn btn-secondary">Kosongkan form</button>
                     </form>
@@ -115,11 +126,37 @@
                 const roles = $('#select-roles').val()
                 if (roles === 'Penyuluh') {
                     $('#container-districts').css('display', 'block')
-                } else {
+                    $('#container-village').css('display', 'none')
+                } else if(roles === 'Ketua Kelompok'){
+                    $('#container-districts').css('display', 'block')
+                    $('#container-village').css('display', 'block')
+                }else {
                     $('#container-districts').css('display', 'none')
+                    $('#container-village').css('display', 'none')
                 }
             })
             $('.select-districts').select2()
+
+            $('#select-districts').change(function(){
+                const district_id = $('#select-districts').val()
+                const url = `{{ route('districts.villages', ':district_id') }}`.replace(':district_id', district_id)
+                $.ajax({
+                    method: "GET",
+                    url: url,
+                    dataType: 'JSON',
+                    success: function(e) {
+                        let option = ""
+
+                        e.map(val => {
+                            option += `<option value="${val.id}">${val.name}</option>`
+                        })
+
+                        $('#select-village').html(option)
+                    }
+                })
+            })
+
+            $('.select-village').select2()
             $('.select2-ajax').select2({
                 ajax: {
                     url: `{{ route('stations.performAjax') }}`,

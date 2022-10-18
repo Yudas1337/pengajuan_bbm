@@ -20,6 +20,7 @@
                                 <th>No</th>
                                 <th>Nama Kelompok</th>
                                 <th>Ketua Kelompok</th>
+                                <th>Jenis Penerima</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -71,6 +72,10 @@
                     {
                         data: 'user.name',
                         name: 'user.name'
+                    },
+                    {
+                        data: 'receiver_type',
+                        name: 'receiver_type'
                     },
                     {
                         data: 'action',

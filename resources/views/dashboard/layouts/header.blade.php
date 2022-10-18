@@ -5,7 +5,7 @@
 <meta name="author" content="Yudas Malabi">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{ config('app.name') }}</title>
+<title>{{ config('app.name') . ' | ' . explode('.', request()->route()->getName())[0] }}</title>
 
 <link rel="shortcut icon" href="{{ asset('app-assets/img/favicon.ico') }}">
 
