@@ -49,4 +49,16 @@ class SubmissionReceiver extends Model
     {
         return $this->belongsTo(User::class, 'validated_by');
     }
+
+    /**
+     * scope a query search by verified submission
+     * @param mixed $query
+     *
+     * @return object|null
+     */
+
+    public function scopeActive(mixed $query): object|null
+    {
+        return $query->where('submission_receivers.status', 1);
+    }
 }
