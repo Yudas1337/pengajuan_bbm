@@ -39,7 +39,13 @@
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}" 
+                                                data-group="{{ $group }}"
+                                                data-district="{{ $group->user->district }}"
+                                                data-village="{{ $group->user->village }}"
+                                                data-station="{{ $group->user->station }}"
+                                                data-user="{{ $group->user }}"  
+                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -250,7 +256,7 @@
                             <div class="mb-3 col-md-12">
                                 <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
                                 <small>(isi keterangan jika anda menolak pengajuan)</small>
-                                <textarea rows="5" class="form-control @error('group_name') is-invalid @enderror"></textarea>
+                                <textarea rows="5" name="approval_message" class="form-control @error('group_name') is-invalid @enderror"></textarea>
                                 @error('group_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
@@ -263,7 +269,7 @@
                     <div class="mb-3 row">
                         <label class="form-check m-0">
                             @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
-                            <button id="" type="button" class="btn btn-danger">Tolak
+                            <button id="reject-form-button" type="button" class="btn btn-danger">Tolak
                                 Pengajuan
                             </button>
                             @endif
@@ -304,19 +310,83 @@
                 return err
             }
 
-            // set leader name on load 
-            setLeaderName()
+            // set selected value on load 
+            setSelectedValue()
             // select group change 
             $('#select-group').change(function() {
-                setLeaderName()
+                setSelectedValue()
             })
 
-            function setLeaderName() {
-                var select = document.getElementById( "select-group" );
+            function setSelectedValue() {
+                var select = document.getElementById("select-group");
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
-                
-                $('#leader-name').val(group.name)
+                var user = JSON.parse(select.options[select.selectedIndex].getAttribute('data-user'))
+                var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
+                var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
+                var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
+
+                // page 1 
+                $('#leader-name').val(user.name)
+                let optionDistrict = `<option value="${district.id}">${district.name}</option>`
+                $('#select-districts').html(optionDistrict)
+                let optionVillage = `<option value="${village.id}">${village.name}</option>`
+                $('#select-villages').html(optionVillage)
+
+                let itemStation = $('input[name="station_id"]')
+                for(let i = 0; i < itemStation.length; i++) {
+                    if(itemStation[i].value == station.id){
+                        itemStation.removeAttr('checked')
+                        itemStation[i].setAttribute('checked', true)
+                    }
+                }
+
+                // page 2 
+                let receiverType = $('input[name="receiver_type"]')
+                for(let i = 0; i < receiverType.length; i++) {
+                    if(receiverType[i].value == group.receiver_type){
+                        receiverType.removeAttr('checked')
+                        receiverType[i].setAttribute('checked', true)
+                    }
+                }
             }
+
+            $('#reject-form-button').click(() => {
+                const confirm = window.confirm("Apakah anda yakin ingin menolak pengajuan ini ?")
+                if (confirm) {
+                    const approval_message = $('textarea[name="approval_message"]').val()
+                    const form = new FormData(document.getElementById('smartwizard-validation'))
+                    form.append('submission_id', submission_id)
+                    form.append('approval_message', approval_message)
+                    
+                    let url = `{{ route('submission.updateSubmission') }}`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: {
+                            _token: CSRF_TOKEN
+                        },
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        enctype: 'multipart/form-data',
+                        data: form,
+                        success: (data) => {
+                            window.location = `{{ route('submission.unverified') }}`
+                        },
+                        error: (err) => {
+                            let errors = HandleError(err.responseJSON.errors)
+                            $('#container-error').css('display', 'block')
+
+                            let tags = ``
+                            errors.map((data) => {
+                                tags += `<li class="mt-1">${data}</li>`
+                            })
+
+                            $('#ul-error').html(tags)
+                        }
+                    })
+                }
+            })
 
             // form detail
             $('#submit-form-button').click(() => {

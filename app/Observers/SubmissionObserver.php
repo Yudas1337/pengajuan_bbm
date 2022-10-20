@@ -39,14 +39,16 @@ class SubmissionObserver
         } else if (UserHelper::checkRolePetugas()) {
             $submission->validated_by_petugas = auth()->id();
         } else if (UserHelper::checkRoleKepalaDinas()) {
-            $submission->validated_by_kepala_dinas = auth()->id();
-            $submission->start_time = now();
-            $submission->end_time = now()->addMonths(3);
-            $submission->submission_receivers()->update([
-                'status' => 1,
-                'validated_by' => auth()->id(),
-                'validated_at' => now()
-            ]);
+            if($submission->approval_message === null){
+                $submission->validated_by_kepala_dinas = auth()->id();
+                $submission->start_time = now();
+                $submission->end_time = now()->addMonths(3);
+                $submission->submission_receivers()->update([
+                    'status' => 1,
+                    'validated_by' => auth()->id(),
+                    'validated_at' => now()
+                ]);
+            }
         }
         
     }

@@ -81,7 +81,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 'id' => Uuid::uuid(),
                 'receiver_id' => $receiver['id'],
                 'submission_id' => $submission_id,
-                'quota' => $row['kuota']
+                'quota' => $row['kuota'],
+                'default_quota' => $row['kuota']
             ]
         );
 
