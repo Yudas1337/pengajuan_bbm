@@ -133,6 +133,12 @@ trait YajraTable
             ->addColumn('action', function ($data) {
                 return view('dashboard.pages.submission.trashed_btn', compact('data'));
             })
+            ->editColumn('group.group_name', function($data) {
+                return $data->group->group_name ?? "Kelompok Belum Dipilih";
+            })
+            ->editColumn('group.user.name', function($data) {
+                return $data->group->user->name ?? "Ketua Kelompok Belum Dipilih";
+            })
             ->editColumn('date', function ($data) {
                 return Carbon::parse($data->date)->format('d-m-Y');
             })
