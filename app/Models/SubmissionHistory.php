@@ -17,7 +17,7 @@ class SubmissionHistory extends Model
     protected $keyType = 'char';
 
     /**
-     * One-to-Many relationship with Submission Model
+     * One-to-Many relationship with SubmissionEvent Model
      *
      * @return BelongsTo
      */

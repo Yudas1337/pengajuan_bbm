@@ -2,13 +2,14 @@
 
 namespace App\Observers;
 
+use App\Events\SubmissionEvent;
 use App\Helpers\UserHelper;
 use App\Models\Submission;
 
 class SubmissionObserver
 {
     /**
-     * Handle the Submission "creating" event.
+     * Handle the SubmissionEvent "creating" event.
      *
      * @param Submission $submission
      * @return void
@@ -26,7 +27,7 @@ class SubmissionObserver
     }
 
     /**
-     * Handle the Submission "updating" event.
+     * Handle the SubmissionEvent "updating" event.
      *
      * @param Submission $submission
      * @return void
@@ -39,7 +40,7 @@ class SubmissionObserver
         } else if (UserHelper::checkRolePetugas()) {
             $submission->validated_by_petugas = auth()->id();
         } else if (UserHelper::checkRoleKepalaDinas()) {
-            if($submission->approval_message === null){
+            if ($submission->approval_message === null) {
                 $submission->validated_by_kepala_dinas = auth()->id();
                 $submission->start_time = now();
                 $submission->end_time = now()->addMonths(3);
@@ -48,8 +49,13 @@ class SubmissionObserver
                     'validated_by' => auth()->id(),
                     'validated_at' => now()
                 ]);
+            } else {
+                $submission->validated_by_penyuluh = null;
+                $submission->validated_by_petugas = null;
+
+                event(new SubmissionEvent());
             }
         }
-        
+
     }
 }

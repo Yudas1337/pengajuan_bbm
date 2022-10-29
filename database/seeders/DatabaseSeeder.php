@@ -17,12 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Artisan::call('import:districts');
         $this->call([
             StationSeeder::class,
             RoleSeeder::class,
             UserSeeder::class
         ]);
-
-        Artisan::call('import:districts');
     }
 }
