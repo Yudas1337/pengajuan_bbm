@@ -52,7 +52,18 @@
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
-                                        <option value="">--Pilih--</option>
+                                            <option value="">--Pilih--</option>
+                                            @if(auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok")
+                                                @foreach ($groups as $group)
+                                                    <option value="{{ $group->id }}" 
+                                                        data-group="{{ $group }}"
+                                                        data-district="{{ $group->user->district }}"
+                                                        data-village="{{ $group->user->village }}"
+                                                        data-station="{{ $group->user->station }}"
+                                                        data-user="{{ $group->user }}" 
+                                                        {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                                @endforeach
+                                            @endif
                                     </select>
                                 </div>
                             </div>
@@ -298,6 +309,7 @@
             }
 
             // select group change
+            $('#select-group').trigger('change')
             $('#select-group').change(function () {
                 setFieldValue()
             })

@@ -43,7 +43,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 'gender' => ($row['jenis_kelamin'] === '-') ? null : $row['jenis_kelamin'],
                 'birth_place' => $row['tempat_lahir'],
                 'birth_date' => ($row['tanggal_lahir'] === '-') ? null : $row['tanggal_lahir'],
-                'profession' => $row['profesi_utama'],
                 'province' => $row['provinsi'],
                 'regency' => $row['kabupatenkota'],
                 'district' => $row['kecamatan'],

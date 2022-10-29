@@ -33,7 +33,7 @@ class GroupRepository extends BaseRepository {
 
     public function fetchGroups() : mixed
     {
-        return $this->model->all();
+        return $this->model->with(['user.district', 'user.village', 'user.station'])->get();
     }
 
     /**

@@ -30,7 +30,6 @@ class SubmissionRepository extends BaseRepository
         return $this->model->query()
             ->select('id', 'group_id', 'status', 'start_time', 'end_time')
             ->with('group.user')
-            ->whereHas('group')
             ->author()
             ->latest();
     }

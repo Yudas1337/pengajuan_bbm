@@ -81,7 +81,6 @@ class SubmissionController extends Controller
             'groups' => $this->groupService->handleFetchGroups(),
             'user_role' => auth()->user()->roles->pluck('name')[0],
         ];
-
         return view('dashboard.pages.submission.create', $datas);
     }
 
@@ -103,7 +102,6 @@ class SubmissionController extends Controller
             'submission' => $this->submissionService->handleShowSubmission($id),
             'groups' => $this->groupService->handleFetchGroups()
         ];
-
         return view('dashboard.pages.submission.edit', $datas);
     }
 

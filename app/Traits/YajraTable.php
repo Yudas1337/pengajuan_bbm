@@ -92,6 +92,12 @@ trait YajraTable
             ->addColumn('action', function ($data) {
                 return view('dashboard.pages.submission.datatables', compact('data'));
             })
+            ->editColumn('group.group_name', function($data) {
+                return $data->group->group_name ?? "Kelompok Belum Dipilih";
+            })
+            ->editColumn('group.user.name', function($data) {
+                return $data->group->user->name ?? "Ketua Kelompok Belum Dipilih";
+            })
             ->editColumn('status', function ($data) {
                 return view('dashboard.pages.submission.status', compact('data'));
             })

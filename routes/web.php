@@ -31,6 +31,10 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/recommendation-letter', function () {
+    return view('documents.recommendation-letter');
+});
+
 Route::get('/', [PrintCardController::class, 'index'])->name('card');
 Route::post('/check-nik', [PrintCardController::class, 'checkNik'])->name('check-nik');
 
