@@ -49,7 +49,7 @@ class SubmissionService
     }
 
     /**
-     * Handle get a specified Submission by given id from SubmissionRepository
+     * Handle get a specified SubmissionEvent by given id from SubmissionRepository
      *
      * @param string $id
      *
@@ -247,7 +247,7 @@ class SubmissionService
 
     /**
      * get all submission data by kepala dinas
-     * 
+     *
      * @return mixed
      */
 
@@ -281,7 +281,7 @@ class SubmissionService
 
     /**
      * get all unverified submission data by kepala dinas
-     * 
+     *
      * @return mixed
      */
 
@@ -292,13 +292,13 @@ class SubmissionService
 
     /**
      * Handle get total quota
-     * 
+     *
      * @param string $submission_id
-     * 
+     *
      * @return int
      */
 
-    public function handleGetTotalQuota(string $submission_id) : int
+    public function handleGetTotalQuota(string $submission_id): int
     {
         return $this->repository->handleGetTotalQuota($submission_id);
     }

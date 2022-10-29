@@ -28,7 +28,7 @@ class SubmissionReceiver extends Model
     }
 
     /**
-     * One-to-Many relationship with Submission Model
+     * One-to-Many relationship with SubmissionEvent Model
      *
      * @return BelongsTo
      */

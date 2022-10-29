@@ -95,7 +95,7 @@ class SubmissionRepository extends BaseRepository
     }
 
     /**
-     * Handle Get all trashed submissions from Submission Model
+     * Handle Get all trashed submissions from SubmissionEvent Model
      *
      * @return object|null
      */
@@ -174,7 +174,7 @@ class SubmissionRepository extends BaseRepository
 
     /**
      * get verified submission by kepala dinas
-     * 
+     *
      * @return mixed
      */
 
@@ -227,7 +227,7 @@ class SubmissionRepository extends BaseRepository
 
     /**
      * get unverified submission by kepala dinas
-     * 
+     *
      * @return mixed
      */
 
@@ -244,17 +244,17 @@ class SubmissionRepository extends BaseRepository
 
     /**
      * handle get total quota
-     * 
+     *
      * @param string $submission_id
-     * 
+     *
      * @return int
-     * 
+     *
      */
 
-    public function handleGetTotalQuota(string $submission_id) : int
+    public function handleGetTotalQuota(string $submission_id): int
     {
         return $this->submissionReceiver->query()
-        ->where('submission_id', $submission_id)
-        ->sum('quota');
+            ->where('submission_id', $submission_id)
+            ->sum('quota');
     }
 }

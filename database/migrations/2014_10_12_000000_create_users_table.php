@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->softDeletes();
             $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('village_id')->references('id')->on('villages');
             $table->timestamps();
         });
     }

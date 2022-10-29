@@ -11,12 +11,13 @@
     Menu Utama
 </li>
 @can('validate-letter-of-recommendation')
-    <li class="sidebar-item {{ request()->routeIs('submission.*') ? 'active' : '' }}">
+    <li class="sidebar-item {{ request()->routeIs('submission.verified') || request()->routeIs('submission.unverified') ? 'active' : '' }}">
         <a data-bs-target="#verify-submissions" data-bs-toggle="collapse" class="sidebar-link collapsed">
-            <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Validasi Pengajuan</span>
+            <i class="align-middle" data-feather="check-square"></i> <span
+                class="align-middle">Validasi Pengajuan</span>
         </a>
         <ul id="verify-submissions"
-            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submission.*') ? 'show' : '' }}"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submission.verified') || request()->routeIs('submission.unverified') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             @can('validate-letter-of-recommendation')
                 <li
@@ -38,7 +39,7 @@
                 Pengajuan</span>
         </a>
         <ul id="submissions"
-            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.trashed') ? 'show' : '' }}"
+            class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submissions.*') || request()->routeIs('submission.trashed') || request()->routeIs('submission.createForm') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li
                 class="sidebar-item {{ request()->routeIs('submissions.create') || request()->routeIs('submission.createForm') ? 'active' : '' }}">
@@ -71,7 +72,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('stations.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('stations.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('stations.create') }}">Tambah
+                                                                                                    href="{{ route('stations.create') }}">Tambah
                     Data</a>
             </li>
             <li
@@ -97,7 +98,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('groups.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('groups.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('groups.create') }}">Tambah
+                                                                                                  href="{{ route('groups.create') }}">Tambah
                     Data</a>
             </li>
             <li
@@ -122,7 +123,8 @@
         <ul id="receivers"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('receivers.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
-            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a class="sidebar-link"
+            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a
+                    class="sidebar-link"
                     href="{{ route('receivers.create') }}">Tambah Data</a>
             </li>
             <li
@@ -146,7 +148,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('users.*') || request()->routeIs('user.inactive') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('users.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('users.create') }}">Tambah
+                                                                                                 href="{{ route('users.create') }}">Tambah
                     Data</a>
             </li>
             <li

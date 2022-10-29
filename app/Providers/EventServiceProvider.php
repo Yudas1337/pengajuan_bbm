@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\SubmissionEvent;
+use App\Listeners\SendSubmissionNotification;
 use App\Models\Group;
 use App\Models\Receiver;
 use App\Models\Station;
@@ -29,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SubmissionEvent::class => [
+            SendSubmissionNotification::class
+        ]
     ];
 
     /**
