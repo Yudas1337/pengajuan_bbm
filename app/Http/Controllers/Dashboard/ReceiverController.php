@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ReceiverRequest;
 use App\Models\Receiver;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Services\DistrictService;
 use App\Services\ReceiversService;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\ReceiverRequest;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ReceiverController extends Controller
 {

@@ -6,6 +6,8 @@ use App\Http\Requests\PrintCardRequest;
 use App\Http\Requests\ReceiverRequest;
 use App\Repositories\ReceiversRepository;
 use App\Traits\YajraTable;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReceiversService
 {
@@ -39,7 +41,20 @@ class ReceiversService
 
     public function handleStoreReceiver(ReceiverRequest $request): void
     {
-        $this->repository->store($request->validated());
+        $data = $this->repository->store($request->validated());
+
+        $url = config('app.api_url');
+
+        $image = QrCode::format('png')
+            ->size(500)
+            ->generate($url . 'receiver/' . $data['national_identity_number']);
+        $output_file = 'qr_file/' . $data['national_identity_number'] . '.png';
+        Storage::disk('public')->put($output_file, $image);
+
+        $this->repository->updateReceiver($data['id'], [
+            'barcode' => $output_file
+        ]);
+
     }
 
     /**
@@ -53,7 +68,29 @@ class ReceiversService
 
     public function handleUpdateReceiver(ReceiverRequest $request, string $id): void
     {
-        $this->repository->update($id, $request->validated());
+        $show = $this->repository->showReceiver($id);
+        $data = $request->validated();
+
+        if ($show->national_identity_number !== $data['national_identity_number']) {
+            if (file_exists(storage_path('app/public/' . $show->barcode))) {
+                Storage::delete('public/' . $show->barcode);
+
+                $url = config('app.api_url');
+                $image = QrCode::format('png')
+                    ->size(500)
+                    ->generate($url . 'receiver/' . $data['national_identity_number']);
+                $output_file = 'qr_file/' . $data['national_identity_number'] . '.png';
+                Storage::disk('public')->put($output_file, $image);
+
+                $this->repository->updateReceiver($show['id'], [
+                    'barcode' => $output_file
+                ]);
+
+            }
+        }
+
+        $this->repository->updateReceiver($id, $data);
+
     }
 
     /**
@@ -66,17 +103,23 @@ class ReceiversService
 
     public function handleDeleteReceiver(string $id): mixed
     {
-        return $this->repository->destroy($id);
+        $show = $this->repository->showReceiver($id);
+
+        if (file_exists(storage_path('app/public/' . $show->barcode))) {
+            Storage::delete('public/' . $show->barcode);
+        }
+
+        return $this->repository->DeleteReceiver($id);
     }
 
     /**
      * handle check nik
-     * 
+     *
      * @param PrintCardRequest $request
-     * 
+     *
      * @return object|null
      */
-    public function handleCheckNik(PrintCardRequest $request) : object|null
+    public function handleCheckNik(PrintCardRequest $request): object|null
     {
         $data = $request->validated();
         return $this->repository->getByNik($data['nik']);

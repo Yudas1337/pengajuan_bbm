@@ -30,16 +30,17 @@
 
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
-                            style="display: block;">
+                             style="display: block;">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
-                                class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
                                             class="form-control select2-ajax" disabled>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}"
+                                                    data-group="{{ $group->user }}" {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,8 +49,9 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
-                                        type="text" class="form-control">
+                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}"
+                                           autocomplete="off" name="group_leader"
+                                           type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -57,7 +59,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select disabled id="select-districts" name="district_id"
-                                        class="form-control select2-ajax">
+                                            class="form-control select2-ajax">
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}"
@@ -72,7 +74,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select disabled id="select-villages" name="village_id"
-                                        class="form-control select2-ajax">
+                                            class="form-control select2-ajax">
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -83,9 +85,10 @@
                                 <div class="col-sm-6">
                                     @foreach ($stations as $station)
                                         <label class="form-check">
-                                            <input disabled {{ $submission->station_id == $station->id ? 'checked' : '' }}
-                                                value="{{ $station->id }}" name="station_id" type="radio"
-                                                class="form-check-input">
+                                            <input disabled
+                                                   {{ $submission->station_id == $station->id ? 'checked' : '' }}
+                                                   value="{{ $station->id }}" name="station_id" type="radio"
+                                                   class="form-check-input">
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
                                     @endforeach
@@ -99,13 +102,13 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Nelayan' ? 'checked' : '' }}
-                                            value="Nelayan" name="receiver_type" type="radio"
-                                            class="form-check-input">
+                                               value="Nelayan" name="receiver_type" type="radio"
+                                               class="form-check-input">
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Pembudidaya' ? 'checked' : '' }}
-                                            value="Pembudidaya" name="receiver_type" type="radio"
-                                            class="form-check-input">
+                                               value="Pembudidaya" name="receiver_type" type="radio"
+                                               class="form-check-input">
                                         <span class="form-check-label">Pembudidaya</span>
                                     </label>
                                 </div>
@@ -118,7 +121,7 @@
 
                                     <div class="col-sm-6">
                                         <a target="_blank" href="{{ asset('storage/' . $submission->letter_file) }}"
-                                            class="btn btn-md btn-danger">
+                                           class="btn btn-md btn-danger">
                                             <i class="align-middle me-2 fas fa-fw fa-file-pdf"></i>Lihat File</a>
                                     </div>
                                 </div>
@@ -127,14 +130,14 @@
             </form>
             <div id="upload-fisherman-file" class="tab-pane" role="tabpanel" style="display: none; min-height: 300px">
                 <form id="excelUploadForm" method="POST" action="{{ route('submission.excelUpload') }}"
-                    enctype="multipart/form-data">
+                      enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3 row" hidden>
                         <label class="col-form-label col-sm-3 text-sm-right">Upload Lampiran Data
                             Nelayan<small class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <input disabled value="{{ $id }}" id="submission_id" autocomplete="off"
-                                name="submission_id" readonly type="text" class="form-control">
+                                   name="submission_id" readonly type="text" class="form-control">
                         </div>
                     </div>
                     @if ($submission->excel_file)
@@ -144,7 +147,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <a target="_blank" href="{{ asset('storage/' . $submission->excel_file) }}"
-                                    class="btn btn-md btn-danger">
+                                   class="btn btn-md btn-danger">
                                     <i class="align-middle me-2 fas fa-fw fa-file-excel"></i>Lihat File</a>
                             </div>
                         </div>
@@ -164,12 +167,12 @@
                         <div class="col-12">
                             <table id="datatables-responsive" class="table table-striped" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Nelayan</th>
-                                        <th>No KTP</th>
-                                        <th>Kuota</th>
-                                    </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Nelayan</th>
+                                    <th>No KTP</th>
+                                    <th>Kuota</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -192,7 +195,7 @@
 @section('footer')
     <script src="{{ asset('app-assets/js/jquery.form.min.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             let upload_msg = $('#upload-msg')
@@ -206,17 +209,17 @@
 
             $('.select2-ajax').select2();
 
-            // set leader name on load 
+            // set leader name on load
             setLeaderName()
-            // select group change 
-            $('#select-group').change(function() {
+            // select group change
+            $('#select-group').change(function () {
                 setLeaderName()
             })
 
             function setLeaderName() {
-                var select = document.getElementById( "select-group" );
+                var select = document.getElementById("select-group");
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
-                
+
                 $('#leader-name').val(group.name)
             }
 
@@ -288,10 +291,10 @@
                     searching: true,
                     ajax: url,
                     columns: [{
-                            data: 'DT_RowIndex',
-                            orderable: false,
-                            searchable: false
-                        },
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
                         {
                             data: 'name',
                             name: 'receivers.name'

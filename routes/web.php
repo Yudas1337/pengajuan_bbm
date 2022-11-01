@@ -1,19 +1,16 @@
 <?php
 
-use App\Http\Controllers\Dashboard\{
-    DashboardController,
+use App\Http\Controllers\Dashboard\{DashboardController,
     DistrictController,
+    GroupController,
     ProfileController,
     ProvinceController,
     ReceiverController,
     StationController,
     SubmissionController,
-    GroupController,
-    UserController
-};
+    UserController};
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrintCardController;
-use App\Models\Submission;
 use Illuminate\Support\Facades\{Auth, Route};
 
 /*

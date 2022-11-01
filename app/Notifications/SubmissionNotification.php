@@ -18,7 +18,6 @@ class SubmissionNotification extends Notification
      */
     public function __construct(array $user)
     {
-        $user['message'] = $user['name'] . " baru saja mengajukan kelas dengan judul " . $user['message'];
         $this->user = $user;
     }
 
@@ -43,7 +42,6 @@ class SubmissionNotification extends Notification
     {
         return [
             'id' => $this->user['id'],
-            'name' => $this->user['name'],
             'type' => $this->user['type'],
             'message' => $this->user['message']
         ];

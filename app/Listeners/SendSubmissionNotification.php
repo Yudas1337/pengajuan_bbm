@@ -24,7 +24,9 @@ class SendSubmissionNotification
      */
     public function handle($event)
     {
-        $notify = UserHelper::notify_superadmin_and_operator();
+        $notify = User::whereHas('roles', function ($query) {
+            $query->where('id', 1);
+        })->get();
 
         Notification::send($notify, new LockedClassroomNotification($lockedClassroomEvent->user));
     }

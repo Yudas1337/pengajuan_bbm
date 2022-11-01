@@ -10,16 +10,20 @@ use Illuminate\Queue\SerializesModels;
 
 class SubmissionEvent
 {
+    private array $user;
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      *
+     * @param array $user
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**

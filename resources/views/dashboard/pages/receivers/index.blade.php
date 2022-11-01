@@ -16,15 +16,14 @@
                     <div class="card-body">
                         <table id="datatables-responsive" class="table table-striped" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>NIK</th>
-                                    <th>Tipe</th>
-                                    <th>Profesi</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Tipe</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -40,9 +39,9 @@
 @endsection
 @section('footer')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
-            $(document).on('click', '.delete', function() {
+            $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
                 let url = `{{ route('receivers.destroy', ':id') }}`.replace(':id', id);
@@ -62,10 +61,10 @@
                 searching: true,
                 ajax: "{{ route('receivers.index') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
                     {
                         data: 'name',
                         name: 'name'
@@ -77,10 +76,6 @@
                     {
                         data: 'receiver_type',
                         name: 'receiver_type'
-                    },
-                    {
-                        data: 'profession',
-                        name: 'profession'
                     },
                     {
                         data: 'status',

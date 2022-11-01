@@ -4,7 +4,7 @@
         <div class="col-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Tambah Data Penerima Bantuan</h5>
+                    <h5 class="card-title">Edit Data Penerima Bantuan</h5>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('receivers.update', $receiver->id) }}">
@@ -55,46 +55,6 @@
                                        class="form-control @error('phone_number') is-invalid @enderror"
                                        placeholder="0857364xxxxx">
                                 @error('phone_number')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">Jenis Kelamin <small class="text-danger">*</small> </label>
-                                <div>
-                                    <label class="form-check form-check-inline">
-                                        <input
-                                            {{ $receiver->gender == 'Laki-laki' ? 'checked' : ''  }} class="form-check-input"
-                                            type="radio" name="gender" value="Laki-laki">
-                                        <span class="form-check-label">
-                                            Laki - Laki
-                                        </span>
-                                    </label>
-                                    <label class="form-check form-check-inline">
-                                        <input
-                                            {{ $receiver->gender == 'Perempuan' ? 'checked' : ''  }}  class="form-check-input"
-                                            type="radio" name="gender" value="Perempuan">
-                                        <span class="form-check-label">
-                                            Perempuan
-                                        </span>
-                                    </label>
-                                </div>
-                                @error('gender')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">Profesi <small class="text-danger">*</small></label>
-                                <input value="{{ $receiver->profession }}" type="text" name="profession"
-                                       autocomplete="off"
-                                       class="form-control @error('profession') is-invalid @enderror"
-                                       placeholder="Nelayan">
-                                @error('profession')
                                 <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
@@ -173,6 +133,32 @@
                             @enderror
                         </div>
                         <div class="row">
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Jenis Kelamin <small class="text-danger">*</small> </label>
+                                <div>
+                                    <label class="form-check form-check-inline">
+                                        <input
+                                            {{ $receiver->gender == 'Laki-laki' ? 'checked' : ''  }} class="form-check-input"
+                                            type="radio" name="gender" value="Laki-laki">
+                                        <span class="form-check-label">
+                                            Laki - Laki
+                                        </span>
+                                    </label>
+                                    <label class="form-check form-check-inline">
+                                        <input
+                                            {{ $receiver->gender == 'Perempuan' ? 'checked' : ''  }}  class="form-check-input"
+                                            type="radio" name="gender" value="Perempuan">
+                                        <span class="form-check-label">
+                                            Perempuan
+                                        </span>
+                                    </label>
+                                </div>
+                                @error('gender')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Status <small class="text-danger">*</small></label>
                                 <select id="select-regencies" name="status" class="form-control select2-ajax">

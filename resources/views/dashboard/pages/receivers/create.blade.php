@@ -62,41 +62,6 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Jenis Kelamin <small class="text-danger">*</small> </label>
-                                <div>
-                                    <label class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" value="Laki-laki">
-                                        <span class="form-check-label">
-                                            Laki - Laki
-                                        </span>
-                                    </label>
-                                    <label class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" value="Perempuan">
-                                        <span class="form-check-label">
-                                            Perempuan
-                                        </span>
-                                    </label>
-                                </div>
-                                @error('gender')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label">Profesi <small class="text-danger">*</small></label>
-                                <input value="{{ old('profession') }}" type="text" name="profession" autocomplete="off"
-                                       class="form-control @error('profession') is-invalid @enderror"
-                                       placeholder="Nelayan">
-                                @error('profession')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
                                 <label class="form-label">Tempat Lahir <small class="text-danger">*</small> </label>
                                 <input value="{{ old('birth_place') }}" type="text" name="birth_place"
                                        autocomplete="off"
@@ -165,6 +130,28 @@
                             @enderror
                         </div>
                         <div class="row">
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Jenis Kelamin <small class="text-danger">*</small> </label>
+                                <div>
+                                    <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" value="Laki-laki">
+                                        <span class="form-check-label">
+                                            Laki - Laki
+                                        </span>
+                                    </label>
+                                    <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" value="Perempuan">
+                                        <span class="form-check-label">
+                                            Perempuan
+                                        </span>
+                                    </label>
+                                </div>
+                                @error('gender')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Status <small class="text-danger">*</small></label>
                                 <select id="select-regencies" name="status" class="form-control select2-ajax">

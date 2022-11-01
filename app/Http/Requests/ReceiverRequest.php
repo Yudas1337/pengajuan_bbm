@@ -21,7 +21,6 @@ class ReceiverRequest extends BaseRequest
             'gender' => 'required',
             'birth_place' => 'required',
             'birth_date' => 'required',
-            'profession' => 'required',
             'province' => 'required',
             'regency' => 'required',
             'district' => 'required',
