@@ -2,6 +2,7 @@
     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         <div class="position-relative">
             <i class="align-middle" data-feather="bell"></i>
+            <span class="indicator">4</span>
         </div>
     </a>
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">

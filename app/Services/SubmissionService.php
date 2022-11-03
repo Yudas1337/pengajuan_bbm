@@ -302,4 +302,16 @@ class SubmissionService
     {
         return $this->repository->handleGetTotalQuota($submission_id);
     }
+
+    /**
+     * Handle count all data event from models.
+     *
+     *
+     * @return mixed
+     */
+
+    public function handleTotalSubmission(): int
+    {
+        return $this->repository->countAll();
+    }
 }

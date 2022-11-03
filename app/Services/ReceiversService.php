@@ -137,4 +137,16 @@ class ReceiversService
     {
         return $this->repository->show($nik);
     }
+
+    /**
+     * Handle count all data event from models.
+     *
+     *
+     * @return mixed
+     */
+
+    public function handleTotalReceiver(): int
+    {
+        return $this->repository->countAll();
+    }
 }
