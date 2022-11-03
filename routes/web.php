@@ -49,6 +49,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     Route::name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
     });
+
+    Route::name('notifications.')->group(function () {
+        Route::get('/notifications/mark-as-read', [DashboardController::class, 'markAsRead'])->name('markAsRead');
+    });
+
     Route::name('user.')->group(function () {
         Route::get('profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('profile/{user}', [ProfileController::class, 'update'])->name('updateProfile');
