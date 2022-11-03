@@ -7,6 +7,7 @@ use App\Services\ReceiversService;
 use App\Services\SubmissionService;
 use Illuminate\View\View;
 
+
 class DashboardController extends Controller
 {
     private SubmissionService $submissionService;

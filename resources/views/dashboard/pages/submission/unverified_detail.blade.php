@@ -29,23 +29,21 @@
                     </ul>
 
                     <div class="tab-content" id="tab-wizard">
-                        <div id="input-submission-data" class="tab-pane" role="tabpanel"
-                            style="display: block;">
+                        <div id="input-submission-data" class="tab-pane" role="tabpanel" style="display: block;">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
-                                class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
+                                    <select id="select-group" name="group_id" class="form-control select2-ajax"
+                                        {{ auth()->user()->roles->pluck('name')[0] === 'Ketua Kelompok'? 'disabled': '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" 
-                                                data-group="{{ $group }}"
+                                            <option value="{{ $group->id }}" data-group="{{ $group }}"
                                                 data-district="{{ $group->user->district }}"
                                                 data-village="{{ $group->user->village }}"
-                                                data-station="{{ $group->user->station }}"
-                                                data-user="{{ $group->user }}"  
-                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                                data-station="{{ $group->user->station }}" data-user="{{ $group->user }}"
+                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>
+                                                {{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -54,8 +52,8 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input id="leader-name" readonly value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
-                                        type="text" class="form-control">
+                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}"
+                                        autocomplete="off" name="group_leader" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -103,8 +101,7 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Nelayan' ? 'checked' : '' }}
-                                            value="Nelayan" name="receiver_type" type="radio"
-                                            class="form-check-input">
+                                            value="Nelayan" name="receiver_type" type="radio" class="form-check-input">
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Pembudidaya' ? 'checked' : '' }}
@@ -213,7 +210,7 @@
             </div>
             <form method="POST" id="receivers-form">
                 @csrf
-                <div id="data-verification" class="tab-pane" role="tabpanel" style="display: none; min-height: 900px">
+                <div id="data-verification" class="tab-pane" role="tabpanel" style="display: none; min-height: 1000px">
                     <div class="mb-3 row">
                         <div class="col-lg-10 alert alert-warning" role="alert">
                             <div class="alert-message">
@@ -250,28 +247,28 @@
                             </table>
                         </div>
                     </div>
-                    @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
-                    <div class="mb-3 row">
-                        <div class="col-12">
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
-                                <small>(isi keterangan jika anda menolak pengajuan)</small>
-                                <textarea rows="5" name="approval_message" class="form-control @error('group_name') is-invalid @enderror"></textarea>
-                                @error('group_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
-                                @enderror
+                    @if (auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                        <div class="mb-3 row">
+                            <div class="col-12">
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
+                                    <small>(isi keterangan jika anda menolak pengajuan)</small>
+                                    <textarea rows="5" name="approval_message" class="form-control @error('group_name') is-invalid @enderror"></textarea>
+                                    @error('group_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                     <div class="mb-3 row">
                         <label class="form-check m-0">
-                            @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
-                            <button id="reject-form-button" type="button" class="btn btn-danger">Tolak
-                                Pengajuan
-                            </button>
+                            @if (auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                                <button id="reject-form-button" type="button" class="btn btn-danger">Tolak
+                                    Pengajuan
+                                </button>
                             @endif
                             <button id="submit-form-button" type="button" class="btn btn-success">Verifikasi
                                 Pengajuan
@@ -310,9 +307,9 @@
                 return err
             }
 
-            // set selected value on load 
+            // set selected value on load
             setSelectedValue()
-            // select group change 
+            // select group change
             $('#select-group').change(function() {
                 setSelectedValue()
             })
@@ -325,7 +322,7 @@
                 var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
                 var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
 
-                // page 1 
+                // page 1
                 $('#leader-name').val(user.name)
                 let optionDistrict = `<option value="${district.id}">${district.name}</option>`
                 $('#select-districts').html(optionDistrict)
@@ -333,17 +330,17 @@
                 $('#select-villages').html(optionVillage)
 
                 let itemStation = $('input[name="station_id"]')
-                for(let i = 0; i < itemStation.length; i++) {
-                    if(itemStation[i].value == station.id){
+                for (let i = 0; i < itemStation.length; i++) {
+                    if (itemStation[i].value == station.id) {
                         itemStation.removeAttr('checked')
                         itemStation[i].setAttribute('checked', true)
                     }
                 }
 
-                // page 2 
+                // page 2
                 let receiverType = $('input[name="receiver_type"]')
-                for(let i = 0; i < receiverType.length; i++) {
-                    if(receiverType[i].value == group.receiver_type){
+                for (let i = 0; i < receiverType.length; i++) {
+                    if (receiverType[i].value == group.receiver_type) {
                         receiverType.removeAttr('checked')
                         receiverType[i].setAttribute('checked', true)
                     }
@@ -357,7 +354,7 @@
                     const form = new FormData(document.getElementById('smartwizard-validation'))
                     form.append('submission_id', submission_id)
                     form.append('approval_message', approval_message)
-                    
+
                     let url = `{{ route('submission.updateSubmission') }}`;
                     $.ajax({
                         url: url,

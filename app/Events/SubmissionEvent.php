@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 
 class SubmissionEvent
 {
-    private array $user;
+    public array $user;
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

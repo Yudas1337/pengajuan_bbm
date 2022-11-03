@@ -2,6 +2,9 @@
 
 namespace App\Listeners;
 
+use App\Models\Submission;
+use App\Models\User;
+use App\Notifications\SubmissionNotification;
 use Illuminate\Support\Facades\Notification;
 
 class SendSubmissionNotification
@@ -24,10 +27,13 @@ class SendSubmissionNotification
      */
     public function handle($event)
     {
-        $notify = User::whereHas('roles', function ($query) {
-            $query->where('id', 1);
-        })->get();
+        $getSubmission = Submission::findOrFail($event->user['id']);
 
-        Notification::send($notify, new LockedClassroomNotification($lockedClassroomEvent->user));
+        $petugas = User::notify_submission_petugas();
+        $penyuluh = User::notify_submission_penyuluh($getSubmission->district_id);
+
+
+        Notification::send($petugas, new SubmissionNotification($event->user));
+        Notification::send($penyuluh, new SubmissionNotification($event->user));
     }
 }

@@ -57,6 +57,35 @@ class User extends Authenticatable
     ];
 
     /**
+     * Notify all Petugas by submission Model
+     *
+     * @return object
+     */
+
+    public static function notify_submission_petugas(): object
+    {
+        return self::query()
+            ->role('Petugas Pelayanan')
+            ->get();
+    }
+
+    /**
+     * Notify all penyuluh by submission Model
+     *
+     * @param string $district_id
+     *
+     * @return object
+     */
+
+    public static function notify_submission_penyuluh(string $district_id): object
+    {
+        return self::query()
+            ->role('Penyuluh')
+            ->where('district_id', $district_id)
+            ->get();
+    }
+
+    /**
      * One-to-Many relationship with Station Model
      *
      * @return BelongsTo
@@ -80,7 +109,7 @@ class User extends Authenticatable
 
     /**
      * One-to-many relationship with Village Model
-     * 
+     *
      * @return BelongsTo
      */
     public function village(): BelongsTo
