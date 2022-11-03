@@ -54,7 +54,7 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input id="leader-name" disabled value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
+                                    <input id="leader-name" readonly value="{{ $submission->group_leader }}" autocomplete="off" name="group_leader"
                                         type="text" class="form-control">
                                 </div>
                             </div>

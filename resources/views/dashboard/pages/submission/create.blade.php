@@ -51,7 +51,7 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
+                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }}>
                                             <option value="">--Pilih--</option>
                                             @if(auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok")
                                                 @foreach ($groups as $group)
@@ -71,7 +71,7 @@
                                 <label class="form-label col-sm-3 text-sm-right" for="inputEmail4">Nama Ketua
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
-                                    <input value="{{ old('group_leader') }}" id="leader-name" disabled
+                                    <input value="{{ old('group_leader') }}" id="leader-name" readonly
                                            autocomplete="off" name="group_leader"
                                            type="text" class="form-control">
                                 </div>
@@ -81,7 +81,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-districts" name="district_id"
-                                            class="form-control select2-ajax" disabled>
+                                            class="form-control select2-ajax" readonly>
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -94,7 +94,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-villages" name="village_id"
-                                            class="form-control select2-ajax" disabled>
+                                            class="form-control select2-ajax" readonly>
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -106,7 +106,7 @@
                                     @foreach ($stations as $station)
                                         <label class="form-check">
                                             <input value="{{ $station->id  }}" name="station_id" type="radio"
-                                                   class="form-check-input" disabled>
+                                                   class="form-check-input" readonly>
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
                                     @endforeach
@@ -120,11 +120,11 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input value="Nelayan" name="receiver_type" type="radio"
-                                               class="form-check-input" disabled>
+                                               class="form-check-input" readonly>
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
                                         <input value="Pembudidaya" name="receiver_type" type="radio"
-                                               class="form-check-input" disabled>
+                                               class="form-check-input" readonly>
                                         <span class="form-check-label">Pembudidaya</span>
                                     </label>
                                 </div>
