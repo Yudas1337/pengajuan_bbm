@@ -45,7 +45,7 @@ class SubmissionObserver
                 'id' => $submission->id,
                 'type' => null,
                 'message' => null,
-                'group_name' => $submission->group()->group_name,
+                'group_name' => $submission->group()->first()->group_name,
                 'url' => route('submission.verified_detail', $submission->id),
                 'timestamp' => now()
             ];
@@ -61,13 +61,13 @@ class SubmissionObserver
                 ]);
 
                 $user['type'] = 'accepted';
-                $user['message'] = 'Pengajuan pada kelompok ' . $user['group_name'] . 'telah disetujui.';
+                $user['message'] = 'Pengajuan pada kelompok ' . $user['group_name'] . ' telah disetujui.';
                 event(new SubmissionEvent($user));
             } else {
                 $submission->validated_by_penyuluh = null;
                 $submission->validated_by_petugas = null;
                 $user['type'] = 'rejected';
-                $user['message'] = 'Pengajuan pada kelompok' . $user['group_name'] . 'ditolak. Klik untuk melihat detail penolakan';
+                $user['message'] = 'Pengajuan pada kelompok' . $user['group_name'] . ' ditolak. Klik untuk melihat detail penolakan';
                 event(new SubmissionEvent($user));
             }
         }
