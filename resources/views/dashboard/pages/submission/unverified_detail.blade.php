@@ -29,23 +29,21 @@
                     </ul>
 
                     <div class="tab-content" id="tab-wizard">
-                        <div id="input-submission-data" class="tab-pane" role="tabpanel"
-                             style="display: block;">
+                        <div id="input-submission-data" class="tab-pane" role="tabpanel" style="display: block;">
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
-                                    <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
+                                    <select id="select-group" name="group_id" class="form-control select2-ajax"
+                                        {{ auth()->user()->roles->pluck('name')[0] === 'Ketua Kelompok'? 'disabled': '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}"
-                                                    data-group="{{ $group }}"
-                                                    data-district="{{ $group->user->district }}"
-                                                    data-village="{{ $group->user->village }}"
-                                                    data-station="{{ $group->user->station }}"
-                                                    data-user="{{ $group->user }}"
-                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}" data-group="{{ $group }}"
+                                                data-district="{{ $group->user->district }}"
+                                                data-village="{{ $group->user->village }}"
+                                                data-station="{{ $group->user->station }}" data-user="{{ $group->user }}"
+                                                {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>
+                                                {{ $group->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -55,8 +53,7 @@
                                     Kelompok <small class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <input id="leader-name" disabled value="{{ $submission->group_leader }}"
-                                           autocomplete="off" name="group_leader"
-                                           type="text" class="form-control">
+                                        autocomplete="off" name="group_leader" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row error-placeholder">
@@ -89,8 +86,8 @@
                                     @foreach ($stations as $station)
                                         <label class="form-check">
                                             <input {{ $submission->station_id == $station->id ? 'checked' : '' }}
-                                                   value="{{ $station->id }}" name="station_id" type="radio"
-                                                   class="form-check-input">
+                                                value="{{ $station->id }}" name="station_id" type="radio"
+                                                class="form-check-input">
                                             <span class="form-check-label">{{ $station->name }}</span>
                                         </label>
                                     @endforeach
@@ -104,13 +101,12 @@
                                 <div class="col-sm-6">
                                     <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Nelayan' ? 'checked' : '' }}
-                                               value="Nelayan" name="receiver_type" type="radio"
-                                               class="form-check-input">
+                                            value="Nelayan" name="receiver_type" type="radio" class="form-check-input">
                                         <span class="form-check-label">Nelayan</span>
                                     </label> <label class="form-check">
                                         <input {{ $submission->receiver_type == 'Pembudidaya' ? 'checked' : '' }}
-                                               value="Pembudidaya" name="receiver_type" type="radio"
-                                               class="form-check-input">
+                                            value="Pembudidaya" name="receiver_type" type="radio"
+                                            class="form-check-input">
                                         <span class="form-check-label">Pembudidaya</span>
                                     </label>
                                 </div>
@@ -133,7 +129,7 @@
 
                                     <div class="col-sm-6">
                                         <a target="_blank" href="{{ asset('storage/' . $submission->letter_file) }}"
-                                           class="btn btn-md btn-danger">
+                                            class="btn btn-md btn-danger">
                                             <i class="align-middle me-2 fas fa-fw fa-file-pdf"></i>Lihat File</a>
                                     </div>
                                 </div>
@@ -142,7 +138,7 @@
             </form>
             <div id="upload-fisherman-file" class="tab-pane" role="tabpanel" style="display: none; min-height: 350px">
                 <form id="excelUploadForm" method="POST" action="{{ route('submission.excelUpload') }}"
-                      enctype="multipart/form-data">
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3 row">
                         <div class="col-lg-10 alert alert-warning" role="alert">
@@ -163,7 +159,7 @@
                             Nelayan<small class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <input value="{{ $id }}" id="submission_id" autocomplete="off"
-                                   name="submission_id" readonly type="text" class="form-control">
+                                name="submission_id" readonly type="text" class="form-control">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -171,7 +167,7 @@
                             Nelayan<small class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <input id="excel_file" autocomplete="off" name="excel_file" type="file"
-                                   class="form-control">
+                                class="form-control">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -179,9 +175,9 @@
                         <div class="col-sm-6">
                             <div class="progress">
                                 <div id="upload-progress-bar"
-                                     class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                     role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                     style="width: 0"></div>
+                                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                    role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 0"></div>
                             </div>
                             <h5 id="upload-msg" style="display: none" class="mt-3 text-success">File
                                 Berhasil
@@ -193,7 +189,7 @@
                         <label class="col-form-label col-sm-3 text-sm-right"><small class="text-danger"></small></label>
                         <div class="col-sm-6">
                             <button id="btn_excel_file" type="submit" name="submit_excel"
-                                    class="btn btn-success">Upload
+                                class="btn btn-success">Upload
                                 File
                             </button>
                         </div>
@@ -205,7 +201,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <a target="_blank" href="{{ asset('storage/' . $submission->excel_file) }}"
-                                   class="btn btn-md btn-danger">
+                                    class="btn btn-md btn-danger">
                                     <i class="align-middle me-2 fas fa-fw fa-file-excel"></i>Lihat File</a>
                             </div>
                         </div>
@@ -239,30 +235,29 @@
                         <div class="col-12">
                             <table id="datatables-responsive" class="table table-striped" style="width:100%">
                                 <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Nelayan</th>
-                                    <th>No KTP</th>
-                                    <th>Kuota</th>
-                                </tr>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Nelayan</th>
+                                        <th>No KTP</th>
+                                        <th>Kuota</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                    @if (auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
                         <div class="mb-3 row">
                             <div class="col-12">
                                 <div class="mb-3 col-md-12">
                                     <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
                                     <small>(isi keterangan jika anda menolak pengajuan)</small>
-                                    <textarea rows="5" name="approval_message"
-                                              class="form-control @error('group_name') is-invalid @enderror"></textarea>
+                                    <textarea rows="5" name="approval_message" class="form-control @error('group_name') is-invalid @enderror"></textarea>
                                     @error('group_name')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
@@ -270,7 +265,7 @@
                     @endif
                     <div class="mb-3 row">
                         <label class="form-check m-0">
-                            @if(auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
+                            @if (auth()->user()->roles->pluck('name')[0] === 'Kepala Dinas')
                                 <button id="reject-form-button" type="button" class="btn btn-danger">Tolak
                                     Pengajuan
                                 </button>
@@ -296,7 +291,7 @@
 @section('footer')
     <script src="{{ asset('app-assets/js/jquery.form.min.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             let upload_msg = $('#upload-msg')
@@ -315,7 +310,7 @@
             // set selected value on load
             setSelectedValue()
             // select group change
-            $('#select-group').change(function () {
+            $('#select-group').change(function() {
                 setSelectedValue()
             })
 
@@ -428,7 +423,7 @@
 
             $('#excel_file').change(() => {
                 upload_msg.css('display', 'none')
-                $('.progress .progress-bar').css("width", 0 + '%', function () {
+                $('.progress .progress-bar').css("width", 0 + '%', function() {
                     return $(this).attr("aria-valuenow", 0) + "%";
                 })
 
@@ -439,22 +434,22 @@
             })
 
             $('#excelUploadForm').ajaxForm({
-                uploadProgress: function (event, position, total, percentComplete) {
+                uploadProgress: function(event, position, total, percentComplete) {
                     $('#upload-msg').css('display', 'block')
                     upload_msg.attr('class', 'mt-3 text-danger')
                     upload_msg.text("upload dan insert data sedang diproses...")
                     let percentage = percentComplete;
-                    $('.progress .progress-bar').css("width", percentage + '%', function () {
+                    $('.progress .progress-bar').css("width", percentage + '%', function() {
                         return $(this).attr("aria-valuenow", percentage) + "%";
                     })
                 },
-                success: function () {
+                success: function() {
                     upload_msg.attr('class', 'mt-3 text-success')
                     upload_msg.text("Berhasil Upload File")
                     $('#excel_file').attr('disabled', true)
                     $('#btn_excel_file').attr('disabled', true)
                 },
-                error: function (err) {
+                error: function(err) {
                     let error_msg = err.responseJSON.errors.excel_file[0]
                     $('#upload-progress-bar').attr('class',
                         'progress-bar progress-bar-striped progress-bar-animated bg-danger')
@@ -547,10 +542,10 @@
                     searching: true,
                     ajax: url,
                     columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                            data: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
+                        },
                         {
                             data: 'name',
                             name: 'receivers.name'

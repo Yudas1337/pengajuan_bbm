@@ -36,7 +36,7 @@
                                 class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'disabled' : '' }}>
+                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }}>
                                         <option value="">--Pilih--</option>
                                         @foreach ($groups as $group)
                                             <option value="{{ $group->id }}" 
