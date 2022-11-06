@@ -8,6 +8,11 @@
             <div id="container-error" class="alert alert-danger" style="display: none">
                 <ul id="ul-error"></ul>
             </div>
+            @if($submission->approval_message)
+            <div class="alert alert-warning p-3">
+                <p>{{ $submission->approval_message }}</p>
+            </div>
+            @endif
             <form id="smartwizard-validation" method="POST" action="{{ route('submission.updateSubmission') }}">
                 @csrf
                 <div id="smartwizard-arrows-primary" class="wizard wizard-primary mb-4 sw sw-theme-arrows sw-justified">
@@ -36,9 +41,8 @@
                                 class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }}>
-                                        <option value="">--Pilih--</option>
-                                        @foreach ($groups as $group)
+                                    class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }}>
+                                    @foreach ($groups as $group)
                                             <option value="{{ $group->id }}" 
                                                 data-group="{{ $group }}"
                                                 data-district="{{ $group->user->district }}"
@@ -322,6 +326,7 @@
                 var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
                 var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
                 var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
+                console.log(group)
 
                 // page 1 
                 $('#leader-name').val(user.name)

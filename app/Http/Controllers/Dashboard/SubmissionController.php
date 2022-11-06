@@ -102,6 +102,7 @@ class SubmissionController extends Controller
             'submission' => $this->submissionService->handleShowSubmission($id),
             'groups' => $this->groupService->handleFetchGroups()
         ];
+        // dd($datas);
         return view('dashboard.pages.submission.edit', $datas);
     }
 

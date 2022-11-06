@@ -90,6 +90,9 @@ trait YajraTable
         return DataTables::of($collection)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
+                if($data->validated_by_kepala_dinas){
+                    return '';
+                }
                 return view('dashboard.pages.submission.datatables', compact('data'));
             })
             ->editColumn('group.group_name', function($data) {

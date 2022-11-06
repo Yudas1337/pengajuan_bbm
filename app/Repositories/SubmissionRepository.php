@@ -28,7 +28,7 @@ class SubmissionRepository extends BaseRepository
     public function getAll(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time')
+            ->select('id', 'group_id', 'validated_by_kepala_dinas', 'status', 'start_time', 'end_time')
             ->with('group.user')
             ->author()
             ->latest();

@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('submission_receivers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('receiver_id')->constrained();
+            $table->foreignUuid('receiver_id')->constrained()->restrictOnDelete();
             $table->foreignUuid('submission_id')->constrained();
             $table->integer('quota')->default(20);
             $table->integer('default_quota')->default(20);
