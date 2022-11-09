@@ -23,6 +23,9 @@ trait YajraTable
             ->addColumn('action', function ($data) {
                 return view('dashboard.pages.station.datatables', compact('data'));
             })
+            ->editColumn('type', function ($data) {
+                return view('dashboard.pages.station.type', compact('data'));
+            })
             ->rawColumns(['action'])
             ->toJson();
     }
@@ -90,15 +93,15 @@ trait YajraTable
         return DataTables::of($collection)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
-                if($data->validated_by_kepala_dinas){
+                if ($data->validated_by_kepala_dinas) {
                     return '';
                 }
                 return view('dashboard.pages.submission.datatables', compact('data'));
             })
-            ->editColumn('group.group_name', function($data) {
+            ->editColumn('group.group_name', function ($data) {
                 return $data->group->group_name ?? "Kelompok Belum Dipilih";
             })
-            ->editColumn('group.user.name', function($data) {
+            ->editColumn('group.user.name', function ($data) {
                 return $data->group->user->name ?? "Ketua Kelompok Belum Dipilih";
             })
             ->editColumn('status', function ($data) {
@@ -136,10 +139,10 @@ trait YajraTable
             ->addColumn('action', function ($data) {
                 return view('dashboard.pages.submission.trashed_btn', compact('data'));
             })
-            ->editColumn('group.group_name', function($data) {
+            ->editColumn('group.group_name', function ($data) {
                 return $data->group->group_name ?? "Kelompok Belum Dipilih";
             })
-            ->editColumn('group.user.name', function($data) {
+            ->editColumn('group.user.name', function ($data) {
                 return $data->group->user->name ?? "Ketua Kelompok Belum Dipilih";
             })
             ->editColumn('date', function ($data) {
@@ -259,7 +262,7 @@ trait YajraTable
             ->addColumn('action', function ($data) {
                 return view('dashboard.pages.group.datatables', compact('data'));
             })
-            ->editColumn('group_name', function ($data){
+            ->editColumn('group_name', function ($data) {
                 return str_replace('_', ' ', strtolower($data->group_name));
             })
             ->rawColumns(['action'])

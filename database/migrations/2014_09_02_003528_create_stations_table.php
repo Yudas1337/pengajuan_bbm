@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('address');
             $table->string('pic_name', 150);
             $table->string('pic_phone', 50);
+            $table->enum('type', ['spbu', 'spbn'])->nullable();
             $table->timestamps();
         });
     }

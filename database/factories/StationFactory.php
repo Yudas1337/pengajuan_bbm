@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Station;
 use Faker\Provider\Uuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends Factory<Station>
@@ -24,7 +25,8 @@ class StationFactory extends Factory
             'number' => fake()->unique()->phoneNumber(),
             'address' => fake()->address(),
             'pic_name' => fake()->domainName(),
-            'pic_phone' => fake()->unique()->phoneNumber()
+            'pic_phone' => fake()->unique()->phoneNumber(),
+            'type' => Arr::random(['spbu', 'spbn'])
         ];
     }
 }

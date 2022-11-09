@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-fluid p-0">
 
-        <h1 class="h3 mb-3">Halaman data SPBU</h1>
+        <h1 class="h3 mb-3">Halaman data Stasiun</h1>
 
         <div class="row">
             <div class="col-12">
@@ -23,6 +23,7 @@
                                 <th>Alamat</th>
                                 <th>Nama PIC</th>
                                 <th>Nomor PIC</th>
+                                <th>Tipe</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -86,6 +87,10 @@
                     {
                         data: 'pic_phone',
                         name: 'pic_phone'
+                    },
+                    {
+                        data: 'type',
+                        name: 'type'
                     },
                     {
                         data: 'action',

@@ -42,7 +42,8 @@
     <li
         class="sidebar-item {{ request()->routeIs('submission.verified') || request()->routeIs('submission.unverified') ? 'active' : '' }}">
         <a data-bs-target="#verify-submissions" data-bs-toggle="collapse" class="sidebar-link collapsed">
-            <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Validasi Pengajuan</span>
+            <i class="align-middle" data-feather="check-square"></i> <span
+                class="align-middle">Validasi Pengajuan</span>
         </a>
         <ul id="verify-submissions"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('submission.verified') || request()->routeIs('submission.unverified') ? 'show' : '' }}"
@@ -62,23 +63,23 @@
 
 @can('create-station')
     <li class="sidebar-header">
-        Menu SPBU
+        Menu Stasiun
     </li>
 
     <li class="sidebar-item {{ request()->routeIs('stations.*') ? 'active' : '' }}">
         <a data-bs-target="#stations" data-bs-toggle="collapse" class="sidebar-link collapsed">
             <i class="align-middle me-2 fas fa-fw fa-gas-pump"></i> <span class="align-middle">
-                Data SPBU</span>
+                Data Stasiun</span>
         </a>
         <ul id="stations"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('stations.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('stations.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('stations.create') }}">Tambah
+                                                                                                    href="{{ route('stations.create') }}">Tambah
                     Data</a>
             </li>
             <li
-                class="sidebar-item {{ request()->routeIs('stations.index') || request()->routeIs('users.edit') ? 'active' : '' }}">
+                class="sidebar-item {{ request()->routeIs('stations.index') || request()->routeIs('stations.edit') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('stations.index') }}">List
                     Data</a>
             </li>
@@ -93,14 +94,14 @@
 
     <li class="sidebar-item {{ request()->routeIs('groups.*') ? 'active' : '' }}">
         <a data-bs-target="#groups" data-bs-toggle="collapse" class="sidebar-link collapsed">
-            <i class="align-middle me-2 fas fa-fw fa-gas-pump"></i> <span class="align-middle">
+            <i class="align-middle" data-feather="users"></i> <span class="align-middle">
                 Data Kelompok</span>
         </a>
         <ul id="groups"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('groups.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('groups.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('groups.create') }}">Tambah
+                                                                                                  href="{{ route('groups.create') }}">Tambah
                     Data</a>
             </li>
             <li
@@ -125,7 +126,8 @@
         <ul id="receivers"
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('receivers.*') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
-            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a class="sidebar-link"
+            <li class="sidebar-item {{ request()->routeIs('receivers.create') ? 'active' : '' }}"><a
+                    class="sidebar-link"
                     href="{{ route('receivers.create') }}">Tambah Data</a>
             </li>
             <li
@@ -149,7 +151,7 @@
             class="sidebar-dropdown list-unstyled collapse {{ request()->routeIs('users.*') || request()->routeIs('user.inactive') ? 'show' : '' }}"
             data-bs-parent="#sidebar">
             <li class="sidebar-item {{ request()->routeIs('users.create') ? 'active' : '' }}"><a class="sidebar-link"
-                    href="{{ route('users.create') }}">Tambah
+                                                                                                 href="{{ route('users.create') }}">Tambah
                     Data</a>
             </li>
             <li

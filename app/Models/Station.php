@@ -13,7 +13,7 @@ class Station extends Model
     public $incrementing = false;
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'number', 'address', 'pic_name', 'pic_phone'];
+    protected $fillable = ['name', 'number', 'address', 'pic_name', 'pic_phone', 'type'];
 
     /**
      * Scope a query to search with where

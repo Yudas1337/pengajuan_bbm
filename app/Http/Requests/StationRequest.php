@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\StationRule;
+
 class StationRequest extends BaseRequest
 {
     /**
@@ -16,7 +18,8 @@ class StationRequest extends BaseRequest
             'number' => 'required|max:50',
             'address' => 'required',
             'pic_name' => 'required|regex:/^[a-z-A-Z_\s\.]*$/',
-            'pic_phone' => 'required|regex:/^[0-9]*$/'
+            'pic_phone' => 'required|regex:/^[0-9]*$/',
+            'type' => ['required', new StationRule()]
         ];
     }
 }

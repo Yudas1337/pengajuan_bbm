@@ -4,7 +4,7 @@
         <div class="col-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Update Data SPBU</h5>
+                    <h5 class="card-title">Update Data Stasiun</h5>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('stations.update', $station->id) }}">
@@ -69,7 +69,19 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label">Tipe <small class="text-danger">*</small></label>
+                            <select name="type" class="form-control @error('type') is-invalid @enderror">
+                                <option value="">--Pilih--</option>
+                                <option {{ $station->type == 'spbu' ? 'selected' : ''  }} value="spbu">SPBU</option>
+                                <option {{ $station->type == 'spbn' ? 'selected' : ''  }} value="spbn">SPBN</option>
+                            </select>
+                            @error('type')
+                            <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <button type="submit" class="btn btn-success">Update Data</button>
                         <button type="reset" class="btn btn-secondary">Kosongkan form</button>
                     </form>
