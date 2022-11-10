@@ -38,7 +38,7 @@ class TransactionService extends BaseRepository
             return ResponseFormatter::error(null, "Gagal! Masa pengajuan telah berakhir");
         }
 
-        if (!$valid_station) {
+        if (!$valid_station || $data['type'] == 'spbn') {
             return ResponseFormatter::error(null, "Gagal! SPBU tidak sesuai dengan record pengajuan");
         }
 

@@ -13,7 +13,7 @@ class SubmissionUpdateRequest extends BaseRequest
     {
         return [
             'submission_id' => 'required',
-            'group_id'  => 'required',
+            'group_id' => 'required',
             'group_name' => 'required',
             'group_leader' => 'required',
             'district_id' => 'required',
@@ -43,7 +43,6 @@ class SubmissionUpdateRequest extends BaseRequest
             'village_id.required' => 'Desa/Kelurahan tidak boleh kosong',
             'station_id.required' => 'SPBU tidak boleh kosong',
             'receiver_type.required' => 'Jenis penerima tidak boleh kosong',
-            'letter_file.required' => 'Bukti Surat tidak boleh kosong',
             'letter_file.pdf' => 'Bukti Surat harus berekstensi pdf',
             'letter_file.max' => 'Bukti Surat maksimal 5Mb'
         ];

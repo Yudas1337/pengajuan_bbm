@@ -31,39 +31,39 @@
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
                              style="display: block">
-                             @if( auth()->user()->roles->pluck('name')[0] === "Penyuluh" || auth()->user()->roles->pluck('name')[0] === "Petugas Pelayanan")
-                             <div class="mb-3 row error-placeholder">
-                                <label class="col-form-label col-sm-3 text-sm-right">Filter Ketua Kelompok <small
-                                        class="text-danger">*</small></label>
-                                <div class="col-sm-6">
-                                    <select id="select-filter-districts"
-                                            class="form-control select2-ajax">
-                                        <option value="">--Pilih--</option>
-                                        @foreach ($districts as $district)
-                                            <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                        @endforeach
-                                    </select>
+                            @if( auth()->user()->roles->pluck('name')[0] === "Penyuluh" || auth()->user()->roles->pluck('name')[0] === "Petugas Pelayanan")
+                                <div class="mb-3 row error-placeholder">
+                                    <label class="col-form-label col-sm-3 text-sm-right">Filter Ketua Kelompok <small
+                                            class="text-danger">*</small></label>
+                                    <div class="col-sm-6">
+                                        <select id="select-filter-districts"
+                                                class="form-control select2-ajax">
+                                            <option value="">--Pilih--</option>
+                                            @foreach ($districts as $district)
+                                                <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                             @endif
+                            @endif
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Nama Kelompok <small
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
                                             class="form-control select2-ajax" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }}>
-                                            <option value="">--Pilih--</option>
-                                            @if(auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok")
-                                                @foreach ($groups as $group)
-                                                    <option value="{{ $group->id }}" 
+                                        <option value="">--Pilih--</option>
+                                        @if(auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok")
+                                            @foreach ($groups as $group)
+                                                <option value="{{ $group->id }}"
                                                         data-group="{{ $group }}"
                                                         data-district="{{ $group->user->district }}"
                                                         data-village="{{ $group->user->village }}"
                                                         data-station="{{ $group->user->station }}"
-                                                        data-user="{{ $group->user }}" 
-                                                        {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
-                                                @endforeach
-                                            @endif
+                                                        data-user="{{ $group->user }}"
+                                                    {{ $group->group_leader_id === auth()->id() ? 'selected' : '' }}>{{ $group->group_name }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -131,11 +131,10 @@
                             </div>
                             <div class="mb-3 row error-placeholder">
                                 <div class="col-sm-3">
-                                    <label class="col-form-label col-sm-12 text-sm-right">Upload Bukti Surat
-                                        <small class="text-danger">(Format Pdf & JPEG) *</small></label>
+                                    <label class="col-form-label col-sm-12 text-sm-right">Upload Bukti Surat</label>
+                                    <br>
+                                    <small class="text-danger">(Tidak wajib. Format Pdf & JPEG) </small>
                                 </div>
-
-
                                 <div class="col-sm-6">
                                     <input autocomplete="off" name="letter_file" type="file" class="form-control">
                                 </div>
@@ -304,7 +303,7 @@
                 return err
             }
 
-            if("{{ $user_role }}" === "Ketua Kelompok"){
+            if ("{{ $user_role }}" === "Ketua Kelompok") {
                 setFieldValue()
             }
 
@@ -323,7 +322,7 @@
                 var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
 
 
-                // page 1 
+                // page 1
                 $('#leader-name').val(user.name)
                 let optionDistrict = `<option value="${district.id}">${district.name}</option>`
                 $('#select-districts').html(optionDistrict)
@@ -331,30 +330,30 @@
                 $('#select-villages').html(optionVillage)
 
                 let itemStation = $('input[name="station_id"]')
-                for(let i = 0; i < itemStation.length; i++) {
-                    if(itemStation[i].value == station.id){
+                for (let i = 0; i < itemStation.length; i++) {
+                    if (itemStation[i].value == station.id) {
                         itemStation.removeAttr('checked')
                         itemStation[i].setAttribute('checked', true)
                     }
                 }
 
-                // page 2 
+                // page 2
                 let receiverType = $('input[name="receiver_type"]')
-                for(let i = 0; i < receiverType.length; i++) {
-                    if(receiverType[i].value == group.receiver_type){
+                for (let i = 0; i < receiverType.length; i++) {
+                    if (receiverType[i].value == group.receiver_type) {
                         receiverType.removeAttr('checked')
                         receiverType[i].setAttribute('checked', true)
                     }
                 }
             }
 
-            $('#select-filter-districts').change(function(){
+            $('#select-filter-districts').change(function () {
                 const url = `{{ route('getGroupByKecamatan', ':id') }}`.replace(':id', $(this).val())
                 $.ajax({
                     method: 'GET',
                     url: url,
                     dataType: 'JSON',
-                    success: function(groups) {
+                    success: function (groups) {
                         let option = ''
                         groups.map(group => {
                             option += `<option

@@ -256,4 +256,20 @@ class SubmissionRepository extends BaseRepository
             ->where('submission_id', $submission_id)
             ->sum('quota');
     }
+
+    /**
+     * handle check station submission by id
+     *
+     * @param string $submission_id
+     *
+     * @return object
+     *
+     */
+
+    public function handleCheckStationSubmission(string $submission_id): object
+    {
+        return $this->model->query()
+            ->with('station')
+            ->findOrFail($submission_id);
+    }
 }
