@@ -31,7 +31,8 @@ return new class extends Migration {
             $table->foreignUuid('validated_by_penyuluh')->nullable()->constrained('users');
             $table->foreignUuid('validated_by_petugas')->nullable()->constrained('users');
             $table->foreignUuid('validated_by_kepala_dinas')->nullable()->constrained('users');
-            $table->string('approval_message')->nullable();
+            $table->text('approval_message')->nullable();
+            $table->text('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

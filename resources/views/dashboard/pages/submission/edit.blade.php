@@ -13,6 +13,12 @@
                     <p>{{ $submission->approval_message }}</p>
                 </div>
             @endif
+            @if($submission->note)
+                <div class="alert alert-warning p-3">
+                    <p>Catatan dari penyuluh : <br>
+                        {{ $submission->note }}</p>
+                </div>
+            @endif
             <form id="smartwizard-validation" method="POST" action="{{ route('submission.updateSubmission') }}">
                 @csrf
                 <div id="smartwizard-arrows-primary" class="wizard wizard-primary mb-4 sw sw-theme-arrows sw-justified">

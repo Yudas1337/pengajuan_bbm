@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\{Auth, Route};
 */
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return phpinfo();
 });
 
 Route::get('/recommendation-letter', function () {

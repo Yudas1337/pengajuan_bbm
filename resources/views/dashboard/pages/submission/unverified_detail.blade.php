@@ -14,6 +14,12 @@
                         {{ $submission->approval_message }}</p>
                 </div>
             @endif
+            @if($submission->note)
+                <div class="alert alert-warning p-3">
+                    <p>Catatan dari penyuluh : <br>
+                        {{ $submission->note }}</p>
+                </div>
+            @endif
             <form id="smartwizard-validation" method="POST" action="{{ route('submission.updateSubmission') }}">
                 @csrf
                 <div id="smartwizard-arrows-primary" class="wizard wizard-primary mb-4 sw sw-theme-arrows sw-justified">
@@ -267,8 +273,25 @@
                                     <label class="form-label">Keterangan<small class="text-danger">*</small> </label>
                                     <small>(isi keterangan jika anda menolak pengajuan)</small>
                                     <textarea rows="5" name="approval_message"
-                                              class="form-control @error('group_name') is-invalid @enderror"></textarea>
-                                    @error('group_name')
+                                              class="form-control @error('approval_message') is-invalid @enderror"></textarea>
+                                    @error('approval_message')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if (auth()->user()->roles->pluck('name')[0] === 'Penyuluh')
+                        <div class="mb-3 row">
+                            <div class="col-12">
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Catatan<small class="text-danger">*</small> </label>
+                                    <small>(isi catatan jika dibutuhkan)</small>
+                                    <textarea rows="5" name="note"
+                                              class="form-control @error('note') is-invalid @enderror"></textarea>
+                                    @error('note')
                                     <span class="invalid-feedback" role="alert">
                                             <strong class="text-danger">{{ $message }}</strong>
                                         </span>
@@ -403,8 +426,10 @@
             $('#submit-form-button').click(() => {
                 const confirm = window.confirm("Apakah anda yakin ingin memverifikasi pengajuan ini ?")
                 if (confirm) {
+                    const note = $('textarea[name="note"]').val()
                     const form = new FormData(document.getElementById('smartwizard-validation'))
                     form.append('submission_id', submission_id)
+                    form.append('note', note)
                     let url = `{{ route('submission.updateSubmission') }}`;
                     $.ajax({
                         url: url,

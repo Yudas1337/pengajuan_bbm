@@ -22,6 +22,7 @@ class SubmissionUpdateRequest extends BaseRequest
             'receiver_type' => 'required',
             'letter_file' => 'nullable|mimes:pdf,jpeg|max:5120|file',
             'approval_message' => 'nullable',
+            'note'      => 'nullable',
             'start_time' => 'nullable',
             'end_time' => 'nullable'
         ];
