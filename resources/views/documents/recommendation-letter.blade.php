@@ -100,7 +100,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="window.print()">
     <div class="container">
         <div class="header">
             <img class="logo" src="{{ asset('app-assets/img/illustrations/logo-black.png') }}" alt="">
