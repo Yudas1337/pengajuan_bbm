@@ -159,17 +159,19 @@ class SubmissionService
         $store_submission = $this->repository->storeOrUpdate($data);
 
         $oldData = $this->repository->show($submission_id);
-        $uploaded_file = $request->file('letter_file');
 
-        if ($oldData->letter_file && $uploaded_file) {
+        if ($oldData->letter_file) {
             Storage::delete('public/' . $oldData->letter_file);
+
         }
 
-        $filename = $uploaded_file->store('letter_file', 'public');
+        if ($request->hasFile('letter_file')) {
+            $filename = $request->file('letter_file')->store('letter_file', 'public');
+            $store_submission->update([
+                'letter_file' => $filename
+            ]);
+        }
 
-        $store_submission->update([
-            'letter_file' => $filename
-        ]);
     }
 
     /**
@@ -264,8 +266,8 @@ class SubmissionService
 
     public function handleGetUnverifiedSubmissionsByPenyuluh(): mixed
     {
-        $disitrict_id = auth()->user()->district_id;
-        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPenyuluh($disitrict_id));
+        $district_id = auth()->user()->district_id;
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPenyuluh($district_id));
     }
 
     /**
@@ -304,14 +306,62 @@ class SubmissionService
     }
 
     /**
-     * Handle count all data event from models.
+     * Handle count all verified submission data event from models.
      *
      *
-     * @return mixed
+     * @return int
      */
 
-    public function handleTotalSubmission(): int
+    public function handleCountVerifiedSubmission(): int
     {
-        return $this->repository->countAll();
+        return $this->repository->countVerifiedSubmission();
+    }
+
+    /**
+     * Handle count all unverified submission data event from models.
+     *
+     *
+     * @return int
+     */
+
+    public function handleCountUnverifiedSubmission(): int
+    {
+        return $this->repository->countUnverifiedSubmission();
+    }
+
+    /**
+     * Handle count all rejected submission data event from models.
+     *
+     *
+     * @return int
+     */
+
+    public function handleCountRejectedSubmission(): int
+    {
+        return $this->repository->countRejectedSubmission();
+    }
+
+    /**
+     * Handle count total quota submission data models.
+     *
+     *
+     * @return int
+     */
+
+    public function handleCountTotalQuota(): int
+    {
+        return $this->repository->countTotalQuota();
+    }
+
+    /**
+     * Handle count total quota transaction from submission data models.
+     *
+     *
+     * @return int
+     */
+
+    public function handleCountTotalQuotaTransaction(): int
+    {
+        return $this->repository->countQuotaTransaction();
     }
 }

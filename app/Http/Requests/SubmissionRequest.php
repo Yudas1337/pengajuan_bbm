@@ -20,8 +20,6 @@ class SubmissionRequest extends BaseRequest
             'station_id' => 'required',
             'receiver_type' => 'required',
             'letter_file' => 'nullable|mimes:pdf,jpeg|max:5120|file',
-            'start_time' => 'nullable',
-            'end_time' => 'nullable'
         ];
     }
 

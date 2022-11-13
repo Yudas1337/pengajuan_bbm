@@ -32,8 +32,12 @@ class DashboardController extends Controller
     public function index(): View
     {
         $data = [
-            'totalSubmissions' => $this->submissionService->handleTotalSubmission(),
-            'totalReceivers' => $this->receiversService->handleTotalReceiver()
+            'totalVerifiedSubmission' => $this->submissionService->handleCountVerifiedSubmission(),
+            'totalUnverifiedSubmission' => $this->submissionService->handleCountUnverifiedSubmission(),
+            'totalRejectedSubmission' => $this->submissionService->handleCountRejectedSubmission(),
+            'totalReceivers' => $this->receiversService->handleTotalReceiver(),
+            'totalQuota' => $this->submissionService->handleCountTotalQuota(),
+            'totalQuotaTransaction' => $this->submissionService->handleCountTotalQuotaTransaction()
         ];
 
         return view('dashboard.pages.index', compact('data'));

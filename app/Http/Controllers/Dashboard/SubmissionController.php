@@ -180,7 +180,7 @@ class SubmissionController extends Controller
      * @return JsonResponse
      */
 
-    public function store(SubmissionRequest $request)
+    public function store(SubmissionRequest $request): JsonResponse
     {
         $this->submissionService->handleStoreSubmission($request);
 
@@ -339,14 +339,14 @@ class SubmissionController extends Controller
 
     /**
      * handle get total quota receivers
-     * 
+     *
      * @param Submission $submission
-     * 
+     *
      * @return JsonResponse
-     * 
+     *
      */
 
-    public function getTotalQuota(Submission $submission) : JsonResponse
+    public function getTotalQuota(Submission $submission): JsonResponse
     {
         return response()->json([
             'success' => true,

@@ -2,20 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Models\Receiver;
 use App\Models\Submission;
+use App\Models\SubmissionHistory;
 use App\Models\SubmissionReceiver;
 
 class SubmissionRepository extends BaseRepository
 {
-    private Receiver $receiver;
     private SubmissionReceiver $submissionReceiver;
+    private SubmissionHistory $submissionHistory;
 
-    public function __construct(Submission $submission, Receiver $receiver, SubmissionReceiver $submissionReceiver)
+    public function __construct(Submission $submission, SubmissionReceiver $submissionReceiver, SubmissionHistory $submissionHistory)
     {
         $this->model = $submission;
-        $this->receiver = $receiver;
         $this->submissionReceiver = $submissionReceiver;
+        $this->submissionHistory = $submissionHistory;
     }
 
     /**
@@ -266,10 +266,73 @@ class SubmissionRepository extends BaseRepository
      *
      */
 
-    public function handleCheckStationSubmission(string $submission_id): object
+    /**
+     * handle count verified submission from model
+     *
+     * @return int
+     *
+     */
+
+    public function countVerifiedSubmission(): int
     {
         return $this->model->query()
-            ->with('station')
-            ->findOrFail($submission_id);
+            ->verified()
+            ->whereNotNull('validated_by_kepala_dinas')
+            ->count();
+    }
+
+    /**
+     * handle count unverified submission from model
+     *
+     * @return int
+     *
+     */
+
+    public function countUnverifiedSubmission(): int
+    {
+        return $this->model->query()
+            ->whereNull('validated_by_kepala_dinas')
+            ->count();
+    }
+
+    /**
+     * handle count unverified submission from model
+     *
+     * @return int
+     *
+     */
+
+    public function countRejectedSubmission(): int
+    {
+        return $this->model->query()
+            ->whereNotNull('approval_message')
+            ->count();
+    }
+
+    /**
+     * handle count total quota submission from model
+     *
+     * @return int
+     *
+     */
+
+    public function countTotalQuota(): int
+    {
+        return $this->submissionReceiver->query()
+            ->active()
+            ->sum('default_quota');
+    }
+
+    /**
+     * handle count total quota transaction from model
+     *
+     * @return int
+     *
+     */
+
+    public function countQuotaTransaction(): int
+    {
+        return $this->submissionHistory->query()
+            ->sum('quota_cost');
     }
 }
