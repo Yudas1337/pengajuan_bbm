@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\{DashboardController,
     DistrictController,
     GroupController,
+    HistoryController,
     ProfileController,
     ProvinceController,
     ReceiverController,
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
         'groups' => GroupController::class
     ], ['except' => ['show']]);
     Route::resource('submissions', SubmissionController::class)->except('update');
+    Route::resource('histories', HistoryController::class)->only('index');
     Route::get('getGroupByKecamatan/{district}', [GroupController::class, 'getGroupByKecamatan'])->name('getGroupByKecamatan');
 
     Route::name('submission.')->group(function () {

@@ -268,4 +268,31 @@ trait YajraTable
             ->rawColumns(['action'])
             ->toJson();
     }
+
+    /**
+     * Datatable mockup for review receiver resource
+     *
+     * @param mixed $collection
+     *
+     * @return JsonResponse
+     */
+
+    public function TransactionMockup(mixed $collection): JsonResponse
+    {
+        return DataTables::of($collection)
+            ->addIndexColumn()
+            ->editColumn('receiver', function ($data) {
+                return $data->submission_receiver->receiver->name;
+            })
+            ->editColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d M Y H:i');
+            })
+            ->editColumn('user', function ($data) {
+                return $data->user->name;
+            })
+            ->editColumn('station', function ($data) {
+                return $data->user->station->name;
+            })
+            ->toJson();
+    }
 }

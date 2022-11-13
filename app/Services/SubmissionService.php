@@ -364,4 +364,16 @@ class SubmissionService
     {
         return $this->repository->countQuotaTransaction();
     }
+
+    /**
+     * Handle get transaction history from submission data models.
+     * using yajra
+     *
+     * @return object|null
+     */
+
+    public function handleGetTransactions(): object|null
+    {
+        return $this->TransactionMockup($this->repository->getTransactions());
+    }
 }

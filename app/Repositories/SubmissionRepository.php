@@ -335,4 +335,18 @@ class SubmissionRepository extends BaseRepository
         return $this->submissionHistory->query()
             ->sum('quota_cost');
     }
+
+    /**
+     * handle get transactions history from model
+     *
+     * @return object|null
+     *
+     */
+
+    public function getTransactions(): object|null
+    {
+        return $this->submissionHistory->query()
+            ->with(['submission_receiver.receiver', 'user.station'])
+            ->latest();
+    }
 }

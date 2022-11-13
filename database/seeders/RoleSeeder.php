@@ -50,8 +50,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'update-group']);
         Permission::create(['name' => 'delete-group']);
 
-
-        // Petugas SPBU 
+        Permission::create(['name' => 'history-transaction']);
+        // Petugas SPBU
         Permission::create(['name' => 'record-transaction']);
 
         // Petugas Pelayanan
