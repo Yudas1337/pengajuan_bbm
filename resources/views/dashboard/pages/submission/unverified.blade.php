@@ -13,16 +13,17 @@
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Kelompok</th>
-                                    <th>Ketua Kelompok</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Status Pengajuan</th>
-                                    <th>Diajukan Oleh</th>
-                                    <th>Aksi</th>
-                                </tr>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Kelompok</th>
+                                <th>Ketua Kelompok</th>
+                                <th>Jenis Penerima</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th>Status Pengajuan</th>
+                                <th>Diajukan Oleh</th>
+                                <th>Aksi</th>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -38,9 +39,9 @@
 @endsection
 @section('footer')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
-            $(document).on('click', '.delete', function() {
+            $(document).on('click', '.delete', function () {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
                 let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
@@ -59,10 +60,10 @@
                 searching: true,
                 ajax: "{{ route('submission.unverified') }}",
                 columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
                     {
                         data: 'group.group_name',
                         name: 'group.group_name'
@@ -70,6 +71,10 @@
                     {
                         data: 'group.user.name',
                         name: 'group.user.name'
+                    },
+                    {
+                        data: 'group.receiver_type',
+                        name: 'group.receiver_type'
                     },
                     {
                         data: 'start_time',

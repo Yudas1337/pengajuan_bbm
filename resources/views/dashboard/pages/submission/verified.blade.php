@@ -17,8 +17,10 @@
                                 <th>No</th>
                                 <th>Nama Kelompok</th>
                                 <th>Ketua Kelompok</th>
+                                <th>Jenis Penerima</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
+                                <th>Status Verifikasi</th>
                                 <th>Status Pengajuan</th>
                                 <th>Diajukan Oleh</th>
                                 <th>Aksi</th>
@@ -72,12 +74,21 @@
                         name: 'group.user.name'
                     },
                     {
+                        data: 'group.receiver_type',
+                        name: 'group.receiver_type'
+                    },
+                    {
                         data: 'start_time',
                         name: 'start_time'
                     },
                     {
                         data: 'end_time',
                         name: 'end_time'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        searchable: false
                     },
                     {
                         data: 'submission_status',

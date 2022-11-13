@@ -40,7 +40,6 @@ class SubmissionObserver
         } else if (UserHelper::checkRolePetugas()) {
             $submission->validated_by_petugas = auth()->id();
         } else if (UserHelper::checkRoleKepalaDinas()) {
-
             $user = [
                 'id' => $submission->id,
                 'type' => null,
@@ -50,7 +49,8 @@ class SubmissionObserver
                 'timestamp' => now()
             ];
 
-            if ($submission->approval_message === null) {
+            if (request()->approval_message === null) {
+                $submission->approval_message = null;
                 $submission->validated_by_kepala_dinas = auth()->id();
                 $submission->start_time = now();
                 $submission->end_time = now()->addMonths(3);
@@ -67,7 +67,7 @@ class SubmissionObserver
                 $submission->validated_by_penyuluh = null;
                 $submission->validated_by_petugas = null;
                 $user['type'] = 'rejected';
-                $user['message'] = 'Pengajuan pada kelompok' . $user['group_name'] . ' ditolak. Klik untuk melihat detail penolakan';
+                $user['message'] = 'Pengajuan pada kelompok ' . $user['group_name'] . ' ditolak. Klik untuk melihat detail penolakan';
                 event(new SubmissionEvent($user));
             }
         }

@@ -145,7 +145,6 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->verified()
@@ -163,7 +162,6 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPetugas(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->verified()
@@ -180,7 +178,6 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->verified()
@@ -199,7 +196,6 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->where('submissions.district_id', $districtId)
@@ -216,7 +212,6 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPetugas(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->whereNotNull('validated_by_penyuluh')
@@ -233,7 +228,6 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->select('id', 'group_id', 'status', 'start_time', 'end_time', 'created_by')
             ->with(['group.user', 'user'])
             ->whereHas('group')
             ->whereNotNull('validated_by_petugas')

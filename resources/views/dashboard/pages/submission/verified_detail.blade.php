@@ -165,6 +165,11 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-12">
+                            <h4>Total Kuota : <span id="totalQuota">0</span></h4>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-12">
                             <table id="datatables-responsive" class="table table-striped" style="width:100%">
                                 <thead>
                                 <tr>
@@ -342,14 +347,35 @@
                         success: (data) => {
                             dataTables.ajax.reload();
 
+                            getTotalQuota()
+
                             alert(data.message)
                         },
                         error: (err) => {
                             console.log(err)
                         }
                     })
-
                 })
+
+                // get total quota
+                function getTotalQuota() {
+                    $.ajax({
+                        url: `{{ route('submission.getTotalQuota', ':submission') }}`.replace(':submission', submission_id),
+                        method: 'get',
+                        data: {
+                            _token: CSRF_TOKEN,
+                        },
+                        success: (data) => {
+                            $('#totalQuota').html(data.data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                }
+
+                getTotalQuota()
+
             })
 
 
