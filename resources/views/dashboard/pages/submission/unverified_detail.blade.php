@@ -429,7 +429,9 @@
                     const note = $('textarea[name="note"]').val()
                     const form = new FormData(document.getElementById('smartwizard-validation'))
                     form.append('submission_id', submission_id)
-                    form.append('note', note)
+                    if(note){
+                        form.append('note', note)
+                    }                    
                     let url = `{{ route('submission.updateSubmission') }}`;
                     $.ajax({
                         url: url,
