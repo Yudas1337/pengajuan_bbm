@@ -38,12 +38,16 @@ class TransactionService extends BaseRepository
             return ResponseFormatter::error(null, "Gagal! Masa pengajuan telah berakhir");
         }
 
-        if (!$valid_station || $data['type'] == 'spbn') {
-            return ResponseFormatter::error(null, "Gagal! SPBU tidak sesuai dengan record pengajuan");
-        }
-
         if (!$quota_remaining) {
             return ResponseFormatter::error(null, "Gagal! Kuota tidak mencukupi");
+        }
+
+        if ($data['type'] == 'spbn') {
+            return $this->handleQuotaTransaction($request);
+        }
+
+        if (!$valid_station) {
+            return ResponseFormatter::error(null, "Gagal! SPBU tidak sesuai dengan record pengajuan");
         }
 
         return $this->handleQuotaTransaction($request);
