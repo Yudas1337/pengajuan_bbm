@@ -57,15 +57,28 @@ class User extends Authenticatable
     ];
 
     /**
-     * Notify all Petugas by submission Model
+     * Notify all admin tangkap by submission Model
      *
      * @return object
      */
 
-    public static function notify_submission_petugas(): object
+    public static function notify_submission_admin_tangkap(): object
     {
         return self::query()
-            ->role('Petugas Pelayanan')
+            ->role('Admin Tangkap')
+            ->get();
+    }
+
+    /**
+     * Notify all admin pembudidaya by submission Model
+     *
+     * @return object
+     */
+
+    public static function notify_submission_admin_pembudidaya(): object
+    {
+        return self::query()
+            ->role('Admin Pembudidaya')
             ->get();
     }
 

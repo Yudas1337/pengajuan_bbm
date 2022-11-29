@@ -9,7 +9,7 @@ class UserHelper
 
     /**
      * check role ketua kelompok
-     * 
+     *
      * @return bool
      */
 
@@ -20,7 +20,7 @@ class UserHelper
 
     /**
      * check role penyuluh
-     * 
+     *
      * @return bool
      */
 
@@ -30,19 +30,30 @@ class UserHelper
     }
 
     /**
-     * check role petugas
-     * 
+     * check role admin tangkap
+     *
      * @return bool
      */
 
-    public static function checkRolePetugas(): bool
+    public static function checkRoleTangkap(): bool
     {
-        return auth()->user()->roles->pluck('name')[0] === UserRoleEnum::PETUGAS_PELAYANAN->value;
+        return auth()->user()->roles->pluck('name')[0] === UserRoleEnum::ADMIN_TANGKAP->value;
+    }
+
+    /**
+     * check role admin pembudidaya
+     *
+     * @return bool
+     */
+
+    public static function checkRolePembudidaya(): bool
+    {
+        return auth()->user()->roles->pluck('name')[0] === UserRoleEnum::ADMIN_PEMBUDIDAYA->value;
     }
 
     /**
      * check role kepala dinas
-     * 
+     *
      * @return bool
      */
 

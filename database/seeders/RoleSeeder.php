@@ -54,8 +54,10 @@ class RoleSeeder extends Seeder
         // Petugas SPBU
         Permission::create(['name' => 'record-transaction']);
 
-        // Petugas Pelayanan
-        Role::create(['name' => 'Petugas Pelayanan'])->givePermissionTo(Permission::all());
+        // Petugas Admin
+        Role::create(['name' => 'Admin Tangkap'])->givePermissionTo(Permission::all());
+        Role::create(['name' => 'Admin Pembudidaya'])->givePermissionTo(Permission::all());
+
 
         // Penyuluh
         Role::create(['name' => 'Penyuluh'])->givePermissionTo([

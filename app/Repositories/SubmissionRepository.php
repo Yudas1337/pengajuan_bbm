@@ -145,7 +145,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
             ->verified()
             ->where('submissions.district_id', $districtId)
@@ -154,16 +154,34 @@ class SubmissionRepository extends BaseRepository
     }
 
     /**
-     * get submission by petugas
+     * get submission by admin tangkap
      *
      * @return mixed
      */
 
-    public function getVerifiedSubmissionByPetugas(): mixed
+    public function getVerifiedSubmissionByTangkap(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
+            ->whereRelation('group', 'receiver_type', '=', 'Nelayan')
+            ->verified()
+            ->whereNotNull('validated_by_petugas')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get submission by admin pembudidaya
+     *
+     * @return mixed
+     */
+
+    public function getVerifiedSubmissionByPembudidaya(): mixed
+    {
+        return $this->model->query()
+            ->with(['group.user', 'user', 'last_update_by'])
+            ->whereHas('group')
+            ->whereRelation('group', 'receiver_type', '=', 'Pembudidaya')
             ->verified()
             ->whereNotNull('validated_by_petugas')
             ->latest('submissions.created_at');
@@ -178,7 +196,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
             ->verified()
             ->whereNotNull('validated_by_kepala_dinas')
@@ -196,7 +214,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
             ->where('submissions.district_id', $districtId)
             ->whereNull('validated_by_penyuluh')
@@ -204,16 +222,34 @@ class SubmissionRepository extends BaseRepository
     }
 
     /**
-     * get unverified submission by petugas
+     * get unverified submission by admin tangkap
      *
      * @return mixed
      */
 
-    public function getUnverifiedSubmissionByPetugas(): mixed
+    public function getUnverifiedSubmissionByTangkap(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
+            ->whereRelation('group', 'receiver_type', '=', 'Nelayan')
+            ->whereNotNull('validated_by_penyuluh')
+            ->whereNull('validated_by_petugas')
+            ->latest('submissions.created_at');
+    }
+
+    /**
+     * get unverified submission by admin pembudidaya
+     *
+     * @return mixed
+     */
+
+    public function getUnverifiedSubmissionByPembudidaya(): mixed
+    {
+        return $this->model->query()
+            ->with(['group.user', 'user', 'last_update_by'])
+            ->whereHas('group')
+            ->whereRelation('group', 'receiver_type', '=', 'Pembudidaya')
             ->whereNotNull('validated_by_penyuluh')
             ->whereNull('validated_by_petugas')
             ->latest('submissions.created_at');
@@ -228,7 +264,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user'])
+            ->with(['group.user', 'user', 'last_update_by'])
             ->whereHas('group')
             ->whereNotNull('validated_by_petugas')
             ->whereNull('validated_by_kepala_dinas')

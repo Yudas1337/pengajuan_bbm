@@ -10,7 +10,7 @@
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="{{ route('home') }}">
+            <a class="sidebar-brand" href="{{ route('card') }}">
                 <span class="align-middle me-3">Dashboard</span>
             </a>
 

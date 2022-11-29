@@ -237,14 +237,25 @@ class SubmissionService
     }
 
     /**
-     * get all submission data with petugas
+     * get all submission data with admin tangkap
      *
      * @return mixed
      */
 
-    public function handleGetSubmissionsByPetugas(): mixed
+    public function handleGetSubmissionsByTangkap(): mixed
     {
-        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByPetugas());
+        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByTangkap());
+    }
+
+    /**
+     * get all submission data with admin pembudidaya
+     *
+     * @return mixed
+     */
+
+    public function handleGetSubmissionsByPembudidaya(): mixed
+    {
+        return $this->VerifiedSubmissionMockup($this->repository->getVerifiedSubmissionByPembudidaya());
     }
 
     /**
@@ -271,14 +282,25 @@ class SubmissionService
     }
 
     /**
-     * get all unverified submission data with petugas
+     * get all unverified submission data with admin tangkap
      *
      * @return mixed
      */
 
-    public function handleGetUnverifiedSubmissionsByPetugas(): mixed
+    public function handleGetUnverifiedSubmissionsByTangkap(): mixed
     {
-        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPetugas());
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByTangkap());
+    }
+
+    /**
+     * get all unverified submission data with admin pembudidaya
+     *
+     * @return mixed
+     */
+
+    public function handleGetUnverifiedSubmissionsByPembudidaya(): mixed
+    {
+        return $this->UnverifiedSubmissionMockup($this->repository->getUnverifiedSubmissionByPembudidaya());
     }
 
     /**

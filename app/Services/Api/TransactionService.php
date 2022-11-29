@@ -25,7 +25,7 @@ class TransactionService extends BaseRepository
      * @return mixed
      */
 
-    public function handleCheckRequirements(QuotaTransactionRequest $request): mixed
+    public function handleCheckRequirements(QuotaTransactionRequest $request): JsonResponse
     {
         $data = $request->validated();
         $user_station_id = auth()->user()->station_id;

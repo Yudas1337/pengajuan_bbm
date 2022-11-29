@@ -28,12 +28,14 @@ class SendSubmissionNotification
     public function handle($event)
     {
         $getSubmission = Submission::findOrFail($event->user['id']);
-
-        $petugas = User::notify_submission_petugas();
         $penyuluh = User::notify_submission_penyuluh($getSubmission->district_id);
 
+        if ($getSubmission->group->receiver_type === 'Nelayan') {
+            Notification::send(User::notify_submission_admin_tangkap(), new SubmissionNotification($event->user));
+        } else if ($getSubmission->group->receiver_type === 'Pembudidaya') {
+            Notification::send(User::notify_submission_admin_pembudidaya(), new SubmissionNotification($event->user));
+        }
 
-        Notification::send($petugas, new SubmissionNotification($event->user));
         Notification::send($penyuluh, new SubmissionNotification($event->user));
     }
 }

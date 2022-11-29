@@ -3,7 +3,8 @@
 @section('content')
     @php
         $kepalaDinas = UserHelper::checkRoleKepalaDinas();
-        $petugas = UserHelper::checkRolePetugas();
+        $tangkap = UserHelper::checkRoleTangkap();
+        $pembudidaya = UserHelper::checkRolePembudidaya();
         $penyuluh = UserHelper::checkRolePenyuluh();
     @endphp
     <div class="container-fluid p-0">
@@ -34,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            @if($kepalaDinas || $petugas || $penyuluh)
+            @if($kepalaDinas || $tangkap || $pembudidaya || $penyuluh)
                 <div class="col-12 col-sm-6 col-xxl-3 d-flex">
                     <div class="card flex-fill">
                         <div class="card-body py-4">
