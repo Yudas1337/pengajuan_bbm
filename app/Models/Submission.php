@@ -46,7 +46,7 @@ class Submission extends Model
      * @return BelongsTo
      */
 
-    public function last_update_by(): BelongsTo
+    public function user_last_update_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'last_update_by');
     }

@@ -201,6 +201,9 @@ trait YajraTable
             ->editColumn('end_time', function ($data) {
                 return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
             })
+            ->editColumn('last_update_by', function ($data) {
+                return ($data->last_update_by) ? $data->user_last_update_by->name : '-';
+            })
             ->editColumn('status', function ($data) {
                 return view('dashboard.pages.submission.status', compact('data'));
             })
@@ -238,6 +241,9 @@ trait YajraTable
             })
             ->editColumn('end_time', function ($data) {
                 return ($data->start_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
+            })
+            ->editColumn('last_update_by', function ($data) {
+                return ($data->last_update_by) ? $data->last_update_by->name : '-';
             })
             ->editColumn('submission_status', function ($data) {
                 $now = now()->format('Y-m-d H:i:s');

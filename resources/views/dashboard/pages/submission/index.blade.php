@@ -9,6 +9,9 @@
                 @if (session('success'))
                     <x-alert-success></x-alert-success>
                 @endif
+                @if (session('errors'))
+                    <x-alert-failed></x-alert-failed>
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">

@@ -91,8 +91,8 @@
                         name: 'user.name'
                     },
                     {
-                        data: 'last_update_by.name',
-                        name: 'last_update_by.name'
+                        data: 'last_update_by',
+                        name: 'last_update_by'
                     },
                     {
                         data: 'action',

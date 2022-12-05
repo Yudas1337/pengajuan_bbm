@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/css/surat.css')  }}">
 
 </head>
-<body>
+<body onload="window.print()">
 <div class="container page">
     <div class="row align-items-center">
         <div class="col-2 text-end">
@@ -54,17 +54,17 @@
                 <tr>
                     <td>Nama</td>
                     <td>:</td>
-                    <td>{{ $submission->user->name  }}</td>
+                    <td>{{ $submission->user->name  }} ( {{ $submission->group->group_name }} )</td>
                 </tr>
                 <tr>
                     <td>No. Identitas diri (KTP/SIM)</td>
                     <td>:</td>
-                    <td>3524142909740001</td>
+                    <td>{{ $submission->user->national_identity_number  }}</td>
                 </tr>
                 <tr>
                     <td style="text-align: start; vertical-align: top">Alamat Usaha</td>
                     <td style="text-align: start; vertical-align: top">:</td>
-                    <td style="text-align: start">RT 032/ RW 009  Dsn Karangtumpuk Ds. Campurejo Kec Panceng  - Gresik
+                    <td style="text-align: start">{{ $submission->user->address  }}
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +75,13 @@
                 <tr>
                     <td>Jenis Usaha Kegiatan</td>
                     <td>:</td>
-                    <td>Perikanan  Tangkap  / KMN. PUTRI ZAHARA</td>
+                    <td>
+                        @if($submission->receiver_type == "Nelayan")
+                            Perikanan  Tangkap
+                        @else
+                            Pembudidaya
+                        @endif
+                    </td>
                 </tr>
             </table>
         </div>
@@ -91,25 +97,31 @@
                     <th style="vertical-align: inherit">Fungsi Alat</th>
                     <th style="vertical-align: inherit">Kebutuhan Jenis BBM Tertentu</th>
                     <th style="vertical-align: inherit">Jam atau hari Operasi</th>
-                    <th style="vertical-align: inherit">Konsumsi Jenis BBM Tertentu Liter per hari</th>
+                    <th style="vertical-align: inherit">Konsumsi Jenis BBM Tertentu Liter</th>
                 </tr>
                 <tr>
                     <td>1.</td>
                     <td>Mesin Diesel</td>
-                    <td>30 PK & 30 PK</td>
-                    <td>Transportasi Menangkap Ikan</td>
+                    <td>{{ $submission->submission_receivers->count() }} PK & {{ $submission->submission_receivers->count() }} PK</td>
+                    <td>
+                        @if($submission->receiver_type == "Nelayan")
+                            Transportasi Menangkap Ikan
+                        @else
+                            Membudidaya Ikan
+                        @endif
+                    </td>
                     <td>SOLAR</td>
-                    <td>22 Hari</td>
-                    <td>50 Liter / hari</td>
+                    <td>30 Hari</td>
+                    <td>{{ $submission->submission_receivers->sum('quota') }} Liter</td>
                 </tr>
             </table>
             </li>
             <li>Diberikan jenis BBM Tententu Jenis Minyak :
             <ul style="margin-left: 1rem">
-                <li>Alokasi Volume: 1100  Liter  / bulan</li>
-                <li>Tempat pengambilan		: Lembaga Penyalur (SPDN)</li>
-                <li>Nomor Lembaga Penyalur	: No. SPBU 58.611.01</li>
-                <li>Lokasi				: Ds Campurejo Kec Panceng -  Gresik</li>
+                <li>Alokasi Volume: {{ $submission->submission_receivers->sum('quota') }} Liter</li>
+                <li>Tempat pengambilan		: Lembaga Penyalur ({{ $submission->station->type }})</li>
+                <li>Nomor Lembaga Penyalur	: No. SPBU {{ $submission->station->number }}</li>
+                <li>Lokasi				: {{ $submission->station->address }}</li>
             </ul>
             </li>
             <li>Masa berlaku Surat Rekomendasi sampai dengan tangga.l : <span class="fw-bold">{{ date('d F Y', strtotime($submission->start_time)) }} s/d {{ date('d F Y', strtotime($submission->end_time)) }}.</span></li>
@@ -120,7 +132,7 @@
         <div class="footer-left" style="font-size: 10pt">
             <p class="fw-bold text-decoration-underline">Catatan</p>
             <p style="line-height: 1rem">Harap tidak dilayani jika dalam pembelian  BBM bersubsidi nama yang tertera dalam identitas diri pembeli BBM tidak sama ataupun masa berlaku Surat Rekomendasi sudah habis.</p>
-            <p class="fw-bold mt-3">-       SPDN Campurejo</p>
+            <p class="fw-bold mt-3">-       {{ $submission->station->name }}</p>
         </div>
         <div class="text-center footer-right" style="margin: 0;font-size: 11pt">
             <p>Gresik, {{ date('d F Y', strtotime(now())) }}</p>

@@ -362,10 +362,13 @@ class SubmissionController extends Controller
      * download submmision view
      *
      * @param Submission $submission
-     * @return View
+     * @return mixed
      */
-    public function downloadLetter(Submission $submission): View
+    public function downloadLetter(Submission $submission): mixed
     {
+        if(($submission->user->national_identity_number == null) && ($submission->user->address == null)){
+            return back()->with('errors', "NIK dan alamat pembuat harus diisi !");
+        }
         return view('documents.new-recommendation-letter', compact('submission'));
     }
 }
