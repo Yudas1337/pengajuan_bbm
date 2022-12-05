@@ -92,6 +92,8 @@ class UserService
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
+            'national_identity_number' => $validated['national_identity_number'] ?? null,
+            'address' => $validated['address'] ?? null,
             'district_id' => $validated['district_id'] ?? null,
             'village_id'    => $validated['village_id'] ?? null
         ]);
@@ -117,6 +119,8 @@ class UserService
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
+            'national_identity_number' => $validated['national_identity_number'] ?? null,
+            'address' => $validated['address'] ?? null,
             'district_id' => $validated['district_id'] ?? null,
             'village_id'    => $validated['village_id'] ?? null
         ]);
@@ -152,7 +156,7 @@ class UserService
 
     /**
      * handle get group leader
-     * 
+     *
      * @return object
      */
 

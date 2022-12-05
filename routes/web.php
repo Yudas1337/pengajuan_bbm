@@ -30,7 +30,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/recommendation-letter', function () {
-    return view('documents.recommendation-letter');
+    return view('documents.new-recommendation-letter');
 });
 
 Route::get('/', [PrintCardController::class, 'index'])->name('card');
@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
     Route::get('getGroupByKecamatan/{district}', [GroupController::class, 'getGroupByKecamatan'])->name('getGroupByKecamatan');
 
     Route::name('submission.')->group(function () {
+        Route::get('download-letter/{submission}', [SubmissionController::class, 'downloadLetter'])->name('downloadLetter');
         Route::post('update-submission', [SubmissionController::class, 'updateSubmission'])->name('updateSubmission');
         Route::get('create-submission/{id}', [SubmissionController::class, 'createForm'])->name('createForm');
         Route::post('excel-upload', [SubmissionController::class, 'uploadExcelToServer'])->name('excelUpload');

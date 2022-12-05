@@ -31,6 +31,8 @@ class User extends Authenticatable
         'station_id',
         'name',
         'username',
+        'national_identity_number',
+        'address',
         'email',
         'password',
         'district_id',

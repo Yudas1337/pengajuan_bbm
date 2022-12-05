@@ -353,4 +353,15 @@ class SubmissionController extends Controller
             'data' => $this->submissionService->handleGetTotalQuota($submission->id)
         ], Response::HTTP_OK);
     }
+
+    /**
+     * download submmision view
+     *
+     * @param Submission $submission
+     * @return View
+     */
+    public function downloadLetter(Submission $submission): View
+    {
+        return view('documents.new-recommendation-letter', compact('submission'));
+    }
 }

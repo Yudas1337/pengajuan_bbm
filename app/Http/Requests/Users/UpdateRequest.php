@@ -22,6 +22,8 @@ class UpdateRequest extends BaseRequest
             'station_id' => 'nullable|exists:stations,id',
             'username' => ['required', 'min:3', 'max:255', Rule::unique('users')->ignore($this->user)],
             'roles' => 'required',
+            'national_identity_number' => 'nullable',
+            'address' => 'nullable',
             'district_id' => 'nullable',
             'village_id' => 'nullable'
         ];

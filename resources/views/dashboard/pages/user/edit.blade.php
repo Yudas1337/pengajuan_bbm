@@ -33,6 +33,33 @@
                                 </span>
                                 @enderror
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputUsername" class="form-label">NIK</label>
+                                    <input autocomplete="off" type="text" name="national_identity_number"
+                                           class="form-control @error('national_identity_number') is-invalid @enderror"
+                                           id="inputUsername" placeholder="350xxxxxxxxxxxxx"
+                                           value="{{ $user->national_identity_number }}">
+                                    @error('national_identity_number')
+                                    <span class="invalid-feedback" role="alert">
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputUsername" class="form-label">Alamat</label>
+                                    <textarea autocomplete="off" type="text" name="address"
+                                              class="form-control @error('address') is-invalid @enderror"
+                                              id="inputUsername" placeholder="jl. soekarno hatta no 10">{{ $user->address }}</textarea>
+                                    @error('address')
+                                    <span class="invalid-feedback" role="alert">
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="select-ships" class="form-label">Alamat SPBU <small

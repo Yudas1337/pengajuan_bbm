@@ -23,6 +23,8 @@ class StoreRequest extends BaseRequest
             'username' => ['required', 'min:3', 'max:255', Rule::unique('users')->ignore($this->user)],
             'password' => 'required|min:6',
             'roles' => 'required',
+            'national_identity_number' => 'nullable',
+            'address' => 'nullable',
             'district_id' => 'nullable|exists:districts,id',
             'village_id' => 'nullable|exists:villages,id'
         ];

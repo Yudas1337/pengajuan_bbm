@@ -94,7 +94,7 @@ trait YajraTable
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
                 if ($data->validated_by_kepala_dinas) {
-                    return '';
+                    return view('dashboard.pages.submission.download_submission', compact('data'));
                 }
                 return view('dashboard.pages.submission.datatables', compact('data'));
             })

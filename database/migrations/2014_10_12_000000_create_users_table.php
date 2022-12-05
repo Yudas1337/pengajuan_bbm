@@ -18,6 +18,8 @@ return new class extends Migration {
                 ->restrictOnDelete()->cascadeOnUpdate();
             $table->string('name');
             $table->string('username')->unique();
+            $table->char('national_identity_number', 16)->unique()->nullable();
+            $table->text('address')->nullable();
             $table->string('email')->unique();
             $table->char('district_id', 20)->nullable();
             $table->char('village_id', 20)->nullable();
