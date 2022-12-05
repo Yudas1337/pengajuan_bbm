@@ -15,7 +15,7 @@ class Submission extends Model
     public $incrementing = false;
     protected $table = 'submissions';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'group_id', 'district_id', 'village_id', 'station_id', 'receiver_type', 'letter_file', 'excel_file', 'start_time', 'end_time', 'status', 'created_by', 'validated_by_penyuluh', 'validated_by_petugas', 'validated_by_kepala_dinas', 'approval_message', 'note', 'updated_at'];
+    protected $fillable = ['id', 'group_id', 'district_id', 'village_id', 'station_id', 'receiver_type', 'letter_file', 'excel_file', 'start_time', 'end_time', 'status', 'created_by', 'validated_by_penyuluh', 'validated_by_petugas', 'validated_by_kepala_dinas', 'approval_message', 'note', 'last_update_by', 'updated_at'];
     protected $keyType = 'char';
 
     /**
@@ -38,6 +38,17 @@ class Submission extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * One-to-Many relationship with User model
+     *
+     * @return BelongsTo
+     */
+
+    public function last_update_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'last_update_by');
     }
 
     /**

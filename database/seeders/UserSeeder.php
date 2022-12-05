@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $i = 0;
-        $username = ['petugas', 'penyuluh', 'ketua', 'dinas', 'spbu'];
+        $username = ['tangkap', 'pembudidaya', 'penyuluh', 'ketua', 'dinas', 'spbu'];
         foreach (Role::all() as $role) {
             $user = User::create([
                 'id' => Uuid::uuid(),

@@ -38,9 +38,13 @@ class PrintCardController extends Controller
     {
         $data = $this->receiverService->handleCheckNik($request);
         if ($data) {
-            return back()->with(['success' => 'Data pengguna ditemukan !', 'data' => $data]);
+            if ($data['status'] == 'Valid') {
+                return back()->with(['success' => 'Data pengguna ditemukan !', 'data' => $data]);
+            } else {
+                return back()->with('notfound', 'Gagal! data penerima bantuan belum valid!');
+            }
         } else {
-            return back()->with('notfound', 'Data pengguna tidak ditemukan !');
+            return back()->with('notfound', 'Data pengguna tidak ditemukan!');
         }
     }
 

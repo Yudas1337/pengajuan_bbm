@@ -19,7 +19,9 @@ class SubmissionObserver
         $submission->created_by = auth()->id();
         if (UserHelper::checkRolePenyuluh()) {
             $submission->status = 1;
-        } else if (UserHelper::checkRolePetugas()) {
+        } else if (UserHelper::checkRolePembudidaya()) {
+            $submission->status = 1;
+        } else if (UserHelper::checkRoleTangkap()) {
             $submission->status = 1;
         } else if (UserHelper::checkRoleKepalaDinas()) {
             $submission->status = 1;
@@ -37,7 +39,7 @@ class SubmissionObserver
         if (UserHelper::checkRolePenyuluh()) {
             $submission->validated_by_penyuluh = auth()->id();
             $submission->status = 1;
-        } else if (UserHelper::checkRolePetugas()) {
+        } else if (UserHelper::checkRolePembudidaya() || UserHelper::checkRoleTangkap()) {
             $submission->validated_by_petugas = auth()->id();
         } else if (UserHelper::checkRoleKepalaDinas()) {
             $user = [
@@ -53,7 +55,7 @@ class SubmissionObserver
                 $submission->approval_message = null;
                 $submission->validated_by_kepala_dinas = auth()->id();
                 $submission->start_time = now();
-                $submission->end_time = now()->addMonths(3);
+                $submission->end_time = now()->addMonths(1);
                 $submission->submission_receivers()->update([
                     'status' => 1,
                     'validated_by' => auth()->id(),
@@ -70,6 +72,8 @@ class SubmissionObserver
                 $user['message'] = 'Pengajuan pada kelompok ' . $user['group_name'] . ' ditolak. Klik untuk melihat detail penolakan';
                 event(new SubmissionEvent($user));
             }
+
+            $submission->last_update_by = auth()->id();
         }
 
     }

@@ -31,7 +31,7 @@
                     <div class="tab-content" id="tab-wizard">
                         <div id="input-submission-data" class="tab-pane" role="tabpanel"
                              style="display: block">
-                            @if( auth()->user()->roles->pluck('name')[0] === "Penyuluh" || auth()->user()->roles->pluck('name')[0] === "Petugas Pelayanan")
+                            @if( auth()->user()->roles->pluck('name')[0] === "Penyuluh" || auth()->user()->roles->pluck('name')[0] === "Admin Tangkap" || auth()->user()->roles->pluck('name')[0] === "Admin Pembudidaya")
                                 <div class="mb-3 row error-placeholder">
                                     <label class="col-form-label col-sm-3 text-sm-right">Filter Ketua Kelompok <small
                                             class="text-danger">*</small></label>

@@ -226,8 +226,10 @@ class SubmissionController extends Controller
         if ($request->ajax()) {
             if (UserHelper::checkRolePenyuluh()) {
                 return $this->submissionService->handleGetSubmissionsByPenyuluh();
-            } else if (UserHelper::checkRolePetugas()) {
-                return $this->submissionService->handleGetSubmissionsByPetugas();
+            } else if (UserHelper::checkRolePembudidaya()) {
+                return $this->submissionService->handleGetSubmissionsByPembudidaya();
+            } else if (UserHelper::checkRoleTangkap()) {
+                return $this->submissionService->handleGetSubmissionsByTangkap();
             } else if (UserHelper::checkRoleKepalaDinas()) {
                 return $this->submissionService->handleGetSubmissionsByKepalaDinas();
             }
@@ -273,8 +275,10 @@ class SubmissionController extends Controller
         if ($request->ajax()) {
             if (UserHelper::checkRolePenyuluh()) {
                 return $this->submissionService->handleGetUnverifiedSubmissionsByPenyuluh();
-            } else if (UserHelper::checkRolePetugas()) {
-                return $this->submissionService->handleGetUnverifiedSubmissionsByPetugas();
+            } else if (UserHelper::checkRolePembudidaya()) {
+                return $this->submissionService->handleGetUnverifiedSubmissionsByPembudidaya();
+            } else if (UserHelper::checkRoleTangkap()) {
+                return $this->submissionService->handleGetUnverifiedSubmissionsByTangkap();
             } else if (UserHelper::checkRoleKepalaDinas()) {
                 return $this->submissionService->handleGetUnverifiedSubmissionsByKepalaDinas();
             }

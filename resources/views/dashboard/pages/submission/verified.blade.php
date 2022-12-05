@@ -16,13 +16,13 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Kelompok</th>
-                                <th>Ketua Kelompok</th>
                                 <th>Jenis Penerima</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status Verifikasi</th>
                                 <th>Status Pengajuan</th>
                                 <th>Diajukan Oleh</th>
+                                <th>Terakhir Diubah</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -70,10 +70,6 @@
                         name: 'group.group_name'
                     },
                     {
-                        data: 'group.user.name',
-                        name: 'group.user.name'
-                    },
-                    {
                         data: 'group.receiver_type',
                         name: 'group.receiver_type'
                     },
@@ -99,6 +95,10 @@
                     {
                         data: 'user.name',
                         name: 'user.name'
+                    },
+                    {
+                        data: 'last_update_by.name',
+                        name: 'last_update_by.name'
                     },
                     {
                         data: 'action',

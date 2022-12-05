@@ -108,10 +108,10 @@ trait YajraTable
                 return view('dashboard.pages.submission.status', compact('data'));
             })
             ->editColumn('start_time', function ($data) {
-                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y H:i') : '-';
+                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y') : '-';
             })
             ->editColumn('end_time', function ($data) {
-                return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y H:i') : '-';
+                return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
             })
             ->editColumn('submission_status', function ($data) {
                 $now = now()->format('Y-m-d H:i:s');
@@ -196,10 +196,10 @@ trait YajraTable
                 return Carbon::parse($data->date)->format('d-m-Y');
             })
             ->editColumn('start_time', function ($data) {
-                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y H:i') : '-';
+                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y') : '-';
             })
             ->editColumn('end_time', function ($data) {
-                return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y H:i') : '-';
+                return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
             })
             ->editColumn('status', function ($data) {
                 return view('dashboard.pages.submission.status', compact('data'));
@@ -234,10 +234,10 @@ trait YajraTable
                 return Carbon::parse($data->date)->format('d-m-Y');
             })
             ->editColumn('start_time', function ($data) {
-                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y H:i') : '-';
+                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y') : '-';
             })
             ->editColumn('end_time', function ($data) {
-                return ($data->start_time) ? Carbon::parse($data->end_time)->format('d M Y H:i') : '-';
+                return ($data->start_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
             })
             ->editColumn('submission_status', function ($data) {
                 $now = now()->format('Y-m-d H:i:s');
