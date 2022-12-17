@@ -14,7 +14,6 @@ class SubmissionUpdateRequest extends BaseRequest
         return [
             'submission_id' => 'required',
             'group_id' => 'required',
-            'group_name' => 'required',
             'group_leader' => 'required',
             'district_id' => 'required',
             'village_id' => 'required',

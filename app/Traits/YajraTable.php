@@ -204,6 +204,9 @@ trait YajraTable
             ->editColumn('last_update_by', function ($data) {
                 return ($data->last_update_by) ? $data->user_last_update_by->name : '-';
             })
+            ->editColumn('updated_at', function ($data) {
+                return ($data->start_time && $data->end_time ) ? Carbon::parse($data->updated_at)->format('d M Y H:i') : '-';
+            })
             ->editColumn('status', function ($data) {
                 return view('dashboard.pages.submission.status', compact('data'));
             })

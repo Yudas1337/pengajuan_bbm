@@ -159,8 +159,7 @@
                             <div class="alert-message">
                                 <strong>Note:</strong>
                                 <ul>
-                                    <li>File harus di upload terlebih dahulu untuk dilakukan validasi
-                                        oleh sistem.
+                                    <li>File lama sudah tercatat dan tidak harus diupload ulang.
                                     </li>
                                     <li>Ekstensi file yang diperbolehkan yaitu excel / csv.</li>
                                     <li>Pastikan file yang dipilih telah benar dan sesuai.</li>
@@ -230,8 +229,7 @@
                             <div class="alert-message">
                                 <strong>Note:</strong>
                                 <ul>
-                                    <li>Data Nelayan yang ditampilkan hanya data yang berstatus: 'Draft', 'Perubahan',
-                                        dan 'Tidak Valid'
+                                    <li>Sebelum melakukan persetujuan atau simpan perubahan mohon dicermati usulan kuota bbm yang sudah diupload
                                     </li>
                                 </ul>
                             </div>
@@ -431,7 +429,7 @@
                     form.append('submission_id', submission_id)
                     if(note){
                         form.append('note', note)
-                    }                    
+                    }
                     let url = `{{ route('submission.updateSubmission') }}`;
                     $.ajax({
                         url: url,

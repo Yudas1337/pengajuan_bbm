@@ -56,6 +56,7 @@ class SubmissionObserver
                 $submission->validated_by_kepala_dinas = auth()->id();
                 $submission->start_time = now();
                 $submission->end_time = now()->addMonths(1);
+                $submission->updated_at = now();
                 $submission->submission_receivers()->update([
                     'status' => 1,
                     'validated_by' => auth()->id(),

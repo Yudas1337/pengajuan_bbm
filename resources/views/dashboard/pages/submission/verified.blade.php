@@ -26,6 +26,7 @@
                                 <th>Status Pengajuan</th>
                                 <th>Diajukan Oleh</th>
                                 <th>Terakhir Diubah</th>
+                                <th>Diverifikasi Pada</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -102,6 +103,10 @@
                     {
                         data: 'last_update_by',
                         name: 'last_update_by'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
                     },
                     {
                         data: 'action',

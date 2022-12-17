@@ -34,8 +34,7 @@
                                     File Data
                                     Nelayan</small></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link inactive" href="#data-verification">Page 4<br><small>Periksa
-                                    Data Nelayan</small></a>
+                        <li class="nav-item"><a class="nav-link inactive" href="#data-verification">Page 4<br><small>Tambah data pengajuan</small></a>
                         </li>
                     </ul>
 
@@ -162,13 +161,18 @@
                             <div class="alert-message">
                                 <strong>Note:</strong>
                                 <ul>
-                                    <li>File harus di upload terlebih dahulu untuk dilakukan validasi
-                                        oleh sistem.
+                                    <li>File lama sudah tercatat dan tidak harus diupload ulang.
                                     </li>
-                                    <li>Ekstensi file yang diperbolehkan yaitu excel / csv.</li>
-                                    <li>Pastikan file yang dipilih telah benar dan sesuai.</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-form-label col-sm-3 text-sm-right">Contoh Format Excel<small class="text-danger">*</small> </label>
+                        <div class="col-sm-6">
+                            <a target="_blank" href="{{ asset("FORMAT-PENGAJUAN.xlsx") }}"
+                               class="btn btn-success">Download Format Excel
+                            </a>
                         </div>
                     </div>
                     <div class="mb-3 row" hidden>
@@ -233,8 +237,7 @@
                             <div class="alert-message">
                                 <strong>Note:</strong>
                                 <ul>
-                                    <li>Data Nelayan yang ditampilkan hanya data yang berstatus: 'Draft', 'Perubahan',
-                                        dan 'Tidak Valid'
+                                    <li>Sebelum melakukan persetujuan atau simpan perubahan mohon dicermati usulan kuota bbm yang sudah diupload
                                     </li>
                                 </ul>
                             </div>
@@ -242,7 +245,7 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-12">
-                            <button class="btn btn-danger" type="button" id="load-receivers">Load data</button>
+                            <button class="btn btn-danger" type="button" id="load-receivers">Tampilkan data</button>
                             <button class="btn btn-success" type="submit">Simpan
                                 Perubahan
                             </button>
@@ -250,7 +253,7 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-12">
-                            <h4>Total Kuota : <span id="totalQuota">0</span></h4>
+                            <h4>Usulan Kuota Total BBM yang Diajukan : <span id="totalQuota">0</span></h4>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -428,6 +431,9 @@
                 success: function () {
                     upload_msg.attr('class', 'mt-3 text-success')
                     upload_msg.text("Berhasil Upload File")
+
+                    alert("upload sukses")
+
                     $('#excel_file').attr('disabled', true)
                     $('#btn_excel_file').attr('disabled', true)
                 },

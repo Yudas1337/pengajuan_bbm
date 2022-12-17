@@ -65,7 +65,6 @@ class SubmissionRepository extends BaseRepository
         return $this->submissionReceiver->query()
             ->select('submission_id', 'quota', 'receiver_id', 'name', 'national_identity_number', 'receivers.status')
             ->join('receivers', 'receivers.id', '=', 'submission_receivers.receiver_id')
-            ->whereIn('receivers.status', ['Draft', 'Perubahan', 'Tidak Valid'])
             ->where(['submission_id' => $id]);
     }
 
