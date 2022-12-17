@@ -1,5 +1,5 @@
 @if($data->approval_message)
-    <span class="badge badge-soft-danger">Ditolak</span>
+    <span class="badge badge-soft-danger">Ditolak: {{ $data->approval_message }}</span>
 @elseif($data->start_time && $data->end_time)
     <span class="badge badge-soft-success">Disetujui</span>
 @else

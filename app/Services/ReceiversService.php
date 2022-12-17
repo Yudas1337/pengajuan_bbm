@@ -149,4 +149,6 @@ class ReceiversService
     {
         return $this->repository->countAll();
     }
+
+
 }

@@ -377,4 +377,36 @@ class SubmissionRepository extends BaseRepository
             ->with(['submission_receiver.receiver', 'user.station'])
             ->latest();
     }
+
+    /**
+     * handle count quota by district
+     *
+     * @return object
+     */
+
+    public function countQuotaByDistrict(): object
+    {
+        return $this->model->query()
+            ->select('id')
+            ->where('district_id', auth()->user()->district_id)
+            ->verified()
+            ->whereDate('start_time', '<=', now())
+            ->whereDate('end_time', '>=', now())
+            ->withSum('submission_receivers', 'default_quota')
+            ->get();
+    }
+
+    /**
+     * handle count unverified submission by district
+     *
+     * @return int
+     */
+
+    public function countUnverifiedSubmissionByDistrict(): int
+    {
+        return $this->model->query()
+            ->where('district_id', auth()->user()->district_id)
+            ->whereNull('validated_by_penyuluh')
+            ->count();
+    }
 }

@@ -398,4 +398,32 @@ class SubmissionService
     {
         return $this->TransactionMockup($this->repository->getTransactions());
     }
+
+    /**
+     * Handle count all quota by district
+     *
+     * @return int
+     */
+
+    public function handleTotalQuotaByDistrict(): int
+    {
+        $quota = 0;
+        $datas = $this->repository->countQuotaByDistrict();
+        foreach ($datas as $data) {
+            $quota += $data->submission_receivers_sum_default_quota;
+        }
+
+        return $quota;
+    }
+
+    /**
+     * Handle count unverified submission by district
+     *
+     * @return int
+     */
+
+    public function handleTotalUnverifiedSubmissionByDistrict(): int
+    {
+        return $this->repository->countUnverifiedSubmissionByDistrict();
+    }
 }

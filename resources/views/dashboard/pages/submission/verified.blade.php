@@ -10,18 +10,15 @@
                     <x-alert-success></x-alert-success>
                 @endif
                 @if (session('errors'))
-                   <x-alert-failed></x-alert-failed>
+                    <x-alert-failed></x-alert-failed>
                 @endif
                 <div class="card">
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Nama Kelompok</th>
-                                <th>Jenis Penerima</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
+                                <th>Tanggal Aktif</th>
                                 <th>Status Verifikasi</th>
                                 <th>Status Pengajuan</th>
                                 <th>Diajukan Oleh</th>
@@ -64,26 +61,14 @@
                 serverSide: true,
                 searching: true,
                 ajax: "{{ route('submission.verified') }}",
-                columns: [{
-                    data: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
+                columns: [
                     {
                         data: 'group.group_name',
                         name: 'group.group_name'
                     },
                     {
-                        data: 'group.receiver_type',
-                        name: 'group.receiver_type'
-                    },
-                    {
                         data: 'start_time',
                         name: 'start_time'
-                    },
-                    {
-                        data: 'end_time',
-                        name: 'end_time'
                     },
                     {
                         data: 'status',

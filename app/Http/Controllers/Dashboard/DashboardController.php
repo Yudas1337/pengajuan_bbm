@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
+use App\Services\GroupService;
 use App\Services\NotificationService;
 use App\Services\ReceiversService;
 use App\Services\SubmissionService;
@@ -15,12 +17,14 @@ class DashboardController extends Controller
     private SubmissionService $submissionService;
     private ReceiversService $receiversService;
     private NotificationService $notificationService;
+    private GroupService $groupService;
 
-    public function __construct(SubmissionService $submissionService, ReceiversService $receiversService, NotificationService $notificationService)
+    public function __construct(SubmissionService $submissionService, ReceiversService $receiversService, NotificationService $notificationService, GroupService $groupService)
     {
         $this->submissionService = $submissionService;
         $this->receiversService = $receiversService;
         $this->notificationService = $notificationService;
+        $this->groupService = $groupService;
     }
 
     /**
@@ -31,14 +35,29 @@ class DashboardController extends Controller
 
     public function index(): View
     {
-        $data = [
-            'totalVerifiedSubmission' => $this->submissionService->handleCountVerifiedSubmission(),
-            'totalUnverifiedSubmission' => $this->submissionService->handleCountUnverifiedSubmission(),
-            'totalRejectedSubmission' => $this->submissionService->handleCountRejectedSubmission(),
-            'totalReceivers' => $this->receiversService->handleTotalReceiver(),
-            'totalQuota' => $this->submissionService->handleCountTotalQuota(),
-            'totalQuotaTransaction' => $this->submissionService->handleCountTotalQuotaTransaction()
-        ];
+        $data = [];
+
+        if (UserHelper::checkRolePembudidaya() || UserHelper::checkRoleTangkap()) {
+            $data = [
+                'totalVerifiedSubmission' => $this->submissionService->handleCountVerifiedSubmission(),
+                'totalUnverifiedSubmission' => $this->submissionService->handleCountUnverifiedSubmission(),
+                'totalRejectedSubmission' => $this->submissionService->handleCountRejectedSubmission(),
+                'totalReceivers' => $this->receiversService->handleTotalReceiver(),
+                'totalQuota' => $this->submissionService->handleCountTotalQuota(),
+                'totalQuotaTransaction' => $this->submissionService->handleCountTotalQuotaTransaction()
+            ];
+        } elseif (UserHelper::checkRoleKepalaDinas()) {
+            $data = [
+                'totalUnverifiedSubmission' => $this->submissionService->handleCountUnverifiedSubmission(),
+            ];
+        } elseif (UserHelper::checkRolePenyuluh()) {
+            $data = [
+                'totalQuotaByDistrict' => $this->submissionService->handleTotalQuotaByDistrict(),
+                'totalUnverifiedSubmissionByDistrict' => $this->submissionService->handleTotalUnverifiedSubmissionByDistrict(),
+                'totalReceiverPerYearByDistrict' => $this->groupService->handleTotalReceiverPerYearByDistrict()
+            ];
+        }
+
 
         return view('dashboard.pages.index', compact('data'));
     }

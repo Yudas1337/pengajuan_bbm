@@ -196,16 +196,13 @@ trait YajraTable
                 return Carbon::parse($data->date)->format('d-m-Y');
             })
             ->editColumn('start_time', function ($data) {
-                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y') : '-';
-            })
-            ->editColumn('end_time', function ($data) {
-                return ($data->end_time) ? Carbon::parse($data->end_time)->format('d M Y') : '-';
+                return ($data->start_time) ? Carbon::parse($data->start_time)->format('d M Y') . '-' . Carbon::parse($data->end_time)->format('d M Y') : '-';
             })
             ->editColumn('last_update_by', function ($data) {
                 return ($data->last_update_by) ? $data->user_last_update_by->name : '-';
             })
             ->editColumn('updated_at', function ($data) {
-                return ($data->start_time && $data->end_time ) ? Carbon::parse($data->updated_at)->format('d M Y H:i') : '-';
+                return ($data->start_time && $data->end_time) ? Carbon::parse($data->updated_at)->format('d M Y H:i') : '-';
             })
             ->editColumn('status', function ($data) {
                 return view('dashboard.pages.submission.status', compact('data'));

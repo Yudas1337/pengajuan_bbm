@@ -6,7 +6,8 @@ use App\Http\Requests\GroupRequest;
 use App\Repositories\GroupRepository;
 use App\Traits\YajraTable;
 
-class GroupService {
+class GroupService
+{
     use YajraTable;
 
     private GroupRepository $repository;
@@ -18,35 +19,35 @@ class GroupService {
 
     /**
      * handle fetch groups
-     * 
+     *
      * @return object
      */
-    
-    public function handleFetchGroups() : object
+
+    public function handleFetchGroups(): object
     {
         return $this->repository->fetchGroups();
     }
 
     /**
      * handle get all group for yajra table
-     * 
+     *
      * @return object|null
      */
-    
-    public function handleGetAll() : object|null
+
+    public function handleGetAll(): object|null
     {
         return $this->GroupMockup($this->repository->getAll());
     }
 
     /**
      * handle store group
-     * 
+     *
      * @param GroupRequest $request
-     * 
+     *
      * @return void
      */
 
-    public function handleStoreGroup(GroupRequest $request) : void
+    public function handleStoreGroup(GroupRequest $request): void
     {
         $data = $request->validated();
         $data['group_name'] = str_replace(' ', '_', strtoupper($data['group_name']));
@@ -55,14 +56,14 @@ class GroupService {
 
     /**
      * handle update group
-     * 
+     *
      * @param GroupRequest $request
      * @param string $id
-     * 
+     *
      * @return void
      */
 
-    public function handleUpdateGroup(GroupRequest $request, string $id) : void
+    public function handleUpdateGroup(GroupRequest $request, string $id): void
     {
         $data = $request->validated();
         $data['group_name'] = str_replace(' ', '_', strtoupper($data['group_name']));
@@ -77,19 +78,38 @@ class GroupService {
      * @return mixed
      */
 
-    public function handleDeleteGroup(string $id) : mixed
+    public function handleDeleteGroup(string $id): mixed
     {
         return $this->repository->destroy($id);
     }
 
     /**
      * handle get group by kecamatan
-     * 
+     *
      * @param string $districtId
      * @return object|null
      */
     public function handleGetByKecamatan(string $districtId): object|null
     {
         return $this->repository->getGroupByKecamatan($districtId);
+    }
+
+    /**
+     * Handle total receiver per year by district.
+     *
+     *
+     * @return int
+     */
+
+    public function handleTotalReceiverPerYearByDistrict(): int
+    {
+        $data = 0;
+
+        $receivers = $this->repository->countReceiverByDistrict();
+        foreach ($receivers as $receiver) {
+            $data += $receiver->receivers;
+        }
+
+        return $data;
     }
 }
