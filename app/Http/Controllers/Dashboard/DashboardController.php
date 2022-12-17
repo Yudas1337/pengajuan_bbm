@@ -56,6 +56,13 @@ class DashboardController extends Controller
                 'totalUnverifiedSubmissionByDistrict' => $this->submissionService->handleTotalUnverifiedSubmissionByDistrict(),
                 'totalReceiverPerYearByDistrict' => $this->groupService->handleTotalReceiverPerYearByDistrict()
             ];
+        } elseif (UserHelper::checkRoleKetuaKelompok()) {
+            $data = [
+                'totalSubmissionThisYear' => $this->submissionService->handleTotalSubmissionThisYear(),
+                'totalAcceptedSubmissionQuotaThisYear' => $this->submissionService->handleTotalAcceptedSubmissionQuotaThisYear(),
+                'totalProgressSubmission' => $this->submissionService->handleTotalProgressSubmission(),
+                'totalDeclinedSubmission' => $this->submissionService->handleTotalDeclinedSubmission()
+            ];
         }
 
 

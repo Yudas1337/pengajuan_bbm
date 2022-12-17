@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Submission;
 use App\Models\SubmissionHistory;
 use App\Models\SubmissionReceiver;
+use Illuminate\Support\Facades\DB;
 
 class SubmissionRepository extends BaseRepository
 {
@@ -407,6 +408,64 @@ class SubmissionRepository extends BaseRepository
         return $this->model->query()
             ->where('district_id', auth()->user()->district_id)
             ->whereNull('validated_by_penyuluh')
+            ->count();
+    }
+
+    /**
+     * handle count total submission this year
+     *
+     * @return int
+     */
+
+    public function countTotalSubmissionThisYear(): int
+    {
+        return $this->model->query()
+            ->where(DB::raw('YEAR(created_at)'), now()->format('Y'))
+            ->count();
+    }
+
+    /**
+     * handle count accepted quota this year
+     *
+     * @return object
+     */
+
+    public function countAcceptedQuotaThisYear(): object
+    {
+        return $this->model->query()
+            ->select('id')
+            ->where(DB::raw('YEAR(created_at)'), now()->format('Y'))
+            ->has('submission_receivers')
+            ->withSum('submission_receivers', 'default_quota')
+            ->get();
+    }
+
+    /**
+     * handle process submission
+     *
+     * @return int
+     */
+
+    public function countProgressSubmission(): int
+    {
+        return $this->model->query()
+            ->select('id', 'start_time', 'end_time')
+            ->whereNull('start_time')
+            ->whereNull('end_time')
+            ->count();
+    }
+
+    /**
+     * handle declined submission
+     *
+     * @return int
+     */
+
+    public function countDeclinedSubmission(): int
+    {
+        return $this->model->query()
+            ->select('id', 'approval_message')
+            ->whereNotNull('approval_message')
             ->count();
     }
 }

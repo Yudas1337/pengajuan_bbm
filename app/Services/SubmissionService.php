@@ -426,4 +426,54 @@ class SubmissionService
     {
         return $this->repository->countUnverifiedSubmissionByDistrict();
     }
+
+    /**
+     * handle count total submission this year
+     *
+     * @return int
+     */
+
+    public function handleTotalSubmissionThisYear(): int
+    {
+        return $this->repository->countTotalSubmissionThisYear();
+    }
+
+    /**
+     * handle count accepted quota this year
+     *
+     * @return int
+     */
+
+    public function handleTotalAcceptedSubmissionQuotaThisYear(): int
+    {
+        $sum = 0;
+        $datas = $this->repository->countAcceptedQuotaThisYear();
+        foreach ($datas as $data) {
+            $sum += $data->submission_receivers_sum_default_quota;
+        }
+
+        return $sum;
+    }
+
+    /**
+     * handle process submission
+     *
+     * @return int
+     */
+
+    public function handleTotalProgressSubmission(): int
+    {
+        return $this->repository->countProgressSubmission();
+    }
+
+    /**
+     * handle declined submission
+     *
+     * @return int
+     */
+
+    public function handleTotalDeclinedSubmission(): int
+    {
+        return $this->repository->countDeclinedSubmission();
+    }
 }
