@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\District;
 use App\Models\Station;
 use Faker\Provider\Uuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class StationFactory extends Factory
     {
         return [
             'id' => Uuid::uuid(),
+            'district_id' => District::all()->random(),
             'name' => fake()->name(),
             'number' => fake()->unique()->phoneNumber(),
             'address' => fake()->address(),

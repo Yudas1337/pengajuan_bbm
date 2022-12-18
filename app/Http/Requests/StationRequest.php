@@ -14,6 +14,7 @@ class StationRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'district_id' => 'required',
             'name' => 'required|min:3|max:150',
             'number' => 'required|max:50',
             'address' => 'required',

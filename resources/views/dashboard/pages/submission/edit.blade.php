@@ -53,6 +53,7 @@
                                                     data-district="{{ $group->user->district }}"
                                                     data-village="{{ $group->user->village }}"
                                                     data-station="{{ $group->user->station }}"
+                                                    data-submission-station="{{ $submission->station }}"
                                                     data-user="{{ $group->user }}"
                                                 {{ $group->group_leader_id === auth()->id() || $submission->group_id === $group->id ? 'selected' : '' }}>{{ $group->group_name }}</option>
                                         @endforeach
@@ -73,7 +74,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-districts" name="district_id"
-                                            class="form-control select2-districts">
+                                            class="form-control select2-districts select-district">
                                         <option value="">--Pilih--</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}"
@@ -88,7 +89,7 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6">
                                     <select id="select-villages" name="village_id"
-                                            class="form-control select2-villages">
+                                            class="form-control select2-villages select-village">
                                         <option value="">--Pilih--</option>
                                     </select>
                                 </div>
@@ -96,15 +97,15 @@
                             <div class="mb-3 row error-placeholder">
                                 <label class="col-form-label col-sm-3 text-sm-right">Pilih SPBU <small
                                         class="text-danger">*</small></label>
-                                <div class="col-sm-6">
-                                    @foreach ($stations as $station)
-                                        <label class="form-check">
-                                            <input
-                                                value="{{ $station->id }}" name="station_id" type="radio"
-                                                class="form-check-input" readonly="true">
-                                            <span class="form-check-label">{{ $station->name }}</span>
-                                        </label>
-                                    @endforeach
+                                <div class="col-sm-6" id="stations-container">
+{{--                                    @foreach ($stations as $station)--}}
+{{--                                        <label class="form-check">--}}
+{{--                                            <input--}}
+{{--                                                value="{{ $station->id }}" name="station_id" type="radio"--}}
+{{--                                                class="form-check-input" readonly="true">--}}
+{{--                                            <span class="form-check-label">{{ $station->name }}</span>--}}
+{{--                                        </label>--}}
+{{--                                    @endforeach--}}
                                 </div>
                             </div>
                         </div>
@@ -312,6 +313,17 @@
         document.addEventListener("DOMContentLoaded", function () {
 
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+                const url = window.location.href.split('/')
+                const submissionId = url[5].split('#')
+                window.location.href = `{{ config('app.url') }}/dashboard/submissions/${submissionId[0]}/edit#input-submission-data`
+            }
+
+
+
+            $('.select-group').prop('disabled', true);
+
             let upload_msg = $('#upload-msg')
             let submission_id = $('#submission_id').val()
 
@@ -332,14 +344,51 @@
                 setSelectedValue()
             })
 
-            function setSelectedValue() {
+            function getStationByDistrict(districtId, station) {
+                $.ajax({
+                    headers: {
+                        _token: CSRF_TOKEN
+                    },
+                    method: 'POST',
+                    url: '{{ route("stations.getStationsByDistrict") }}',
+                    data: {districtId: districtId, _token: CSRF_TOKEN},
+                    dataType : 'JSON',
+                    success: function(e){
+                        let html = ""
+                        e.map((val) => {
+                            html += `<label class="form-check">
+                                            <input value="${val.id}" name="station_id" type="radio"
+                                                   class="form-check-input" readonly required>
+                                            <span class="form-check-label">${val.name}</span>
+                                        </label>`
+                        })
+
+                        $('#stations-container').html(html)
+
+                        let itemStation = $('input[name="station_id"]')
+                        for (let i = 0; i < itemStation.length; i++) {
+                            if (itemStation[i].value == station.id) {
+                                itemStation.removeAttr('checked')
+                                itemStation[i].setAttribute('checked', true)
+                            }
+                        }
+                    }
+                })
+            }
+
+            function setSelectedValue()  {
+                $('#stations-container').children('label').remove()
+
                 var select = document.getElementById("select-group");
+                var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
+                var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
+                var submission_station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-submission-station'))
+                console.log(submission_station)
+                getStationByDistrict(district.id, (submission_station != null) ? submission_station : station)
+
                 var group = JSON.parse(select.options[select.selectedIndex].getAttribute('data-group'))
                 var user = JSON.parse(select.options[select.selectedIndex].getAttribute('data-user'))
-                var district = JSON.parse(select.options[select.selectedIndex].getAttribute('data-district'))
                 var village = JSON.parse(select.options[select.selectedIndex].getAttribute('data-village'))
-                var station = JSON.parse(select.options[select.selectedIndex].getAttribute('data-station'))
-                console.log(group)
 
                 // page 1
                 $('#leader-name').val(user.name)
@@ -348,13 +397,7 @@
                 let optionVillage = `<option value="${village.id}">${village.name}</option>`
                 $('#select-villages').html(optionVillage)
 
-                let itemStation = $('input[name="station_id"]')
-                for (let i = 0; i < itemStation.length; i++) {
-                    if (itemStation[i].value == station.id) {
-                        itemStation.removeAttr('checked')
-                        itemStation[i].setAttribute('checked', true)
-                    }
-                }
+
 
                 // page 2
                 let receiverType = $('input[name="receiver_type"]')
@@ -449,6 +492,50 @@
             $("#smartwizard-arrows-primary").smartWizard({
                 theme: "arrows",
                 autoAdjustHeight: true
+            });
+
+            // Validation
+            var $validationForm = $("#smartwizard-validation");
+            $validationForm.validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    $(element).parents(".error-placeholder").append(
+                        error.addClass("invalid-feedback small d-block")
+                    )
+                },
+                highlight: function(element) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass("is-invalid");
+                },
+                rules: {
+                    "wizard-confirm": {
+                        equalTo: "input[name=\"wizard-password\"]"
+                    }
+                }
+            });
+            $validationForm
+                .smartWizard({
+                    autoAdjustHeight: false,
+                    backButtonSupport: false,
+                    useURLhash: false,
+                    showStepURLhash: false,
+                    toolbarSettings: {
+                        toolbarExtraButtons: [$("<button class=\"btn btn-submit btn-primary\" type=\"button\">Finish</button>")]
+                    }
+                })
+                .on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+                    if (stepDirection === 1) {
+                        return $validationForm.valid();
+                    }
+                    return true;
+                });
+            $validationForm.find(".btn-submit").on("click", function() {
+                if (!$validationForm.valid()) {
+                    return;
+                }
+                alert("Great! The form is valid and ready to submit.");
+                return false;
             });
 
             $('.select2-ajax').select2();

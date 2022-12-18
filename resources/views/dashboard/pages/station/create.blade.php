@@ -68,18 +68,34 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tipe <small class="text-danger">*</small></label>
-                            <select name="type" class="form-control @error('type') is-invalid @enderror">
-                                <option value="">--Pilih--</option>
-                                <option {{ old('type') == 'spbu' ? 'selected' : ''  }} value="spbu">SPBU</option>
-                                <option {{ old('type') == 'spbn' ? 'selected' : ''  }} value="spbn">SPBN</option>
-                            </select>
-                            @error('type')
-                            <span class="invalid-feedback" role="alert">
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Tipe <small class="text-danger">*</small></label>
+                                <select name="type" class="form-control @error('type') is-invalid @enderror">
+                                    <option value="">--Pilih--</option>
+                                    <option {{ old('type') == 'spbu' ? 'selected' : ''  }} value="spbu">SPBU</option>
+                                    <option {{ old('type') == 'spbn' ? 'selected' : ''  }} value="spbn">SPBN</option>
+                                </select>
+                                @error('type')
+                                <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Kecamatan <small class="text-danger">*</small></label>
+                                <select name="district_id" class="form-control select2-ajax @error('type') is-invalid @enderror">
+                                    <option value="">--Pilih--</option>
+                                    @foreach($districts as $district)
+                                        <option {{ old('district_id') == $district->id ? 'selected' : ''  }} value="{{ $district->id }}">{{ $district->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="reset" class="btn btn-secondary">Kosongkan form</button>
@@ -88,4 +104,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.select2-ajax').select2();
+        })
+    </script>
 @endsection

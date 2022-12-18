@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Station extends Model
 {
@@ -13,7 +14,7 @@ class Station extends Model
     public $incrementing = false;
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'number', 'address', 'pic_name', 'pic_phone', 'type'];
+    protected $fillable = ['district_id', 'name', 'number', 'address', 'pic_name', 'pic_phone', 'type'];
 
     /**
      * Scope a query to search with where
@@ -28,5 +29,15 @@ class Station extends Model
     public function scopeWhereLike(mixed $query, mixed $column, mixed $value): object|null
     {
         return $query->where($column, 'like', '%' . $value . '%');
+    }
+
+    /**
+     * many to one relationship with district
+     *
+     * @return BelongsTo
+     */
+    public function district() : BelongsTo
+    {
+        return $this->belongsTo(District::class, 'district_id');
     }
 }

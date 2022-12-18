@@ -20,7 +20,18 @@ class StationRepository extends BaseRepository
 
     public function getAll(): mixed
     {
-        return $this->model->query();
+        return $this->model->query()->with('district');
+    }
+
+    /**
+     * get stations by district
+     *
+     * @param int $districtId
+     * @return mixed
+     */
+    public function getByDistrict(int $districtId): mixed
+    {
+        return $this->model->where('district_id', $districtId)->get();
     }
 
     /**

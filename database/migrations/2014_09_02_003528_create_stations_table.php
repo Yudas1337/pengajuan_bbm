@@ -14,6 +14,7 @@ return new class extends Migration {
     {
         Schema::create('stations', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('district_id')->constrained();
             $table->string('name', 150);
             $table->char('number', 50);
             $table->text('address');

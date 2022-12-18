@@ -24,6 +24,7 @@
                                 <th>Nama PIC</th>
                                 <th>Nomor PIC</th>
                                 <th>Tipe</th>
+                                <th>Kecamatan</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -91,6 +92,10 @@
                     {
                         data: 'type',
                         name: 'type'
+                    },
+                    {
+                        data: 'district.name',
+                        name: 'district.name'
                     },
                     {
                         data: 'action',

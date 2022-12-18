@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
             });
         });
         Route::name('stations.')->prefix('station')->group(function () {
+            Route::post('getStationsByDistrict', [StationController::class, 'getByDistrict'])->name('getStationsByDistrict');
             Route::get('getStationsWithAjax', [StationController::class, 'getAllWithAjax'])->name('performAjax');
         });
         Route::name('provinces.')->prefix('province')->group(function () {

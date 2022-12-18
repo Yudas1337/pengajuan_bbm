@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StationRequest;
+use App\Models\District;
 use App\Models\Station;
+use App\Services\DistrictService;
 use App\Services\StationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -14,11 +16,13 @@ use Illuminate\View\View;
 class StationController extends Controller
 {
     private StationService $service;
+    private DistrictService $districtService;
 
-    public function __construct(StationService $stationService)
+    public function __construct(StationService $stationService, DistrictService $districtService)
     {
         $this->authorizeResource(Station::class);
         $this->service = $stationService;
+        $this->districtService = $districtService;
     }
 
     /**
@@ -44,7 +48,8 @@ class StationController extends Controller
 
     public function create(): View
     {
-        return view('dashboard.pages.station.create');
+        $districts = $this->districtService->handleGetAllDistricts();
+        return view('dashboard.pages.station.create', compact('districts'));
     }
 
     /**
@@ -71,7 +76,8 @@ class StationController extends Controller
      */
     public function edit(Station $station): View
     {
-        return view('dashboard.pages.station.edit', compact('station'));
+        $districts = $this->districtService->handleGetAllDistricts();
+        return view('dashboard.pages.station.edit', compact('station', 'districts'));
     }
 
     /**
@@ -118,6 +124,19 @@ class StationController extends Controller
     {
         if ($request->ajax()) {
             return $this->service->handleSelectAjaxStations($request);
+        }
+    }
+
+    /**
+     * get station by district
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getByDistrict(Request $request) : JsonResponse
+    {
+        if($request->ajax()){
+            return response()->json($this->service->handleGetStationByDistrict($request->districtId));
         }
     }
 }

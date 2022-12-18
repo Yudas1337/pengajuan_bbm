@@ -250,7 +250,7 @@ class SubmissionController extends Controller
     {
         $id = $submission->id;
         $datas = [
-            'stations' => $this->stationService->handleGetAllStations(),
+            'stations' => $this->stationService->handleGetStationByDistrict(auth()->user()->district_id),
             'districts' => $this->districtService->handleGetAllDistricts(),
             'id' => $id,
             'submission' => $this->submissionService->handleShowSubmission($id),

@@ -73,6 +73,17 @@ class StationService
     }
 
     /**
+     * handle get stations by district
+     *
+     * @param int $districtId
+     * @return mixed
+     */
+    public function handleGetStationByDistrict(int $districtId): mixed
+    {
+        return $this->repository->getByDistrict($districtId);
+    }
+
+    /**
      * Store station data to StationRepository
      *
      * @param StationRequest $request
