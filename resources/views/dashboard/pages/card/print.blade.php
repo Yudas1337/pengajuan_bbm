@@ -31,6 +31,7 @@
                 width: 8.56cm;
                 height: 5.39cm;
                 background-color: white;
+                page-break-after: always;
                 /* border-radius: 1rem; */
                 /* border: 1px solid black; */
             }
