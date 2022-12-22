@@ -61,23 +61,11 @@
     </li>
 @endcan
 
-@can('history-transaction')
-    <li class="sidebar-header">
-        Menu Transaksi
-    </li>
-    <li class="sidebar-item {{ request()->routeIs('histories.index') ? 'active' : '' }}">
-        <a href="{{ route('histories.index') }}" class="sidebar-link">
-            <i class="align-middle me-2 fas fa-fw fa-credit-card"></i> <span
-                class="align-middle">History Transaksi</span>
-        </a>
-    </li>
-@endcan
+<li class="sidebar-header">
+    Menu Master
+</li>
 
 @can('create-station')
-    <li class="sidebar-header">
-        Menu Stasiun
-    </li>
-
     <li class="sidebar-item {{ request()->routeIs('stations.*') ? 'active' : '' }}">
         <a data-bs-target="#stations" data-bs-toggle="collapse" class="sidebar-link collapsed">
             <i class="align-middle me-2 fas fa-fw fa-gas-pump"></i> <span class="align-middle">
@@ -100,9 +88,6 @@
 @endcan
 
 @can('create-group')
-    <li class="sidebar-header">
-        Menu Kelompok
-    </li>
 
     <li class="sidebar-item {{ request()->routeIs('groups.*') ? 'active' : '' }}">
         <a data-bs-target="#groups" data-bs-toggle="collapse" class="sidebar-link collapsed">
@@ -126,10 +111,6 @@
 @endcan
 
 @can('create-receiver')
-    <li class="sidebar-header">
-        Menu Penerima Bantuan
-    </li>
-
     <li class="sidebar-item {{ request()->routeIs('receivers.*') ? 'active' : '' }}">
         <a data-bs-target="#receivers" data-bs-toggle="collapse" class="sidebar-link collapsed">
             <i class="align-middle me-2 fas fa-fw fa-users"></i> <span class="align-middle">
@@ -150,10 +131,8 @@
         </ul>
     </li>
 @endcan
+
 @can('create-user')
-    <li class="sidebar-header">
-        Menu Pengguna
-    </li>
     <li class="sidebar-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
         <a data-bs-target="#users" data-bs-toggle="collapse" class="sidebar-link collapsed">
             <i class="align-middle me-2 fas fa-fw fa-user"></i> <span class="align-middle">
@@ -174,5 +153,17 @@
                 <a class="sidebar-link" href="{{ route('user.inactive') }}">Pengguna Nonaktif</a>
             </li>
         </ul>
+    </li>
+@endcan
+
+@can('history-transaction')
+    <li class="sidebar-header">
+        Menu Transaksi
+    </li>
+    <li class="sidebar-item {{ request()->routeIs('histories.index') ? 'active' : '' }}">
+        <a href="{{ route('histories.index') }}" class="sidebar-link">
+            <i class="align-middle me-2 fas fa-fw fa-credit-card"></i> <span
+                class="align-middle">History Transaksi</span>
+        </a>
     </li>
 @endcan
