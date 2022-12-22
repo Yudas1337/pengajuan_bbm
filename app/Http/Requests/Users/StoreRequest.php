@@ -17,7 +17,7 @@ class StoreRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:3|max:255|regex:/^[a-z-A-Z_\s\.]*$/',
+            'name' => 'required|min:3|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($this->user)],
             'station_id' => 'nullable|exists:stations,id',
             'username' => ['required', 'min:3', 'max:255', Rule::unique('users')->ignore($this->user)],

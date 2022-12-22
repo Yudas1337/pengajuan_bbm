@@ -321,6 +321,7 @@ class SubmissionRepository extends BaseRepository
     {
         return $this->model->query()
             ->whereNull('validated_by_kepala_dinas')
+            ->whereNotNull('validated_by_petugas')
             ->count();
     }
 
@@ -421,6 +422,7 @@ class SubmissionRepository extends BaseRepository
     {
         return $this->model->query()
             ->where(DB::raw('YEAR(created_at)'), now()->format('Y'))
+            ->where('created_by', auth()->id())
             ->count();
     }
 
@@ -435,6 +437,7 @@ class SubmissionRepository extends BaseRepository
         return $this->model->query()
             ->select('id')
             ->where(DB::raw('YEAR(created_at)'), now()->format('Y'))
+            ->where('created_by', auth()->id())
             ->has('submission_receivers')
             ->withSum('submission_receivers', 'default_quota')
             ->get();
@@ -449,7 +452,9 @@ class SubmissionRepository extends BaseRepository
     public function countProgressSubmission(): int
     {
         return $this->model->query()
-            ->select('id', 'start_time', 'end_time')
+            ->select('id', 'start_time', 'end_time', 'created_by')
+            ->where('created_by', auth()->id())
+            ->whereNotNull('validated_by_penyuluh')
             ->whereNull('start_time')
             ->whereNull('end_time')
             ->count();
@@ -464,8 +469,9 @@ class SubmissionRepository extends BaseRepository
     public function countDeclinedSubmission(): int
     {
         return $this->model->query()
-            ->select('id', 'approval_message')
+            ->select('id', 'approval_message', 'created_by')
             ->whereNotNull('approval_message')
+            ->where('created_by', auth()->id())
             ->count();
     }
 }
