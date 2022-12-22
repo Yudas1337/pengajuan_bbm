@@ -1,3 +1,4 @@
+@php use App\Helpers\UserHelper; @endphp
 <li class="sidebar-header">
     Home
 </li>
@@ -60,10 +61,12 @@
         </ul>
     </li>
 @endcan
+@if(UserHelper::checkRolePenyuluh() || UserHelper::checkRoleTangkap() || UserHelper::checkRolePembudidaya())
+    <li class="sidebar-header">
+        Menu Master
+    </li>
 
-<li class="sidebar-header">
-    Menu Master
-</li>
+@endif
 
 @can('create-station')
     <li class="sidebar-item {{ request()->routeIs('stations.*') ? 'active' : '' }}">
