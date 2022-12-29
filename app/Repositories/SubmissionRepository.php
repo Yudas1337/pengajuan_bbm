@@ -88,7 +88,7 @@ class SubmissionRepository extends BaseRepository
 
         $show->update(['quota' => $data['quota']]);
         $show->receiver()->update([
-            'name' => $data['name'], 'national_identity_number' => $data['nik']
+            'name' => $data['name'], 'national_identity_number' => $data['nik'], 'status' => $data['status']
         ]);
     }
 

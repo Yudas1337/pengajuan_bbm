@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
 
     /**
      * Run the migrations.
@@ -29,7 +30,7 @@ return new class extends Migration {
             $table->string('district', 100)->nullable();
             $table->string('village', 100)->nullable();
             $table->text('address')->nullable();
-            $table->enum('status', ['Valid', 'Draft', 'Perubahan', 'Tidak Valid', 'Final', 'Ditutup'])->nullable();
+            $table->enum('status', ['Valid', 'Draft', 'Perubahan', 'Tidak Valid'])->nullable();
             $table->text('barcode')->nullable();
             $table->softDeletes();
             $table->timestamps();
