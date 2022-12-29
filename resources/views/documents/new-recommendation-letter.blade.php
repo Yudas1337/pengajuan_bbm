@@ -19,16 +19,15 @@
         <div class="col-10 text-center header-letter">
             <h5 class="fw-bold" style="font-size: 14pt">PEMERINTAH KABUPATEN GRESIK</h5>
             <h5 class="fw-bold" style="font-size: 14pt">DINAS PERIKANAN</h5>
-            <h5 class="fw-bold" style="font-size: 14pt">UPT TEMPAT PELANGGAN IKAN CAMPUREJO</h5>
-            <p style="font-size: 13pt">Jl. Komplek Pangkalan Pendaratan Ikan (PPI) Campurejo Panceng</p>
-            <h5 style="font-size: 14pt"><span class="fw-bold">GRESIK</span> - 61156</h5>
+            <p style="font-size: 10pt">Jl. Dr. Wahidin Sudirohusodo No. 44 A Telp./Fax. (031) 3984523</p>
+            <h5 style="font-size: 14pt"><span class="fw-bold">GRESIK</span> 61121</h5>
         </div>
     </div>
     <hr>
     <div class="row" style="margin-top: 1rem">
         <div class="text-center no-surat">
-            <h6 class="fw-bold text-decoration-underline" style="font-size: 12pt; margin: 0">SURAT REKOMENDASI PEMBELIAN BBM BERSUBSIDI / TERTENTU</h6>
-            <p style="margin: 0"><span class="fw-bold">Nomor : </span>............ /  ..............  / ............... / ..........</p>
+            <h6 class="fw-bold text-decoration-underline" style="font-size: 11pt; margin: 0">SURAT REKOMENDASI PEMBELIAN JENIS BBM TERTENTU (JENIS MINYAK SOLAR)</h6>
+            <p style="margin: 0"><span class="fw-bold">Nomor : </span>523/{{ \Carbon\Carbon::parse($submission->created_at)->timestamp }}/437.60/{{ date('Y') }}</p>
         </div>
     </div>
     <div class="row px-5 mt-3 fw-bold rules" style="margin-top: 1rem">
