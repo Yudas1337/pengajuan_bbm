@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Submission;
 use App\Models\SubmissionHistory;
 use App\Models\SubmissionReceiver;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SubmissionRepository extends BaseRepository
@@ -373,11 +374,40 @@ class SubmissionRepository extends BaseRepository
      *
      */
 
-    public function getTransactions(): object|null
+    public function getTransactions(Request $request): object|null
     {
-        return $this->submissionHistory->query()
+        $date = explode(' - ', $request->date);
+        $start = date($date[0]);
+        $end = date($date[1]);
+        return  $this->submissionHistory->query()
+            ->selectRaw('submission_histories.*, submission_histories.created_at as submmission_history_created')
             ->with(['submission_receiver.receiver', 'user.station'])
+            ->when($request->date, function($q) use($start, $end){
+                return $q->whereBetween('submission_histories.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
+            })
             ->latest();
+    }
+
+    /**
+     * handle get transactions history from model by date
+     *
+     * @return mixed
+     *
+     */
+
+    public function getTransactionsByDate(string $daterange): mixed
+    {
+        $date = explode(' - ', $daterange);
+        $start = date($date[0]);
+        $end = date($date[1]);
+        return $this->submissionHistory->query()
+            ->selectRaw('submission_histories.*, submission_histories.created_at as submmission_history_created')
+            ->with(['submission_receiver.receiver', 'user.station'])
+            ->when($daterange, function($q) use($start, $end){
+                return $q->whereBetween('submission_histories.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
+            })
+            ->latest()
+            ->get();
     }
 
     /**

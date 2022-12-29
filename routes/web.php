@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
             'groups' => GroupController::class
         ], ['except' => ['show']]);
         Route::resource('submissions', SubmissionController::class)->except('update');
+        Route::get('histories/print/{date}', [HistoryController::class, 'print'])->name('print-history');
         Route::resource('histories', HistoryController::class)->only('index');
         Route::get('getGroupByKecamatan/{district}', [GroupController::class, 'getGroupByKecamatan'])->name('getGroupByKecamatan');
 

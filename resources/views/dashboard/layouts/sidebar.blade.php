@@ -161,12 +161,12 @@
 
 @can('history-transaction')
     <li class="sidebar-header">
-        Menu Transaksi
+        Menu Laporan
     </li>
     <li class="sidebar-item {{ request()->routeIs('histories.index') ? 'active' : '' }}">
         <a href="{{ route('histories.index') }}" class="sidebar-link">
             <i class="align-middle me-2 fas fa-fw fa-credit-card"></i> <span
-                class="align-middle">History Transaksi</span>
+                class="align-middle">Laporan Transaksi</span>
         </a>
     </li>
 @endcan

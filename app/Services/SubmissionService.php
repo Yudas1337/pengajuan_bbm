@@ -394,9 +394,19 @@ class SubmissionService
      * @return object|null
      */
 
-    public function handleGetTransactions(): object|null
+    public function handleGetTransactions(Request $request): object|null
     {
-        return $this->TransactionMockup($this->repository->getTransactions());
+        return $this->TransactionMockup($this->repository->getTransactions($request));
+    }
+
+    /**
+     * Handle get transaction history from submission data models by date.
+     *
+     * @return object|null
+     */
+    public function handleGetTransactionsByDate(string $date): mixed
+    {
+        return $this->repository->getTransactionsByDate($date);
     }
 
     /**

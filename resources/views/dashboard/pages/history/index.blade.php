@@ -14,20 +14,30 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatables-responsive" class="table table-striped" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Penerima Bantuan</th>
-                                <th>Tanggal transaksi</th>
-                                <th>Banyak Kuota</th>
-                                <th>Petugas yang menangani</th>
-                                <th>Stasiun</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="col-12">
+                                <form id="search-form" class="row justify-content-end" action="" method="GET">
+                                    <div class="col-4"><input type="text" name="date" value="{{ date('Y-m-d') . ' - ' . date('Y-m-d') }}" class="form-control"></div>
+                                    <div class="col-2 d-flex flex-row">
+                                        <button class="btn btn-primary me-2" type="submit">Cari</button>
+                                        <button id="btn-print" class="btn btn-dark">Print</button>
+                                    </div>
+                                </form>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <table id="datatables-responsive" class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Penerima Bantuan</th>
+                                    <th>Tanggal transaksi</th>
+                                    <th>Banyak Kuota</th>
+                                    <th>Petugas yang menangani</th>
+                                    <th>Stasiun</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,9 +50,8 @@
 @section('footer')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-
             // Datatables Responsive
-            $("#datatables-responsive").DataTable({
+            var table = $("#datatables-responsive").DataTable({
                 scrollX: true,
                 scrollY: '500px',
                 scrollCollapse: false,
@@ -51,21 +60,16 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                searching: true,
-                ajax: "{{ route('histories.index') }}",
+                searching: false,
+                ajax: "{{ route('histories.index') . '?date=' . date('Y-m-d') . ' - ' . date('Y-m-d') }}",
                 columns: [
-                    {
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
                     {
                         data: 'receiver',
                         name: 'submission_receiver.receiver.name'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at'
+                        data: 'submmission_history_created',
+                        name: 'submmission_history_created'
                     },
                     {
                         data: 'quota_cost',
@@ -81,6 +85,27 @@
                     }
 
                 ]
+
+            });
+
+            $('#search-form').submit(function (e){
+                e.preventDefault()
+                const date = $('input[name="date"]').val()
+                table.ajax.url("{{ route('histories.index') . '?date=:date' }}".replace(':date', date))
+                table.ajax.reload()
+            })
+
+            $('#btn-print').click(function() {
+                const date = $('input[name="date"]').val()
+                window.open("{{ route('print-history', ':date') }}".replace(':date', date), '_blank')
+            })
+
+            // Daterangepicker
+            $("input[name=\"date\"]").daterangepicker({
+                opens: "left",
+                locale: {
+                    format: 'Y-M-D'
+                }
             });
         });
     </script>
