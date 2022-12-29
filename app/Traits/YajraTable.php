@@ -171,6 +171,9 @@ trait YajraTable
             ->editColumn('quota', function ($data) {
                 return view('dashboard.pages.submission.receiver.quota', compact('data'));
             })
+            ->editColumn('status', function ($data) {
+                return view('dashboard.pages.submission.receiver.status', compact('data'));
+            })
             ->toJson();
     }
 

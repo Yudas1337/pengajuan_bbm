@@ -23,7 +23,8 @@
                                     File Data
                                     Nelayan</small></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link inactive" href="#data-verification">Page 4<br><small>Tambah Data Pengajuan</small></a>
+                        <li class="nav-item"><a class="nav-link inactive" href="#data-verification">Page 4<br><small>Tambah
+                                    Data Pengajuan</small></a>
                         </li>
                     </ul>
 
@@ -50,7 +51,8 @@
                                         class="text-danger">*</small> </label>
                                 <div class="col-sm-6">
                                     <select id="select-group" name="group_id"
-                                            class="form-control select2-ajax select-group" {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }} required>
+                                            class="form-control select2-ajax select-group"
+                                            {{ auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok" ? 'readonly' : '' }} required>
                                         <option value="">--Pilih--</option>
                                         @if(auth()->user()->roles->pluck('name')[0] === "Ketua Kelompok")
                                             @foreach ($groups as $group)
@@ -103,11 +105,11 @@
                                         class="text-danger">*</small></label>
                                 <div class="col-sm-6" id="stations-container">
                                     @foreach ($stations as $station)
-{{--                                        <label class="form-check">--}}
-{{--                                            <input value="{{ $station->id  }}" name="station_id" type="radio"--}}
-{{--                                                   class="form-check-input" readonly required>--}}
-{{--                                            <span class="form-check-label">{{ $station->name }}</span>--}}
-{{--                                        </label>--}}
+                                        {{--                                        <label class="form-check">--}}
+                                        {{--                                            <input value="{{ $station->id  }}" name="station_id" type="radio"--}}
+                                        {{--                                                   class="form-check-input" readonly required>--}}
+                                        {{--                                            <span class="form-check-label">{{ $station->name }}</span>--}}
+                                        {{--                                        </label>--}}
                                     @endforeach
                                 </div>
                             </div>
@@ -162,10 +164,11 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-form-label col-sm-3 text-sm-right">Contoh Format Excel<small class="text-danger">*</small> </label>
+                        <label class="col-form-label col-sm-3 text-sm-right">Contoh Format Excel<small
+                                class="text-danger">*</small> </label>
                         <div class="col-sm-6">
                             <a target="_blank" href="{{ asset("FORMAT-PENGAJUAN.xlsx") }}"
-                                    class="btn btn-success">Download Format Excel
+                               class="btn btn-success">Download Format Excel
                             </a>
                         </div>
                     </div>
@@ -222,7 +225,8 @@
                             <div class="alert-message">
                                 <strong>Note:</strong>
                                 <ul>
-                                    <li>Sebelum melakukan persetujuan atau simpan perubahan mohon dicermati usulan kuota bbm yang sudah diupload
+                                    <li>Sebelum melakukan persetujuan atau simpan perubahan mohon dicermati usulan kuota
+                                        bbm yang sudah diupload
                                     </li>
                                 </ul>
                             </div>
@@ -250,6 +254,7 @@
                                     <th>Nama Nelayan</th>
                                     <th>No KTP</th>
                                     <th>Kuota</th>
+                                    <th>Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -307,8 +312,8 @@
             }
 
             // submit form
-            $('#smartwizard-arrows-primary').submit(function(e) {
-                $(':disabled').each(function(e) {
+            $('#smartwizard-arrows-primary').submit(function (e) {
+                $(':disabled').each(function (e) {
                     $(this).removeAttr('disabled');
                 })
             });
@@ -346,8 +351,8 @@
                     method: 'POST',
                     url: '{{ route("stations.getStationsByDistrict") }}',
                     data: {districtId: districtId, _token: CSRF_TOKEN},
-                    dataType : 'JSON',
-                    success: function(e){
+                    dataType: 'JSON',
+                    success: function (e) {
                         let html = ""
                         e.map((val) => {
                             html += `<label class="form-check">
@@ -370,7 +375,7 @@
                 })
             }
 
-            function setFieldValue()  {
+            function setFieldValue() {
                 $('#stations-container').children('label').remove()
 
                 var select = document.getElementById("select-group");
@@ -389,7 +394,6 @@
                 $('#select-districts').html(optionDistrict)
                 let optionVillage = `<option value="${village.id}">${village.name}</option>`
                 $('#select-villages').html(optionVillage)
-
 
 
                 // page 2
@@ -517,10 +521,10 @@
                         error.addClass("invalid-feedback small d-block")
                     )
                 },
-                highlight: function(element) {
+                highlight: function (element) {
                     $(element).addClass("is-invalid");
                 },
-                unhighlight: function(element) {
+                unhighlight: function (element) {
                     $(element).removeClass("is-invalid");
                 },
                 rules: {
@@ -539,13 +543,13 @@
                         toolbarExtraButtons: [$("<button class=\"btn btn-submit btn-primary\" type=\"button\">Finish</button>")]
                     }
                 })
-                .on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+                .on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
                     if (stepDirection === 1) {
                         return $validationForm.valid();
                     }
                     return true;
                 });
-            $validationForm.find(".btn-submit").on("click", function() {
+            $validationForm.find(".btn-submit").on("click", function () {
                 if (!$validationForm.valid()) {
                     return;
                 }
@@ -619,6 +623,10 @@
                         {
                             data: 'quota',
                             name: 'quota'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
                         },
                     ]
                 });
