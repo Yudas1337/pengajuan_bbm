@@ -65,7 +65,6 @@
     <li class="sidebar-header">
         Menu Master
     </li>
-
 @endif
 
 @can('create-station')

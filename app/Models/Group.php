@@ -12,7 +12,7 @@ class Group extends Model
     use HasFactory;
 
     public $incrementing = false;
-    public $fillable = ['id', 'group_name', 'receiver_type', 'group_leader_id'];
+    public $fillable = ['id', 'group_name', 'receiver_type', 'group_leader_id', 'ship_name', 'gross_tonnage'];
     public $keyType = 'char';
     protected $table = 'groups';
     protected $primaryKey = 'id';
