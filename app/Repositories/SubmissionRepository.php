@@ -504,4 +504,28 @@ class SubmissionRepository extends BaseRepository
             ->where('created_by', auth()->id())
             ->count();
     }
+
+    /**
+     * get submission report
+     *
+     * @return mixed
+     */
+
+    public function getSubmissionReport(Request $request): mixed
+    {
+        $date = explode(' - ', $request->date);
+        $start = date($date[0]);
+        $end = date($date[1]);
+        return $this->model->query()
+            ->withCount('submission_receivers')
+            ->withSum('submission_receivers', 'quota')
+            ->with(['group.user.district', 'user', 'user_last_update_by'])
+            ->whereHas('group')
+            ->verified()
+            ->whereNotNull('validated_by_kepala_dinas')
+            ->when($request->date, function($q) use($start, $end){
+                return $q->whereBetween('submissions.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
+            })
+            ->latest('submissions.created_at');
+    }
 }

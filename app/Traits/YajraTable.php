@@ -304,4 +304,25 @@ trait YajraTable
             })
             ->toJson();
     }
+
+    /**
+     * Datatable mockup for submission report resource
+     *
+     * @param mixed $collection
+     *
+     * @return JsonResponse
+     */
+
+    public function SubmissionReportMockup(mixed $collection): JsonResponse
+    {
+        return DataTables::of($collection)
+            ->addIndexColumn()
+            ->editColumn('start_time', function ($data) {
+                return Carbon::parse($data->start_time)->format('d M Y H:i');
+            })
+            ->editColumn('end_time', function ($data) {
+                return Carbon::parse($data->end_time)->format('d M Y H:i');
+            })
+            ->toJson();
+    }
 }

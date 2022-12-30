@@ -486,4 +486,24 @@ class SubmissionService
     {
         return $this->repository->countDeclinedSubmission();
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function handleGetSubmissionReport(Request $request) : mixed
+    {
+        return $this->SubmissionReportMockup($this->repository->getSubmissionReport($request));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function handlePrintSubmissionReport(Request $request) : mixed
+    {
+        return $this->repository->getSubmissionReport($request)->get();
+    }
 }

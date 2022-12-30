@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\{DashboardController,
     ReceiverController,
     StationController,
     SubmissionController,
+    SubmissionReportController,
     UserController};
 use App\Http\Controllers\PrintCardController;
 use Illuminate\Support\Facades\{Auth, Route};
@@ -80,6 +81,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('submissions', SubmissionController::class)->except('update');
         Route::get('histories/print/{date}', [HistoryController::class, 'print'])->name('print-history');
         Route::resource('histories', HistoryController::class)->only('index');
+        Route::name('submission-report.')->prefix('submission-report')->group(function (){
+            Route::get('/', [SubmissionReportController::class, 'index'])->name('index');
+            Route::get('/print/{date}', [SubmissionReportController::class, 'print'])->name('print');
+        });
         Route::get('getGroupByKecamatan/{district}', [GroupController::class, 'getGroupByKecamatan'])->name('getGroupByKecamatan');
 
         Route::name('submission.')->group(function () {

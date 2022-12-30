@@ -168,4 +168,10 @@
                 class="align-middle">Laporan Transaksi</span>
         </a>
     </li>
+    <li class="sidebar-item {{ request()->routeIs('submission-report.index') ? 'active' : '' }}">
+        <a href="{{ route('submission-report.index') }}" class="sidebar-link">
+            <i class="align-middle me-2 fas fa-fw fa-credit-card"></i> <span
+                class="align-middle">Laporan Pengajuan</span>
+        </a>
+    </li>
 @endcan
