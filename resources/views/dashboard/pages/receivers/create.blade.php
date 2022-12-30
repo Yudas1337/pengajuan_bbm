@@ -130,6 +130,30 @@
                             @enderror
                         </div>
                         <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Nama Kapal </label>
+                                <input value="{{ old('ship_name') }}" type="text" name="ship_name"
+                                       autocomplete="off"
+                                       class="form-control @error('ship_name') is-invalid @enderror">
+                                @error('ship_name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Gross Tonase </label>
+                                <input value="{{ old('gross_tonnage') }}" type="number" name="gross_tonnage"
+                                       autocomplete="off"
+                                       class="form-control @error('gross_tonnage') is-invalid @enderror">
+                                @error('gross_tonnage')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="mb-3 col-md-12">
                                 <label class="form-label">Jenis Kelamin <small class="text-danger">*</small> </label>
                                 <div>
@@ -190,7 +214,7 @@
                         $('#select-villages option').remove();
                         for (let i = 0; i < data.length; i++) {
                             let option = document.createElement("option");
-                            option.value = data[i].id;
+                            option.value = data[i].name;
                             option.text = data[i].name;
                             select_villages.append(option);
                         }

@@ -53,11 +53,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
         }
         $submission_id = request('submission_id');
 
-        $group->update([
-            'ship_name' => $row['nama_kapal'],
-            'gross_tonnage' => $row['gross_tonase']
-        ]);
-
         $receiver = Receiver::firstOrCreate(
             ['national_identity_number' => $row['nik']],
             [
@@ -75,7 +70,9 @@ class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChun
                 'village' => $row['desa'],
                 'address' => $row['alamat'],
                 'status' => $row['status'],
-                'barcode' => $output_file ?? null
+                'barcode' => $output_file ?? null,
+                'ship_name' => $row['nama_kapal'] ?? null,
+                'gross_tonnage' => $row['gross_tonase'] ?? null
             ]
         );
 

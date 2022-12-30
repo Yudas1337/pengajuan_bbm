@@ -13,7 +13,7 @@ class Receiver extends Model
     use HasFactory, SoftDeletes;
 
     public $incrementing = false;
-    public $fillable = ['id', 'group_id', 'receiver_type', 'national_identity_number', 'name', 'phone_number', 'gender', 'birth_place', 'birth_date', 'profession', 'province', 'regency', 'district', 'village', 'address', 'status', 'barcode'];
+    public $fillable = ['id', 'group_id', 'receiver_type', 'national_identity_number', 'name', 'phone_number', 'gender', 'birth_place', 'birth_date', 'profession', 'province', 'regency', 'district', 'village', 'address', 'status', 'barcode', 'ship_name', 'gross_tonnage'];
     public $keyType = 'char';
     protected $table = 'receivers';
     protected $primaryKey = 'id';

@@ -17,8 +17,6 @@ return new class extends Migration {
             $table->string('group_name', 150)->unique();
             $table->string('receiver_type')->nullable();
             $table->foreignUuid('group_leader_id')->constrained('users');
-            $table->string('ship_name');
-            $table->integer('gross_tonnage');
             $table->timestamps();
         });
     }

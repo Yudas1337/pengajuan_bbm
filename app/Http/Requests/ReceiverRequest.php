@@ -26,7 +26,9 @@ class ReceiverRequest extends BaseRequest
             'district' => 'required',
             'village' => 'required',
             'address' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'ship_name' => 'nullable',
+            'gross_tonnage' => 'nullable'
         ];
     }
 
