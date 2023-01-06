@@ -145,7 +145,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->verified()
             ->where('submissions.district_id', $districtId)
@@ -162,7 +162,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByTangkap(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->whereRelation('group', 'receiver_type', '=', 'Nelayan')
             ->verified()
@@ -179,7 +179,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByPembudidaya(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->whereRelation('group', 'receiver_type', '=', 'Pembudidaya')
             ->verified()
@@ -382,7 +382,7 @@ class SubmissionRepository extends BaseRepository
         return  $this->submissionHistory->query()
             ->selectRaw('submission_histories.*, submission_histories.created_at as submmission_history_created')
             ->with(['submission_receiver.receiver', 'user.station'])
-            ->when($request->date, function($q) use($start, $end){
+            ->when($request->date, function ($q) use ($start, $end) {
                 return $q->whereBetween('submission_histories.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
             })
             ->latest();
@@ -403,7 +403,7 @@ class SubmissionRepository extends BaseRepository
         return $this->submissionHistory->query()
             ->selectRaw('submission_histories.*, submission_histories.created_at as submmission_history_created')
             ->with(['submission_receiver.receiver', 'user.station'])
-            ->when($daterange, function($q) use($start, $end){
+            ->when($daterange, function ($q) use ($start, $end) {
                 return $q->whereBetween('submission_histories.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
             })
             ->latest()
@@ -523,7 +523,7 @@ class SubmissionRepository extends BaseRepository
             ->whereHas('group')
             ->verified()
             ->whereNotNull('validated_by_kepala_dinas')
-            ->when($request->date, function($q) use($start, $end){
+            ->when($request->date, function ($q) use ($start, $end) {
                 return $q->whereBetween('submissions.created_at', [$start . ' 00:00:00', $end . ' 23:59:59']);
             })
             ->latest('submissions.created_at');
