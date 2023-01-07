@@ -144,13 +144,17 @@ class SubmissionRepository extends BaseRepository
 
     public function getVerifiedSubmissionByPenyuluh(string $districtId): mixed
     {
-        return $this->model->query()
+        $data = $this->model->query()
             ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->verified()
             ->where('submissions.district_id', $districtId)
             ->whereNotNull('validated_by_penyuluh')
-            ->latest('submissions.created_at');
+            ->latest('submissions.created_at')
+            ->get();
+
+        dd($data);
+        return $data;
     }
 
     /**
@@ -162,7 +166,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByTangkap(): mixed
     {
         return $this->model->query()
-            ->with(['group', 'user', 'user_last_update_by'])
+            ->with(['user', 'user_last_update_by', 'group'])
             ->whereHas('group')
             ->whereRelation('group', 'receiver_type', '=', 'Nelayan')
             ->verified()
@@ -196,7 +200,7 @@ class SubmissionRepository extends BaseRepository
     public function getVerifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->verified()
             ->whereNotNull('validated_by_kepala_dinas')
@@ -214,7 +218,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByPenyuluh(string $districtId): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->where('submissions.district_id', $districtId)
             ->whereNull('validated_by_penyuluh')
@@ -230,7 +234,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByTangkap(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->whereRelation('group', 'receiver_type', '=', 'Nelayan')
             ->whereNotNull('validated_by_penyuluh')
@@ -264,7 +268,7 @@ class SubmissionRepository extends BaseRepository
     public function getUnverifiedSubmissionByKepalaDinas(): mixed
     {
         return $this->model->query()
-            ->with(['group.user', 'user', 'user_last_update_by'])
+            ->with(['group', 'user', 'user_last_update_by'])
             ->whereHas('group')
             ->whereNotNull('validated_by_petugas')
             ->whereNull('validated_by_kepala_dinas')

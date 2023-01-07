@@ -16,16 +16,17 @@
                     <div class="card-body">
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
-                            <tr>
-                                <th>Nama Kelompok</th>
-                                <th>Tanggal Aktif</th>
-                                <th>Status Verifikasi</th>
-                                <th>Status Pengajuan</th>
-                                <th>Diajukan Oleh</th>
-                                <th>Terakhir Diubah</th>
-                                <th>Diverifikasi Pada</th>
-                                <th>Aksi</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Kelompok</th>
+                                    <th>Tanggal Aktif</th>
+                                    <th>Status Verifikasi</th>
+                                    <th>Status Pengajuan</th>
+                                    <th>Diajukan Oleh</th>
+                                    <th>Terakhir Diubah</th>
+                                    <th>Diverifikasi Pada</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -41,9 +42,9 @@
 @endsection
 @section('footer')
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-            $(document).on('click', '.delete', function () {
+            $(document).on('click', '.delete', function() {
                 $('#exampleModal').modal('show')
                 const id = $(this).attr('data-id');
                 let url = `{{ route('submissions.destroy', ':id') }}`.replace(':id', id);
@@ -61,7 +62,11 @@
                 serverSide: true,
                 searching: true,
                 ajax: "{{ route('submission.verified') }}",
-                columns: [
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
                     {
                         data: 'group.group_name',
                         name: 'group.group_name'
